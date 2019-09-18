@@ -90,3 +90,6 @@ yarn-error.log*
 
 # auth0
 auth_config.json
+
+# local config
+config.json

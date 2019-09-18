@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import "./App.css";
 import { useAuth0 } from "./react-auth0-spa";
 import request from "./utils/request";
+import config from "./config";
+import endpoints from "./endpoints";
 
 function App() {
   let [pois, setPois] = useState([]);
@@ -11,7 +13,7 @@ function App() {
   let handlePOIsClick = async e => {
     e.preventDefault();
     let pois = await request(
-      "http://localhost:4000/poi",
+      `${config.baseURL}${endpoints.pois}`,
       getTokenSilently,
       loginWithRedirect
     );
