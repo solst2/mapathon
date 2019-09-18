@@ -13,6 +13,6 @@ export default async function(url, getTokenSilently, loginWithRedirect) {
     return data;
   } catch (e) {
     console.error(e);
-    loginWithRedirect({ connection: "github" });
+    await loginWithRedirect({ connection: "github" });
   }
 }

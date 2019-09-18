@@ -4,10 +4,12 @@ import { useAuth0 } from "./react-auth0-spa";
 import request from "./utils/request";
 import config from "./config";
 import endpoints from "./endpoints";
+import Loading from "./components/Loading";
+import POI from "./components/POI";
 
 function App() {
   let [pois, setPois] = useState([]);
-  let { loginWithRedirect, getTokenSilently } = useAuth0();
+  let { loading, loginWithRedirect, getTokenSilently } = useAuth0();
 
   let handlePOIsClick = async e => {
     e.preventDefault();
@@ -16,9 +18,16 @@ function App() {
       getTokenSilently,
       loginWithRedirect
     );
-    console.log(pois.data);
-    setPois(pois.data);
+
+    if (pois && pois.data) {
+      console.log(pois.data);
+      setPois(pois.data);
+    }
   };
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <div className="App">
@@ -28,7 +37,15 @@ function App() {
         <a className="App-link" href="#" onClick={handlePOIsClick}>
           Get POIs
         </a>
-        {pois && pois.length > 0 && <p>{JSON.stringify(pois)}</p>}
+        {pois && pois.length > 0 && (
+          <ul className="POI-List">
+            {pois.map(poi => (
+              <li key={poi.id}>
+                <POI {...poi} />
+              </li>
+            ))}
+          </ul>
+        )}
       </header>
     </div>
   );
