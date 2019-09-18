@@ -2,6 +2,6 @@ version:                   '3.7'
 
 services:
 
-  server:
+  react:
     ports:
-      - 3000:3000
+      - 80:80
