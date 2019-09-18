@@ -7,7 +7,6 @@ import endpoints from "./endpoints";
 
 function App() {
   let [pois, setPois] = useState([]);
-  let [error, setError] = useState(null);
   let { loginWithRedirect, getTokenSilently } = useAuth0();
 
   let handlePOIsClick = async e => {
@@ -17,8 +16,8 @@ function App() {
       getTokenSilently,
       loginWithRedirect
     );
-    console.log(pois);
-    setPois(pois);
+    console.log(pois.data);
+    setPois(pois.data);
   };
 
   return (
@@ -30,7 +29,6 @@ function App() {
           Get POIs
         </a>
         {pois && pois.length > 0 && <p>{JSON.stringify(pois)}</p>}
-        {error && <p style={{ color: "red" }}>{error}</p>}
       </header>
     </div>
   );
