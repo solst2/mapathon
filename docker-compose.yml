@@ -2,7 +2,16 @@ version: "3.7"
 
 services:
   react:
-    build: .
-    environment:
-      - VIRTUAL_HOST=${VIRTUAL_HOST}
-      - LETSENCRYPT_HOST=${LETSENCRYPT_HOST}
+    labels:
+      - "traefik.backend=${TRAEFIK_BACKEND}"
+      - "traefik.docker.network=prod"
+      - "traefik.frontend.rule=Host:${TRAEFIK_URL}"
+      - "traefik.enable=true"
+    networks:
+      - default
+      - prod
+
+networks:
+  prod:
+    external: true
+    name: ${TRAEFIK_NETWORK}

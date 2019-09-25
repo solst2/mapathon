@@ -5,3 +5,5 @@ services:
   react:
     ports:
       - 80:80
+    networks:
+      - default
