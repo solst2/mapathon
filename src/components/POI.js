@@ -30,7 +30,7 @@ export default function POI(props) {
       {Categories && Categories.length > 0 && (
         <div className="categories">
           {Categories.map(category => (
-            <span className="category">
+            <span className="category" key={category.id}>
               {category.image && (
                 <img className="category-image" src={category.image} />
               )}
@@ -58,6 +58,7 @@ export default function POI(props) {
               <span
                 className="category tag"
                 style={{ backgroundColor: tag.color }}
+                key={tag.id}
               >
                 {tag.image && (
                   <img className="category-image" src={tag.image} />

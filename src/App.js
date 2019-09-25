@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import "./App.css";
 import { useAuth0 } from "./react-auth0-spa";
 import request from "./utils/request";
-import config from "./config";
 import endpoints from "./endpoints";
 import Loading from "./components/Loading";
 import POI from "./components/POI";
@@ -14,7 +13,7 @@ function App() {
   let handlePOIsClick = async e => {
     e.preventDefault();
     let pois = await request(
-      `${config.baseURL}${endpoints.pois}`,
+      `${process.env.REACT_APP_SERVER_URL}${endpoints.pois}`,
       getTokenSilently,
       loginWithRedirect
     );

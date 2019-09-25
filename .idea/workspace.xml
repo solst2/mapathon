@@ -2,7 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9d99ef1f-6be9-48ac-88ce-0e79a9308b07" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/POI.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/POI.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,6 +69,13 @@
       </list>
     </option>
   </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView />
+      </list>
+    </option>
+  </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -84,7 +94,10 @@
       <workItem from="1568665428905" duration="1181000" />
       <workItem from="1568714594074" duration="4647000" />
       <workItem from="1568727468392" duration="423000" />
-      <workItem from="1568727915131" duration="14027000" />
+      <workItem from="1568727915131" duration="14248000" />
+      <workItem from="1568905073172" duration="1367000" />
+      <workItem from="1569232426670" duration="623000" />
+      <workItem from="1569391571351" duration="595000" />
     </task>
     <servers />
   </component>
@@ -105,23 +118,27 @@
     </option>
   </component>
   <component name="WindowStateProjectService">
-    <state x="416" y="282" key="EditFileWatcherDialog" />
-    <state x="416" y="282" key="EditFileWatcherDialog/1680.1050/1680.1050" />
-    <state x="614" y="312" key="FileChooserDialogImpl" />
-    <state x="614" y="312" key="FileChooserDialogImpl/1680.1050/1680.1050" />
-    <state width="1600" height="268" key="GridCell.Tab.0.bottom" />
-    <state width="1600" height="268" key="GridCell.Tab.0.bottom/1680.1050/1680.1050" />
-    <state width="1600" height="268" key="GridCell.Tab.0.center" />
-    <state width="1600" height="268" key="GridCell.Tab.0.center/1680.1050/1680.1050" />
-    <state width="1600" height="268" key="GridCell.Tab.0.left" />
-    <state width="1600" height="268" key="GridCell.Tab.0.left/1680.1050/1680.1050" />
-    <state width="1600" height="268" key="GridCell.Tab.0.right" />
-    <state width="1600" height="268" key="GridCell.Tab.0.right/1680.1050/1680.1050" />
-    <state x="347" y="181" key="SettingsEditor" />
-    <state x="347" y="181" key="SettingsEditor/1680.1050/1680.1050" />
-    <state x="175" y="150" width="1434" height="807" key="find.popup" />
-    <state x="175" y="150" width="1434" height="807" key="find.popup/1680.1050/1680.1050" />
-    <state x="531" y="250" width="672" height="678" key="search.everywhere.popup" />
-    <state x="531" y="250" width="672" height="678" key="search.everywhere.popup/1680.1050/1680.1050" />
+    <state x="601" y="286" width="524" height="502" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1569391972949">
+      <screen x="57" y="27" width="1623" height="1023" />
+    </state>
+    <state x="601" y="286" width="524" height="502" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/57.27.1623.1023/1680.0.1680.1050@57.27.1623.1023" timestamp="1569391972949" />
+    <state x="416" y="282" key="EditFileWatcherDialog" timestamp="1569391944487" />
+    <state x="416" y="282" key="EditFileWatcherDialog/1680.1050/1680.1050" timestamp="1569391944488" />
+    <state x="614" y="312" key="FileChooserDialogImpl" timestamp="1569391944488" />
+    <state x="614" y="312" key="FileChooserDialogImpl/1680.1050/1680.1050" timestamp="1569391944488" />
+    <state width="1600" height="268" key="GridCell.Tab.0.bottom" timestamp="1569391944488" />
+    <state width="1600" height="268" key="GridCell.Tab.0.bottom/1680.1050/1680.1050" timestamp="1569391944488" />
+    <state width="1600" height="268" key="GridCell.Tab.0.center" timestamp="1569391944488" />
+    <state width="1600" height="268" key="GridCell.Tab.0.center/1680.1050/1680.1050" timestamp="1569391944488" />
+    <state width="1600" height="268" key="GridCell.Tab.0.left" timestamp="1569391944488" />
+    <state width="1600" height="268" key="GridCell.Tab.0.left/1680.1050/1680.1050" timestamp="1569391944488" />
+    <state width="1600" height="268" key="GridCell.Tab.0.right" timestamp="1569391944488" />
+    <state width="1600" height="268" key="GridCell.Tab.0.right/1680.1050/1680.1050" timestamp="1569391944488" />
+    <state x="347" y="181" key="SettingsEditor" timestamp="1569391944488" />
+    <state x="347" y="181" key="SettingsEditor/1680.1050/1680.1050" timestamp="1569391944488" />
+    <state x="175" y="150" width="1434" height="807" key="find.popup" timestamp="1569391944488" />
+    <state x="175" y="150" width="1434" height="807" key="find.popup/1680.1050/1680.1050" timestamp="1569391944488" />
+    <state x="531" y="250" width="672" height="678" key="search.everywhere.popup" timestamp="1569391944488" />
+    <state x="531" y="250" width="672" height="678" key="search.everywhere.popup/1680.1050/1680.1050" timestamp="1569391944488" />
   </component>
 </project>
