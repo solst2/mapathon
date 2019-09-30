@@ -8,17 +8,16 @@ MAINTAINER Roger Schaer <roger.schaer@hevs.ch>
 WORKDIR /usr/src/app
 
 # Install app dependencies
-# A wildcard is used to ensure both package.json AND package-lock.json are copied
-# where available (npm@5+)
-COPY package*.json ./
-RUN npm install
-RUN npm install react-scripts -g
+COPY package.json ./
+COPY yarn.lock ./
+RUN yarn
+RUN yarn global add react-scripts
 
 # Copy app source
 COPY . /usr/src/app
 
 # Run the build
-RUN npm run build
+RUN yarn run build
 
 ### STAGE 2: Production Environment ###
 

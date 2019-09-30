@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9d99ef1f-6be9-48ac-88ce-0e79a9308b07" name="Default Changelist" comment="" />
+    <list default="true" id="9d99ef1f-6be9-48ac-88ce-0e79a9308b07" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -29,16 +34,19 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../IMAGINE/imagine-web" />
     <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.standard" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.standard" value="project" />
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.standard" value="" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="yarn" />
     <property name="prettierjs.PrettierConfiguration.Package" value="/usr/local/lib/node_modules/prettier" />
-    <property name="settings.editor.selected.configurable" value="watcher.settings" />
+    <property name="settings.editor.selected.configurable" value="settings.javascript.linters.eslint" />
     <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
   </component>
   <component name="RecentsManager">
@@ -93,11 +101,24 @@
       <workItem from="1568905073172" duration="1367000" />
       <workItem from="1569232426670" duration="623000" />
       <workItem from="1569391571351" duration="2230000" />
+      <workItem from="1569564207589" duration="772000" />
+      <workItem from="1569588978842" duration="1901000" />
+      <workItem from="1569840102716" duration="1271000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ORDER">
+      <list>
+        <option value="0" />
+        <option value="2" />
+        <option value="3" />
+        <option value="1" />
+      </list>
+    </option>
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -121,16 +142,31 @@
     <state x="416" y="282" key="EditFileWatcherDialog/1680.1050/1680.1050" timestamp="1569391944488" />
     <state x="614" y="312" key="FileChooserDialogImpl" timestamp="1569391944488" />
     <state x="614" y="312" key="FileChooserDialogImpl/1680.1050/1680.1050" timestamp="1569391944488" />
-    <state width="1600" height="268" key="GridCell.Tab.0.bottom" timestamp="1569391944488" />
+    <state width="1657" height="277" key="GridCell.Tab.0.bottom" timestamp="1569841021731">
+      <screen x="1680" y="0" width="1680" height="1050" />
+    </state>
     <state width="1600" height="268" key="GridCell.Tab.0.bottom/1680.1050/1680.1050" timestamp="1569391944488" />
-    <state width="1600" height="268" key="GridCell.Tab.0.center" timestamp="1569391944488" />
+    <state width="1657" height="277" key="GridCell.Tab.0.bottom/57.27.1623.1023/1680.0.1680.1050@1680.0.1680.1050" timestamp="1569841021731" />
+    <state width="1657" height="277" key="GridCell.Tab.0.center" timestamp="1569841021731">
+      <screen x="1680" y="0" width="1680" height="1050" />
+    </state>
     <state width="1600" height="268" key="GridCell.Tab.0.center/1680.1050/1680.1050" timestamp="1569391944488" />
-    <state width="1600" height="268" key="GridCell.Tab.0.left" timestamp="1569391944488" />
+    <state width="1657" height="277" key="GridCell.Tab.0.center/57.27.1623.1023/1680.0.1680.1050@1680.0.1680.1050" timestamp="1569841021731" />
+    <state width="1657" height="277" key="GridCell.Tab.0.left" timestamp="1569841021731">
+      <screen x="1680" y="0" width="1680" height="1050" />
+    </state>
     <state width="1600" height="268" key="GridCell.Tab.0.left/1680.1050/1680.1050" timestamp="1569391944488" />
-    <state width="1600" height="268" key="GridCell.Tab.0.right" timestamp="1569391944488" />
+    <state width="1657" height="277" key="GridCell.Tab.0.left/57.27.1623.1023/1680.0.1680.1050@1680.0.1680.1050" timestamp="1569841021731" />
+    <state width="1657" height="277" key="GridCell.Tab.0.right" timestamp="1569841021731">
+      <screen x="1680" y="0" width="1680" height="1050" />
+    </state>
     <state width="1600" height="268" key="GridCell.Tab.0.right/1680.1050/1680.1050" timestamp="1569391944488" />
-    <state x="347" y="181" key="SettingsEditor" timestamp="1569391944488" />
+    <state width="1657" height="277" key="GridCell.Tab.0.right/57.27.1623.1023/1680.0.1680.1050@1680.0.1680.1050" timestamp="1569841021731" />
+    <state x="347" y="181" key="SettingsEditor" timestamp="1569840755495">
+      <screen x="57" y="27" width="1623" height="1023" />
+    </state>
     <state x="347" y="181" key="SettingsEditor/1680.1050/1680.1050" timestamp="1569391944488" />
+    <state x="347" y="181" key="SettingsEditor/57.27.1623.1023/1680.0.1680.1050@1680.0.1680.1050" timestamp="1569840755495" />
     <state x="175" y="150" width="1434" height="807" key="find.popup" timestamp="1569563433524">
       <screen x="57" y="27" width="1623" height="1023" />
     </state>
