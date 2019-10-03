@@ -18,9 +18,9 @@ function App() {
       loginWithRedirect
     );
 
-    if (pois && pois.data) {
-      console.log(pois.data);
-      setPois(pois.data);
+    if (pois && pois.length > 0) {
+      console.log(pois);
+      setPois(pois);
     }
   };
 
