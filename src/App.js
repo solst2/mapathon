@@ -6,6 +6,50 @@ import endpoints from "./endpoints";
 import Loading from "./components/Loading";
 import POI from "./components/POI";
 
+function Geo(){
+  let [laltitude, setLaltitude] = useState([]);
+  let [longtitude, setLongtitude] = useState([]);
+  let [available, setAvailable] = useState(false);
+  let [message, setMessage] = useState('Browser does not support geolocation.');
+
+  function getPosition(position) {
+    setLaltitude(position.coords.latitude);
+    setLongtitude(position.coords.longitude);
+    setAvailable(true);
+  }
+
+  function getError(error){
+    {(() => {
+      switch(error.code) {
+        case error.PERMISSION_DENIED:
+          setMessage('permission denied for geolocation');
+          setAvailable(false);
+          break;
+        case error.TIMEOUT:
+          setMessage('timeout geolocation');
+          setAvailable(false);
+          break;
+        case error.POSITION_UNAVAILABLE:
+          setMessage('position unavailable for geolocation');
+          setAvailable(false);
+          break;
+        case error.UNKNOWN_ERROR:
+          setMessage('unknown error for geolocation');
+          setAvailable(false);
+          break;
+      }
+    })()}
+  }
+
+  (navigator.geolocation) ?
+      navigator.geolocation.getCurrentPosition(getPosition, getError) :
+      setAvailable(false);
+
+  return (available) ? <p>Laltitude: {laltitude}, Longtitude: {longtitude}</p>: <p>{message}</p>
+
+}
+
+
 function App() {
   let [pois, setPois] = useState([]);
   let { loading, loginWithRedirect, getTokenSilently } = useAuth0();
