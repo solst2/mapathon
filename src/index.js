@@ -6,7 +6,7 @@ import auth_config from "./auth_config.js";
 import * as serviceWorker from "./serviceWorker";
 import { Auth0Provider } from "./react-auth0-spa";
 import { createBrowserHistory } from "history";
-
+import 'leaflet/dist/leaflet.css';
 let history = createBrowserHistory();
 
 const onRedirectCallback = appState => {
