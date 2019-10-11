@@ -8,8 +8,7 @@ import POI from "./components/POI";
 import L from 'leaflet';
 import { Map, TileLayer, Marker, Popup  } from 'react-leaflet';
 
-let firstLat;
-let firstLng;
+
 function Geo(){
   let [laltitude, setLaltitude] = useState([]);
   let [longtitude, setLongtitude] = useState([]);
@@ -48,9 +47,8 @@ function Geo(){
   (navigator.geolocation) ?
       navigator.geolocation.getCurrentPosition(getPosition, getError) :
       setAvailable(false);
-firstLat={laltitude};
-firstLng={longtitude};
-  return (available) ? <p>Laltitude: {laltitude}, Longtitude: {longtitude}</p>: <p>{message}</p>
+console.log( {laltitude}+"   "+ {longtitude});
+  return(available) ? <div > <Mapdiv firstLat={laltitude} firstLng={longtitude}/></div>: <p>{message}</p>
 
 }
 
@@ -60,13 +58,19 @@ var myIcon = L.icon({
   iconAnchor: [10, 30],
   popupAnchor: [0, -20]
 });
+
+function setFirstMarker () {
+  const {markers} = this.state
+
+  this.setState({markers})
+}
 class Mapdiv extends Component {
 
   constructor(props) {
     super(props);
 
     this.state = {
-      markers:[firstLng,firstLat],
+      markers:[[props.firstLat,props.firstLng]],
       citiesData:[
         { "name": "Tokyo", "coordinates": [139.6917, 35.6895], "population": 37843000 ,"displayed":true},
         { "name": "Jakarta", "coordinates": [106.8650, -6.1751], "population": 30539000 ,"displayed":false},
@@ -91,6 +95,7 @@ class Mapdiv extends Component {
     markers.push(e.latlng)
     this.setState({markers})
   }
+
   deleteMarker= (e) =>  {
     const {markers} = this.state
     markers.splice(e.target.value, 1)
@@ -103,7 +108,7 @@ class Mapdiv extends Component {
 
   }
   render() {
-    let {markers} = this.props;
+    let {markers,firstLat,firstLng} = this.props;
     return (
 
               <Map className="map"
@@ -162,7 +167,7 @@ function App() {
           <h1>Mapathon</h1>
           <Geo/>
           <br />
-          <Mapdiv />
+
           <a className="App-link" href="#" onClick={handlePOIsClick}>
             Get POIs
           </a>
