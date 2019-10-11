@@ -49,7 +49,6 @@ function Geo(){
 
 }
 
-
 function App() {
   let [pois, setPois] = useState([]);
   let { loading, loginWithRedirect, getTokenSilently } = useAuth0();
@@ -57,9 +56,9 @@ function App() {
   let handlePOIsClick = async e => {
     e.preventDefault();
     let pois = await request(
-      `${process.env.REACT_APP_SERVER_URL}${endpoints.pois}`,
-      getTokenSilently,
-      loginWithRedirect
+        `${process.env.REACT_APP_SERVER_URL}${endpoints.pois}`,
+        getTokenSilently,
+        loginWithRedirect
     );
 
     if (pois && pois.length > 0) {
@@ -73,24 +72,25 @@ function App() {
   }
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Mapathon</h1>
-        <br />
-        <a className="App-link" href="#" onClick={handlePOIsClick}>
-          Get POIs
-        </a>
-        {pois && pois.length > 0 && (
-          <ul className="POI-List">
-            {pois.map(poi => (
-              <li key={poi.id}>
-                <POI {...poi} />
-              </li>
-            ))}
-          </ul>
-        )}
-      </header>
-    </div>
+      <div className="App">
+        <header className="App-header">
+          <h1>Mapathon</h1>
+          <Geo/>
+          <br />
+          <a className="App-link" href="#" onClick={handlePOIsClick}>
+            Get POIs
+          </a>
+          {pois && pois.length > 0 && (
+              <ul className="POI-List">
+                {pois.map(poi => (
+                    <li key={poi.id}>
+                      <POI {...poi} />
+                    </li>
+                ))}
+              </ul>
+          )}
+        </header>
+      </div>
   );
 }
 
