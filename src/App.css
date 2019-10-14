@@ -34,3 +34,16 @@
 .App-link {
   color: #09d3ac;
 }
+
+.ButtonBar {
+  border-radius: 8px;
+  border: 2px solid #4CAF50;
+  font-size: 12px;
+  padding: 10px 24px;
+  background-color: #F8F8FF;
+}
+
+.ButtonBar:hover {
+  background-color: #4CAF50;
+  color: white;
+}

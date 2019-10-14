@@ -9,7 +9,7 @@ import L from 'leaflet';
 import { Map, TileLayer, Marker, Popup  } from 'react-leaflet';
 
 
-function Geo(){
+export function Geo(){
   let [laltitude, setLaltitude] = useState([]);
   let [longtitude, setLongtitude] = useState([]);
   let [available, setAvailable] = useState(false);
@@ -91,54 +91,80 @@ class Mapdiv extends Component {
   }
 
   addMarker = (e) => {
-    const {markers} = this.state
-    markers.push(e.latlng)
+    const {markers} = this.state;
+    markers.push(e.latlng);
     this.setState({markers})
-  }
+  };
 
   deleteMarker= (e) =>  {
-    const {markers} = this.state
-    markers.splice(e.target.value, 1)
+    const {markers} = this.state;
+    markers.splice(e.target.value, 1);
     this.setState({markers})
-  }
+  };
 
   hideMarker = (e) => {
     const {markers} = this.state
     //console.log(markers.find(e => e.title == "Istanbul"))
 
-  }
+  };
+
   render() {
     let {markers,firstLat,firstLng} = this.props;
     return (
+        <div>
+          <button className="ButtonBar">reload actual location</button>
+          {/*<button onClick={this.handleReload} className="ButtonBar">reload actual location</button>*/}
+          <Map className="map"
+               id="map"
+               minZoom ={1}
+               center={[firstLat, firstLng]}
+               View={[60,0]}
+               onClick={this.addMarker}
+               zoom={16}
+          >
+            <TileLayer
+                attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
 
-              <Map className="map"
-                   id="map"
-                   minZoom ={1}
-                   center={[firstLat, firstLng]}
-                   View={[60,0]}
-                   onClick={this.addMarker}
-                   zoom={16}
-              >
-                <TileLayer
-                    attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                    url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
-
-                />
-                {this.state.markers.map((position, idx) =>
-                    <Marker key={`marker-${idx}`} position={position}  icon={myIcon}>
-                      <Popup>
-                        <span><img width={10} height={10} src="https://image.flaticon.com/icons/svg/61/61456.svg" /><br/>{position.lat} {position.lng}</span>
-                      </Popup>
+            />
+            {this.state.markers.map((position, idx) =>
+                <Marker key={`marker-${idx}`} position={position}  icon={myIcon}>
+                  <Popup>
+                    <span><img width={10} height={10} src="https://image.flaticon.com/icons/svg/61/61456.svg" /><br/>{position.lat} {position.lng}</span>
+                  </Popup>
 
 
-                    </Marker>
-                )}
-              </Map>
+                </Marker>
+            )}
+          </Map>
+        </div>
 
     );
   }
 
 }
+
+function MenuOptions() {
+  let [text, setText] = useState('Create new POI');
+  let [filter, setFilter] = useState('Filter POIs');
+
+  let handleNewPOI = async e => {
+    setText('Create clicked');
+  };
+  let handleFilterClick = async e => {
+    setFilter('Filter activated');
+  };
+
+  return (<div>
+    <button onClick={handleNewPOI} className="ButtonBar">➕ {text}</button>
+    <button onClick={handleFilterClick} className="ButtonBar">{filter}</button>
+  </div>)
+}
+
+function Filter (){
+
+}
+
 function App() {
   let [pois, setPois] = useState([]);
   let { loading, loginWithRedirect, getTokenSilently } = useAuth0();
@@ -146,7 +172,7 @@ function App() {
   let handlePOIsClick = async e => {
     e.preventDefault();
     let pois = await request(
-        `${process.env.REACT_APP_SERVER_URL}${endpoints.pois}`,
+        `${process.env.REACT_APP_SERVER_URL}${endpoints.pois}?group=4`,
         getTokenSilently,
         loginWithRedirect
     );
@@ -164,13 +190,13 @@ function App() {
   return (
       <div className="App">
         <header className="App-header">
-          <h1>Mapathon</h1>
+          <h1>Mapathon </h1>
           <Geo/>
           <br />
-
           <a className="App-link" href="#" onClick={handlePOIsClick}>
             Get POIs
           </a>
+          <MenuOptions/>
           {pois && pois.length > 0 && (
               <ul className="POI-List">
                 {pois.map(poi => (
