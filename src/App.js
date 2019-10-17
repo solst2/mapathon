@@ -144,30 +144,31 @@ class Mapdiv extends Component {
 
 }
 
-function MenuOptions() {
+function MenuOptions(props) {
   let [text, setText] = useState('Create new POI');
   let [filter, setFilter] = useState('Filter POIs');
+  let [showFilterInput, setShowFilterInput] = useState(false);
 
   let handleNewPOI = async e => {
     setText('Create clicked');
   };
   let handleFilterClick = async e => {
+    setShowFilterInput(true);
     setFilter('Filter activated');
   };
 
   return (<div>
     <button onClick={handleNewPOI} className="ButtonBar">➕ {text}</button>
     <button onClick={handleFilterClick} className="ButtonBar">{filter}</button>
+    <br/>
+    {showFilterInput ? <input onChange={props.handleFilter}/>:null}
   </div>)
-}
-
-function Filter (){
-
 }
 
 function App() {
   let [pois, setPois] = useState([]);
   let { loading, loginWithRedirect, getTokenSilently } = useAuth0();
+  let [filterPoi, setFilterPoi] = useState('');
 
   let handlePOIsClick = async e => {
     e.preventDefault();
@@ -183,9 +184,18 @@ function App() {
     }
   };
 
+  let handleFilter = async e => {
+    console.log(e.target.value);
+    setFilterPoi(e.target.value);
+  };
+
   if (loading) {
     return <Loading />;
   }
+
+  let filterPois = pois.filter((poi)=>{
+    return poi.name.toLowerCase().includes(filterPoi.toLowerCase()) ? poi : poi.description.toLowerCase().includes(filterPoi.toLowerCase())
+  });
 
   return (
       <div className="App">
@@ -196,10 +206,10 @@ function App() {
           <a className="App-link" href="#" onClick={handlePOIsClick}>
             Get POIs
           </a>
-          <MenuOptions/>
-          {pois && pois.length > 0 && (
+          <MenuOptions handleFilter={handleFilter}/>
+          {filterPois && filterPois.length > 0 && (
               <ul className="POI-List">
-                {pois.map(poi => (
+                {filterPois.map(poi => (
                     <li key={poi.id}>
                       <POI {...poi} />
                     </li>
