@@ -8,7 +8,6 @@ import POI from "./components/POI";
 import L from 'leaflet';
 import { Map, TileLayer, Marker, Popup  } from 'react-leaflet';
 
-
 export function Geo(){
   let [laltitude, setLaltitude] = useState([]);
   let [longtitude, setLongtitude] = useState([]);
@@ -112,7 +111,7 @@ class Mapdiv extends Component {
     let {markers,firstLat,firstLng} = this.props;
     return (
         <div>
-          <button className="ButtonBar">reload actual location</button>
+          {/*<button className="ButtonBar">reload actual location</button>*/}
           {/*<button onClick={this.handleReload} className="ButtonBar">reload actual location</button>*/}
           <Map className="map"
                id="map"
@@ -157,18 +156,22 @@ function MenuOptions(props) {
     setFilter('Filter activated');
   };
 
+
+
   return (<div>
     <button onClick={handleNewPOI} className="ButtonBar">➕ {text}</button>
     <button onClick={handleFilterClick} className="ButtonBar">{filter}</button>
     <br/>
     {showFilterInput ? <input onChange={props.handleFilter}/>:null}
+    {showFilterInput ? <div><input type="checkbox" checked={props.justOwn} onChange={props.handleJustOwnClick}/><small>Show own POI</small></div>:null}
   </div>)
 }
 
 function App() {
   let [pois, setPois] = useState([]);
-  let { loading, loginWithRedirect, getTokenSilently } = useAuth0();
+  let { loading, loginWithRedirect, getTokenSilently, user } = useAuth0();
   let [filterPoi, setFilterPoi] = useState('');
+  let [justOwn, setJustOwn] = useState(false);
 
   let handlePOIsClick = async e => {
     e.preventDefault();
@@ -189,6 +192,11 @@ function App() {
     setFilterPoi(e.target.value);
   };
 
+  let handleJustOwnClick = e => {
+    console.log(!justOwn);
+    setJustOwn(!justOwn);
+  };
+
   if (loading) {
     return <Loading />;
   }
@@ -196,6 +204,12 @@ function App() {
   let filterPois = pois.filter((poi)=>{
     return poi.name.toLowerCase().includes(filterPoi.toLowerCase()) ? poi : poi.description.toLowerCase().includes(filterPoi.toLowerCase())
   });
+
+  if (justOwn){
+    filterPois=filterPois.filter((poi) =>{
+      return poi.Creator.id === user.sub ? poi : null
+    })
+  }
 
   return (
       <div className="App">
@@ -206,7 +220,7 @@ function App() {
           <a className="App-link" href="#" onClick={handlePOIsClick}>
             Get POIs
           </a>
-          <MenuOptions handleFilter={handleFilter}/>
+          <MenuOptions handleFilter={handleFilter} handleJustOwnClick={handleJustOwnClick} justOwn={justOwn}/>
           {filterPois && filterPois.length > 0 && (
               <ul className="POI-List">
                 {filterPois.map(poi => (
