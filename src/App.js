@@ -70,6 +70,7 @@ class Mapdiv extends Component {
 
     this.state = {
       markers:[[props.firstLat,props.firstLng]],
+      POI:[],
       citiesData:[
         { "name": "Tokyo", "coordinates": [139.6917, 35.6895], "population": 37843000 ,"displayed":true},
         { "name": "Jakarta", "coordinates": [106.8650, -6.1751], "population": 30539000 ,"displayed":false},
@@ -90,9 +91,13 @@ class Mapdiv extends Component {
   }
 
   addMarker = (e) => {
-    const {markers} = this.state;
-    markers.push(e.latlng);
-    this.setState({markers})
+    const pois=this.state.POI
+    var newPoi={id:this.state.POI.length,position:e.latlng,name:''}
+    console.log('Point '+newPoi.id+ ' at '+e.latlng)
+    pois.push(newPoi)
+    this.setState(pois);
+
+
   };
 
   deleteMarker= (e) =>  {
@@ -106,7 +111,9 @@ class Mapdiv extends Component {
     //console.log(markers.find(e => e.title == "Istanbul"))
 
   };
-
+  updatePOIs= (pois) => {
+    this.setState({POI: pois});
+  }
   render() {
     let {markers,firstLat,firstLng} = this.props;
     return (
@@ -126,14 +133,8 @@ class Mapdiv extends Component {
                 url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
 
             />
-            {this.state.markers.map((position, idx) =>
-                <Marker key={`marker-${idx}`} position={position}  icon={myIcon}>
-                  <Popup>
-                    <span><img width={10} height={10} src="https://image.flaticon.com/icons/svg/61/61456.svg" /><br/>{position.lat} {position.lng}</span>
-                  </Popup>
-
-
-                </Marker>
+            {this.state.POI.map((poi) =>
+                <POIMarker position={poi.position} updatePOIs={this.updatePOIs} poisList={this.state.POI} id={poi.id}/>
             )}
           </Map>
         </div>
@@ -234,5 +235,154 @@ function App() {
       </div>
   );
 }
+class POIForm extends React.Component {
+  constructor(props) {
+    super(props);
+    let poiInfo=props.poisList.find(poi=> poi.id==props.id);
+    this.state = {
+      // Empty POIForm object for holding form input values
+      newPOI: {
+        id:this.props.id,
+        name:poiInfo.name,
+        position:'',
+        isSaved: false
 
+      }
+    };
+  }
+  // Update POIForm object on form input change
+  handleInputChange = event => {
+    const target = event.target;
+    const value = target.value;
+    const name = target.name;
+
+    // Merge changed form field into existing newBook object
+    this.setState(prevState => ({
+      // Spread existing newBook object and overwrite
+      // dynamic [name] property with the new value
+      newPOI: { ...prevState.newPOI, [name]: value }
+    }));
+  };
+  handlePOIAdd = event => {
+    // Avoid reloading the page on form submission
+    event.preventDefault();
+
+    this.state.newPOI.isSaved=true;
+
+    this.props.updatePOI(this.state.newPOI);
+    //this.props.updatePOIs(this.props.poisList);
+    let updatedPoisData = this.props.poisList;
+    console.log('POIs ID')
+    updatedPoisData.map((poi=>
+            console.log(poi.id)
+    ))
+    console.log('this poi id : '+this.state.newPOI.id);
+
+    let updatedPOIS = updatedPoisData.find((c) => c.id === this.state.newPOI.id);
+
+    updatedPOIS.name = this.state.newPOI.name;
+    this.props.updatePOIs(updatedPoisData);
+
+  };
+  render() {
+    let {position,updatePOI,updatePOIs,poisList,id} = this.props;
+
+
+
+    return (
+        //Render a form for adding a new book
+        <div>
+          <form onSubmit={this.handlePOIAdd}>
+            <p>Save a point at {this.props.position.lat.toFixed(2)}  {this.props.position.lng.toFixed(2)} </p>
+            <FormInput
+                type="text"
+                name="name"
+                placeholder="Name"
+                value={this.state.newPOI.name}
+                onChange={this.handleInputChange}
+
+            />
+            <button type="submit">Save</button>
+            <br />
+            <br />
+          </form>
+        </div>
+    );
+  }
+}
+export function FormInput({
+                            type,
+                            name,
+                            placeholder,
+                            value,
+                            onChange,
+                            fieldRef
+                          }) {
+  return (
+      <>
+        <input
+            type={type}
+            name={name}
+            placeholder={placeholder}
+            required
+            value={value}
+            onChange={onChange}
+            ref={fieldRef}
+        />
+        <br />
+      </>
+  );
+}
+
+class POIMarker extends  React.Component
+{
+  constructor(props) {
+    super(props);
+    this.state = {
+      // Empty POIForm object for holding form input values
+      newPOI: {
+        id:this.props.id,
+        name:'',
+        position:'',
+        isSaved:false
+      }
+    };
+  }
+
+  updatePOI = (poi) => {
+    this.setState({newPOI: poi});
+
+  }
+
+  render() {
+
+    let {position,updatePOIs,poisList,id} = this.props;
+
+    if(this.state.newPOI.isSaved)
+      return (
+          //Render a form for adding a new book
+
+          <div>
+            <Marker position={position} icon={myIcon} draggable='true'>
+              <Popup>
+                <h1>{this.state.newPOI.name}</h1>
+                <span><img width={10} height={10} src="https://image.flaticon.com/icons/svg/61/61456.svg" onClick= { (e) => {this.state.newPOI.isSaved=false; this.updatePOI(this.state.newPOI)}} /><br/></span>
+              </Popup>
+            </Marker>
+          </div>
+      )
+    else
+      return (
+          //Render a form for adding a new book
+
+          <div >
+            <Marker position={position} icon={myIcon}>
+              <Popup>
+                <POIForm updatePOIs ={updatePOIs} poisList={poisList} updatePOI={this.updatePOI} position={position} id={id}/>
+              </Popup>
+            </Marker>
+          </div>
+      )
+  }
+}
 export default App;
