@@ -6,9 +6,9 @@ import endpoints from "./endpoints";
 import Loading from "./components/Loading";
 import POI from "./components/POI";
 import L from 'leaflet';
-import { Map, TileLayer, Marker, Popup  } from 'react-leaflet';
-
-export function Geo(){
+import { Circle, FeatureGroup, LayerGroup, LayersControl, Map, Marker, Popup, Rectangle, TileLayer} from 'react-leaflet';
+const {  BaseLayer, Overlay} = LayersControl
+export function Geo(props){
   let [laltitude, setLaltitude] = useState([]);
   let [longtitude, setLongtitude] = useState([]);
   let [available, setAvailable] = useState(false);
@@ -47,7 +47,7 @@ export function Geo(){
       navigator.geolocation.getCurrentPosition(getPosition, getError) :
       setAvailable(false);
 console.log( {laltitude}+"   "+ {longtitude});
-  return(available) ? <div > <Mapdiv firstLat={laltitude} firstLng={longtitude}/></div>: <p>{message}</p>
+  return(available) ? <div > <Mapdiv firstLat={laltitude} firstLng={longtitude}  updatedPOIS={props.updatedPOIS} poisList={props.poisList} Zoomfocus={props.Zoomfocus}/></div>: <p>{message}</p>
 
 }
 
@@ -70,7 +70,11 @@ class Mapdiv extends Component {
 
     this.state = {
       markers:[[props.firstLat,props.firstLng]],
-      POI:[],
+      poisList:this.props.poisList,
+      Map:{ minZoom :1,
+        center:this.props.Zoomfocus.center,
+        View:[0,0],
+        zoom:this.props.Zoomfocus.zoom},
       citiesData:[
         { "name": "Tokyo", "coordinates": [139.6917, 35.6895], "population": 37843000 ,"displayed":true},
         { "name": "Jakarta", "coordinates": [106.8650, -6.1751], "population": 30539000 ,"displayed":false},
@@ -89,14 +93,23 @@ class Mapdiv extends Component {
       ]
     };
   }
+   zoomOnMarker= (e) =>
+  {
+    let map = this.state.Map;
+    map.zoom=10;
+    console.log(e.target.value)
+    let postion=this.state.POI.find(poi=> poi.id==e.target.value).position
+    map.center=[postion.lat,postion.lng];
 
+    this.setState({Map:map});
+  }
   addMarker = (e) => {
-    const pois=this.state.POI
-    var newPoi={id:this.state.POI.length,position:e.latlng,name:''}
+    const newPoisList=this.state.poisList
+    var newPoi={id:this.state.poisList.length,position:e.latlng,name:''}
     console.log('Point '+newPoi.id+ ' at '+e.latlng)
-    pois.push(newPoi)
-    this.setState(pois);
-
+    newPoisList.push(newPoi)
+    this.setState({poisList:newPoisList});
+      this.props.updatedPOIS(newPoisList);
 
   };
 
@@ -111,30 +124,70 @@ class Mapdiv extends Component {
     //console.log(markers.find(e => e.title == "Istanbul"))
 
   };
-  updatePOIs= (pois) => {
-    this.setState({POI: pois});
-  }
+
   render() {
-    let {markers,firstLat,firstLng} = this.props;
+    let {poisList,firstLat,firstLng,updatedPOIS} = this.props;
     return (
         <div>
           {/*<button className="ButtonBar">reload actual location</button>*/}
           {/*<button onClick={this.handleReload} className="ButtonBar">reload actual location</button>*/}
           <Map className="map"
                id="map"
-               minZoom ={1}
-               center={[firstLat, firstLng]}
-               View={[60,0]}
+               minZoom ={this.state.Map.minZoom}
+               center={this.state.Map.center}
+               view={this.state.Map.view}
                onClick={this.addMarker}
-               zoom={16}
-          >
-            <TileLayer
-                attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
+               zoom={this.state.Map.zoom}
 
-            />
-            {this.state.POI.map((poi) =>
-                <POIMarker position={poi.position} updatePOIs={this.updatePOIs} poisList={this.state.POI} id={poi.id}/>
+          >
+
+            <LayersControl>
+
+              <BaseLayer checked name="Default">
+                <TileLayer
+                    attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                    url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
+
+                />
+              </BaseLayer>
+              <BaseLayer  name="Satelit">
+                <TileLayer
+                    attribution='&copy; <a href="http://www.esri.com/">Esri</a> i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+                    url='http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'
+
+                />
+              </BaseLayer>
+              <BaseLayer name="hot">
+                <TileLayer
+                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Tiles style by <a href="https://www.hotosm.org/" target="_blank">Humanitarian OpenStreetMap Team</a> hosted by <a href="https://openstreetmap.fr/" target="_blank">OpenStreetMap France</a>'
+                    url='https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png'
+
+                />
+              </BaseLayer>
+              <BaseLayer name="Topo">
+                <TileLayer
+                    attribution='Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
+                    url='https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png'
+
+                />
+              </BaseLayer>
+              <BaseLayer name="FR">
+                <TileLayer
+                    attribution='&copy; Openstreetmap France | &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                    url='https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png'
+
+                />
+              </BaseLayer>
+              <BaseLayer name="DE">
+                <TileLayer
+                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                    url='https://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png'
+
+                />
+              </BaseLayer>
+            </LayersControl>
+            {this.state.poisList.map((poi) =>
+                <POIMarker position={poi.position} poisList={this.state.poisList} updatedPOIS={updatedPOIS} id={poi.id}/>
             )}
           </Map>
         </div>
@@ -167,26 +220,37 @@ function MenuOptions(props) {
     {showFilterInput ? <div><input type="checkbox" checked={props.justOwn} onChange={props.handleJustOwnClick}/><small>Show own POI</small></div>:null}
   </div>)
 }
-
 function App() {
-  let [pois, setPois] = useState([]);
+  let [poisList, setPoisList] = useState([]);
   let { loading, loginWithRedirect, getTokenSilently, user } = useAuth0();
   let [filterPoi, setFilterPoi] = useState('');
   let [justOwn, setJustOwn] = useState(false);
-
+  let [focusZoom,setFocusZoom]= useState({center:[-0.09, 41.505],zoom:1});
   let handlePOIsClick = async e => {
     e.preventDefault();
-    let pois = await request(
+    let poisList = await request(
         `${process.env.REACT_APP_SERVER_URL}${endpoints.pois}?group=4`,
         getTokenSilently,
         loginWithRedirect
     );
 
-    if (pois && pois.length > 0) {
-      console.log(pois);
-      setPois(pois);
+    if (poisList && poisList.length > 0) {
+      console.log(poisList);
+      setPoisList(poisList);
     }
   };
+
+  function updateFocusZoom (poi)
+  {
+    let newFocus = focusZoom;
+    newFocus.center=poi;
+    newFocus.zoom=10;
+    setFocusZoom(newFocus);
+
+    console.log('new focus sated')
+  }
+
+
 
   let handleFilter = async e => {
     console.log(e.target.value);
@@ -197,12 +261,15 @@ function App() {
     console.log(!justOwn);
     setJustOwn(!justOwn);
   };
+  function updatedPOIS(updatedPois) {
+    setPoisList(updatedPois);
+  };
 
   if (loading) {
     return <Loading />;
   }
 
-  let filterPois = pois.filter((poi)=>{
+  let filterPois = poisList.filter((poi)=>{
     return poi.name.toLowerCase().includes(filterPoi.toLowerCase()) ? poi : poi.description.toLowerCase().includes(filterPoi.toLowerCase())
   });
 
@@ -216,24 +283,84 @@ function App() {
       <div className="App">
         <header className="App-header">
           <h1>Mapathon </h1>
-          <Geo/>
+          <Geo updatedPOIS={updatedPOIS} poisList={poisList} Zoomfocus={focusZoom}/>
           <br />
           <a className="App-link" href="#" onClick={handlePOIsClick}>
             Get POIs
           </a>
           <MenuOptions handleFilter={handleFilter} handleJustOwnClick={handleJustOwnClick} justOwn={justOwn}/>
-          {filterPois && filterPois.length > 0 && (
+          {poisList && filterPois.length > 0 && (
               <ul className="POI-List">
                 {filterPois.map(poi => (
                     <li key={poi.id}>
-                      <POI {...poi} />
+                      <POI {...poi} zoomOnMarker={updateFocusZoom} />
                     </li>
                 ))}
               </ul>
           )}
+
         </header>
       </div>
   );
+}
+
+class POIMarker extends  React.Component
+{
+  constructor(props) {
+    super(props);
+    this.state = {
+      // Empty POIForm object for holding form input values
+      newPOI: {
+        id:this.props.id,
+        name:'',
+        description:'',
+        position:'',
+        isSaved:false
+      }
+    };
+  }
+
+  updatePOI = (updatedPoi) => {
+    this.setState({newPOI: updatedPoi});
+  let updatedList=this.props.poisList;
+  let updatedPoi2 = updatedList.find((poi)=>poi.id==updatedPoi.id);
+  updatedPoi2.name=updatedPoi.name;
+
+    this.props.updatedPOIS(updatedList);
+
+
+  }
+
+  render() {
+
+    let {position,poisList,id,updatedPOIS} = this.props;
+
+    if(this.state.newPOI.isSaved)
+      return (
+          //Render a form for adding a new book
+
+          <div>
+            <Marker position={position} icon={myIcon} draggable='true'>
+              <Popup>
+                <h1>{this.state.newPOI.name}</h1>
+                <span><img width={10} height={10} src="https://image.flaticon.com/icons/svg/61/61456.svg" onClick= { (e) => {this.state.newPOI.isSaved=false; this.updatePOI(this.state.newPOI)}} /><br/></span>
+              </Popup>
+            </Marker>
+          </div>
+      )
+    else
+      return (
+          //Render a form for adding a new book
+
+          <div >
+            <Marker position={position} icon={myIcon}>
+              <Popup>
+                <POIForm poisList={poisList} updatePOI={this.updatePOI} position={position} id={id}/>
+              </Popup>
+            </Marker>
+          </div>
+      )
+  }
 }
 class POIForm extends React.Component {
   constructor(props) {
@@ -244,6 +371,7 @@ class POIForm extends React.Component {
       newPOI: {
         id:this.props.id,
         name:poiInfo.name,
+        description:'',
         position:'',
         isSaved: false
 
@@ -278,14 +406,14 @@ class POIForm extends React.Component {
     ))
     console.log('this poi id : '+this.state.newPOI.id);
 
-    let updatedPOIS = updatedPoisData.find((c) => c.id === this.state.newPOI.id);
+    let updatedPOI = updatedPoisData.find((c) => c.id === this.state.newPOI.id);
 
-    updatedPOIS.name = this.state.newPOI.name;
-    this.props.updatePOIs(updatedPoisData);
+    updatedPOI.name = this.state.newPOI.name;
+
 
   };
   render() {
-    let {position,updatePOI,updatePOIs,poisList,id} = this.props;
+    let {position,updatePOIS,poisList,id} = this.props;
 
 
 
@@ -299,6 +427,14 @@ class POIForm extends React.Component {
                 name="name"
                 placeholder="Name"
                 value={this.state.newPOI.name}
+                onChange={this.handleInputChange}
+
+            />
+            <FormInput
+                type="text"
+                name="description"
+                placeholder="Description"
+                value={this.state.newPOI.description}
                 onChange={this.handleInputChange}
 
             />
@@ -334,55 +470,4 @@ export function FormInput({
   );
 }
 
-class POIMarker extends  React.Component
-{
-  constructor(props) {
-    super(props);
-    this.state = {
-      // Empty POIForm object for holding form input values
-      newPOI: {
-        id:this.props.id,
-        name:'',
-        position:'',
-        isSaved:false
-      }
-    };
-  }
-
-  updatePOI = (poi) => {
-    this.setState({newPOI: poi});
-
-  }
-
-  render() {
-
-    let {position,updatePOIs,poisList,id} = this.props;
-
-    if(this.state.newPOI.isSaved)
-      return (
-          //Render a form for adding a new book
-
-          <div>
-            <Marker position={position} icon={myIcon} draggable='true'>
-              <Popup>
-                <h1>{this.state.newPOI.name}</h1>
-                <span><img width={10} height={10} src="https://image.flaticon.com/icons/svg/61/61456.svg" onClick= { (e) => {this.state.newPOI.isSaved=false; this.updatePOI(this.state.newPOI)}} /><br/></span>
-              </Popup>
-            </Marker>
-          </div>
-      )
-    else
-      return (
-          //Render a form for adding a new book
-
-          <div >
-            <Marker position={position} icon={myIcon}>
-              <Popup>
-                <POIForm updatePOIs ={updatePOIs} poisList={poisList} updatePOI={this.updatePOI} position={position} id={id}/>
-              </Popup>
-            </Marker>
-          </div>
-      )
-  }
-}
 export default App;

@@ -2,7 +2,7 @@ import React from "react";
 import "./POI.css";
 
 export default function POI(props) {
-  const { name, description, lat, lng, image, url } = props;
+  const { name, description, lat, lng, image, url, } = props;
   const { Categories, Tags, User, Status } = props;
 
   let statusColor;
@@ -67,8 +67,11 @@ export default function POI(props) {
               </span>
             ))}
           </div>
+
         </>
       )}
+      <button onClick={props.zoomOnMarker([lat,lng])}>Show</button>
+
     </div>
   );
 }

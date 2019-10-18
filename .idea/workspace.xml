@@ -4,6 +4,7 @@
     <list default="true" id="9d99ef1f-6be9-48ac-88ce-0e79a9308b07" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/POI.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/POI.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -111,6 +112,7 @@
       <workItem from="1569840102716" duration="2672000" />
       <workItem from="1570087353375" duration="21000" />
       <workItem from="1571036445477" duration="3089000" />
+      <workItem from="1571389697735" duration="11904000" />
     </task>
     <task id="LOCAL-00001" summary="map">
       <created>1570781121132</created>
@@ -140,7 +142,14 @@
       <option name="project" value="LOCAL" />
       <updated>1571341987936</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="filter text">
+      <created>1571389789377</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1571389789377</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -177,57 +186,32 @@
     <option name="LAST_COMMIT_MESSAGE" value="filter text" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="601" y="286" width="524" height="502" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1569391972949">
-      <screen x="57" y="27" width="1623" height="1023" />
-    </state>
-    <state x="601" y="286" width="524" height="502" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/57.27.1623.1023/1680.0.1680.1050@57.27.1623.1023" timestamp="1569391972949" />
-    <state x="416" y="282" key="EditFileWatcherDialog" timestamp="1569391944487" />
-    <state x="416" y="282" key="EditFileWatcherDialog/1680.1050/1680.1050" timestamp="1569391944488" />
-    <state x="614" y="312" key="FileChooserDialogImpl" timestamp="1569391944488" />
-    <state x="614" y="312" key="FileChooserDialogImpl/1680.1050/1680.1050" timestamp="1569391944488" />
-    <state width="1657" height="277" key="GridCell.Tab.0.bottom" timestamp="1569850367766">
-      <screen x="1680" y="0" width="1680" height="1050" />
-    </state>
-    <state width="1600" height="268" key="GridCell.Tab.0.bottom/1680.1050/1680.1050" timestamp="1569391944488" />
-    <state width="1657" height="277" key="GridCell.Tab.0.bottom/57.27.1623.1023/1680.0.1680.1050@1680.0.1680.1050" timestamp="1569850367766" />
-    <state width="1657" height="277" key="GridCell.Tab.0.center" timestamp="1569850367765">
-      <screen x="1680" y="0" width="1680" height="1050" />
-    </state>
-    <state width="1600" height="268" key="GridCell.Tab.0.center/1680.1050/1680.1050" timestamp="1569391944488" />
-    <state width="1657" height="277" key="GridCell.Tab.0.center/57.27.1623.1023/1680.0.1680.1050@1680.0.1680.1050" timestamp="1569850367765" />
-    <state width="1657" height="277" key="GridCell.Tab.0.left" timestamp="1569850367765">
-      <screen x="1680" y="0" width="1680" height="1050" />
-    </state>
-    <state width="1600" height="268" key="GridCell.Tab.0.left/1680.1050/1680.1050" timestamp="1569391944488" />
-    <state width="1657" height="277" key="GridCell.Tab.0.left/57.27.1623.1023/1680.0.1680.1050@1680.0.1680.1050" timestamp="1569850367765" />
-    <state width="1657" height="277" key="GridCell.Tab.0.right" timestamp="1569850367765">
-      <screen x="1680" y="0" width="1680" height="1050" />
-    </state>
-    <state width="1600" height="268" key="GridCell.Tab.0.right/1680.1050/1680.1050" timestamp="1569391944488" />
-    <state width="1657" height="277" key="GridCell.Tab.0.right/57.27.1623.1023/1680.0.1680.1050@1680.0.1680.1050" timestamp="1569850367765" />
-    <state x="347" y="181" key="SettingsEditor" timestamp="1569840755495">
-      <screen x="57" y="27" width="1623" height="1023" />
-    </state>
-    <state x="347" y="181" key="SettingsEditor/1680.1050/1680.1050" timestamp="1569391944488" />
-    <state x="347" y="181" key="SettingsEditor/57.27.1623.1023/1680.0.1680.1050@1680.0.1680.1050" timestamp="1569840755495" />
-    <state x="175" y="150" width="1434" height="807" key="find.popup" timestamp="1570087363592">
-      <screen x="57" y="27" width="1623" height="1023" />
-    </state>
-    <state x="175" y="150" width="1434" height="807" key="find.popup/1680.1050/1680.1050" timestamp="1569391944488" />
-    <state x="175" y="150" width="1434" height="807" key="find.popup/57.27.1623.1023/1680.0.1680.1050@57.27.1623.1023" timestamp="1569563433524" />
-    <state x="175" y="150" width="1434" height="807" key="find.popup/57.27.1623.1023@57.27.1623.1023" timestamp="1570087363592" />
-    <state x="531" y="250" width="672" height="678" key="search.everywhere.popup" timestamp="1569391944488" />
-    <state x="531" y="250" width="672" height="678" key="search.everywhere.popup/1680.1050/1680.1050" timestamp="1569391944488" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/src/App.js</url>
-          <line>210</line>
-          <option name="timeStamp" value="9" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <state x="601" y="286" width="524" height="502" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" />
+    <state x="601" y="286" width="524" height="502" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/57.27.1623.1023/1680.0.1680.1050@57.27.1623.1023" />
+    <state x="416" y="282" key="EditFileWatcherDialog" />
+    <state x="416" y="282" key="EditFileWatcherDialog/1680.1050/1680.1050" />
+    <state x="614" y="312" key="FileChooserDialogImpl" />
+    <state x="614" y="312" key="FileChooserDialogImpl/1680.1050/1680.1050" />
+    <state width="1657" height="277" key="GridCell.Tab.0.bottom" />
+    <state width="1600" height="268" key="GridCell.Tab.0.bottom/1680.1050/1680.1050" />
+    <state width="1657" height="277" key="GridCell.Tab.0.bottom/57.27.1623.1023/1680.0.1680.1050@1680.0.1680.1050" />
+    <state width="1657" height="277" key="GridCell.Tab.0.center" />
+    <state width="1600" height="268" key="GridCell.Tab.0.center/1680.1050/1680.1050" />
+    <state width="1657" height="277" key="GridCell.Tab.0.center/57.27.1623.1023/1680.0.1680.1050@1680.0.1680.1050" />
+    <state width="1657" height="277" key="GridCell.Tab.0.left" />
+    <state width="1600" height="268" key="GridCell.Tab.0.left/1680.1050/1680.1050" />
+    <state width="1657" height="277" key="GridCell.Tab.0.left/57.27.1623.1023/1680.0.1680.1050@1680.0.1680.1050" />
+    <state width="1657" height="277" key="GridCell.Tab.0.right" />
+    <state width="1600" height="268" key="GridCell.Tab.0.right/1680.1050/1680.1050" />
+    <state width="1657" height="277" key="GridCell.Tab.0.right/57.27.1623.1023/1680.0.1680.1050@1680.0.1680.1050" />
+    <state x="347" y="181" key="SettingsEditor" />
+    <state x="347" y="181" key="SettingsEditor/1680.1050/1680.1050" />
+    <state x="347" y="181" key="SettingsEditor/57.27.1623.1023/1680.0.1680.1050@1680.0.1680.1050" />
+    <state x="175" y="150" width="1434" height="807" key="find.popup" />
+    <state x="175" y="150" width="1434" height="807" key="find.popup/1680.1050/1680.1050" />
+    <state x="175" y="150" width="1434" height="807" key="find.popup/57.27.1623.1023/1680.0.1680.1050@57.27.1623.1023" />
+    <state x="175" y="150" width="1434" height="807" key="find.popup/57.27.1623.1023@57.27.1623.1023" />
+    <state x="531" y="250" width="672" height="678" key="search.everywhere.popup" />
+    <state x="531" y="250" width="672" height="678" key="search.everywhere.popup/1680.1050/1680.1050" />
   </component>
 </project>
