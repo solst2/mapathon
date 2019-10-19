@@ -2,12 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9d99ef1f-6be9-48ac-88ce-0e79a9308b07" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/App.old.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Cities.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/requestPOI.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/POI.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/POI.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -123,7 +119,7 @@
       <workItem from="1571036445477" duration="3089000" />
       <workItem from="1571389697735" duration="24022000" />
       <workItem from="1571416433310" duration="11916000" />
-      <workItem from="1571458445599" duration="739000" />
+      <workItem from="1571458445599" duration="1034000" />
     </task>
     <task id="LOCAL-00001" summary="map">
       <created>1570781121132</created>
@@ -167,7 +163,14 @@
       <option name="project" value="LOCAL" />
       <updated>1571401636064</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="filter text">
+      <created>1571460547184</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1571460547184</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

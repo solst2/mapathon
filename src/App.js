@@ -166,12 +166,12 @@ class App extends Component {
 
   addMarker = (e) => {
     const pois=this.state.POIs
-    var newPoi={id:this.state.POIs.length,lat:e.latlng.lat,lng:e.latlng.lng,name:'dsf',description:'sdf',"group": 0,isSaved:false}
-    var test={lat:e.latlng.lat,lng:e.latlng.lng,name:'dsf',description:'sdf',"group": 0}
+    var newPoi={id:this.state.POIs.length,lat:e.latlng.lat,lng:e.latlng.lng,name:'',description:'',"group": 0,isSaved:false}
+ //   var test={lat:e.latlng.lat,lng:e.latlng.lng,name:'dsf',description:'sdf',"group": 0}
     console.log('Point '+newPoi.id+ ' at '+newPoi.lat +"/"+newPoi.lng)
     pois.push(newPoi)
     this.setState(pois);
-   this.props.addPOI(test);
+   //this.props.addPOI(newPoi);
   }
   deleteMarker= (e) =>  {
 
