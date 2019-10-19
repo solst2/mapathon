@@ -70,7 +70,7 @@ export default function POI(props) {
 
         </>
       )}
-      <button onClick={props.zoomOnMarker([lat,lng])}>Show</button>
+
 
     </div>
   );
