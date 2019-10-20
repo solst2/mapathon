@@ -170,6 +170,8 @@ class App extends Component {
  //   var test={lat:e.latlng.lat,lng:e.latlng.lng,name:'dsf',description:'sdf',"group": 0}
     console.log('Point '+newPoi.id+ ' at '+newPoi.lat +"/"+newPoi.lng)
     pois.push(newPoi)
+
+    this.state.Map.center=[e.latlng.lat,e.latlng.lng];
     this.setState(pois);
    //this.props.addPOI(newPoi);
   }
@@ -199,7 +201,15 @@ class App extends Component {
   updatePOIs= (pois) => {
     this.setState({POIs: pois});
   }
-
+  zoomOnMarker= (e) =>
+  {
+    let map = this.state.Map;
+    map.zoom=10;
+    map.center=[postion.lat,postion.lng];
+    console.log(e.target.value)
+    let postion=this.state.POI.find(poi=> poi.id==e.target.value).position
+    this.setState({Map:map});
+  }
   render() {
 
     let filteredCities = this.state.citiesData.filter((city) => city.displayed);
