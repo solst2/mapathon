@@ -1,0 +1,35 @@
+
+   getPosition(position) {
+    this.setState({geoLat:position.coords.latitude})
+     this.setState({geoLng:position.coords.longitude})
+      this.setState({available:true})
+  }
+
+   getError(error){
+    {(() => {
+      switch(error.code) {
+        case error.PERMISSION_DENIED:
+          this.setState({mesage:'permission denied for geolocation'});
+          this.setState({available:false});
+          break;
+        case error.TIMEOUT:
+          this.setState({mesage:'timeout geolocation'});
+          this.setState({available:false});
+          break;
+        case error.POSITION_UNAVAILABLE:
+          this.setState({mesage:'position unavailable for geolocation'});
+          this.setState({available:false});
+          break;
+        case error.UNKNOWN_ERROR:
+          this.setState({mesage:'unknown error for geolocation'});
+          this.setState({available:false});
+          break;
+      }
+    })()}
+  }
+  geoLocat()
+  {
+    navigator.geolocation?navigator.geolocation.getCurrentPosition(this.getPosition, this.getError) :
+      this.setState({available:false})
+
+  }

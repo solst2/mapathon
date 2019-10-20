@@ -11,7 +11,8 @@ import endpoints from "./endpoints";
 import Loading from "./components/Loading";
 import POI from "./components/POI";
 import requestPOI from './requestPOI';
-import {Geo} from "./App.old";
+
+import * as ReactDOM from "react-dom";
 
 var myIcon = L.icon({
   iconUrl: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAApCAYAAADAk4LOAAAFgUlEQVR4Aa1XA5BjWRTN2oW17d3YaZtr2962HUzbDNpjszW24mRt28p47v7zq/bXZtrp/lWnXr337j3nPCe85NcypgSFdugCpW5YoDAMRaIMqRi6aKq5E3YqDQO3qAwjVWrD8Ncq/RBpykd8oZUb/kaJutow8r1aP9II0WmLKLIsJyv1w/kqw9Ch2MYdB++12Onxee/QMwvf4/Dk/Lfp/i4nxTXtOoQ4pW5Aj7wpici1A9erdAN2OH64x8OSP9j3Ft3b7aWkTg/Fm91siTra0f9on5sQr9INejH6CUUUpavjFNq1B+Oadhxmnfa8RfEmN8VNAsQhPqF55xHkMzz3jSmChWU6f7/XZKNH+9+hBLOHYozuKQPxyMPUKkrX/K0uWnfFaJGS1QPRtZsOPtr3NsW0uyh6NNCOkU3Yz+bXbT3I8G3xE5EXLXtCXbbqwCO9zPQYPRTZ5vIDXD7U+w7rFDEoUUf7ibHIR4y6bLVPXrz8JVZEql13trxwue/uDivd3fkWRbS6/IA2bID4uk0UpF1N8qLlbBlXs4Ee7HLTfV1j54APvODnSfOWBqtKVvjgLKzF5YdEk5ewRkGlK0i33Eofffc7HT56jD7/6U+qH3Cx7SBLNntH5YIPvODnyfIXZYRVDPqgHtLs5ABHD3YzLuespb7t79FY34DjMwrVrcTuwlT55YMPvOBnRrJ4VXTdNnYug5ucHLBjEpt30701A3Ts+HEa73u6dT3FNWwflY86eMHPk+Yu+i6pzUpRrW7SNDg5JHR4KapmM5Wv2E8Tfcb1HoqqHMHU+uWDD7zg54mz5/2BSnizi9T1Dg4QQXLToGNCkb6tb1NU+QAlGr1++eADrzhn/u8Q2YZhQVlZ5+CAOtqfbhmaUCS1ezNFVm2imDbPmPng5wmz+gwh+oHDce0eUtQ6OGDIyR0uUhUsoO3vfDmmgOezH0mZN59x7MBi++WDL1g/eEiU3avlidO671bkLfwbw5XV2P8Pzo0ydy4t2/0eu33xYSOMOD8hTf4CrBtGMSoXfPLchX+J0ruSePw3LZeK0juPJbYzrhkH0io7B3k164hiGvawhOKMLkrQLyVpZg8rHFW7E2uHOL888IBPlNZ1FPzstSJM694fWr6RwpvcJK60+0HCILTBzZLFNdtAzJaohze60T8qBzyh5ZuOg5e7uwQppofEmf2++DYvmySqGBuKaicF1blQjhuHdvCIMvp8whTTfZzI7RldpwtSzL+F1+wkdZ2TBOW2gIF88PBTzD/gpeREAMEbxnJcaJHNHrpzji0gQCS6hdkEeYt9DF/2qPcEC8RM28Hwmr3sdNyht00byAut2k3gufWNtgtOEOFGUwcXWNDbdNbpgBGxEvKkOQsxivJx33iow0Vw5S6SVTrpVq11ysA2Rp7gTfPfktc6zhtXBBC+adRLshf6sG2RfHPZ5EAc4sVZ83yCN00Fk/4kggu40ZTvIEm5g24qtU4KjBrx/BTTH8ifVASAG7gKrnWxJDcU7x8X6Ecczhm3o6YicvsLXWfh3Ch1W0k8x0nXF+0fFxgt4phz8QvypiwCCFKMqXCnqXExjq10beH+UUA7+nG6mdG/Pu0f3LgFcGrl2s0kNNjpmoJ9o4B29CMO8dMT4Q5ox8uitF6fqsrJOr8qnwNbRzv6hSnG5wP+64C7h9lp30hKNtKdWjtdkbuPA19nJ7Tz3zR/ibgARbhb4AlhavcBebmTHcFl2fvYEnW0ox9xMxKBS8btJ+KiEbq9zA4RthQXDhPa0T9TEe69gWupwc6uBUphquXgf+/FrIjweHQS4/pduMe5ERUMHUd9xv8ZR98CxkS4F2n3EUrUZ10EYNw7BWm9x1GiPssi3GgiGRDKWRYZfXlON+dfNbM+GgIwYdwAAAAASUVORK5CYII=',
@@ -23,6 +24,7 @@ var myIcon = L.icon({
 const {  BaseLayer, Overlay} = LayersControl
 const center = [51.505, -0.09]
 const rectangle = [[51.49, -0.08], [51.5, -0.06]]
+
 
 function AppWrapper() {
   const { isAuthenticated, loginWithRedirect, loading,getTokenSilently } = useAuth0();
@@ -96,7 +98,7 @@ function AppWrapper() {
           <header className="App-header">
             <h1>Mapathon </h1>
             <br />
-            <button onClick={handlePOIsClick}>Start</button>
+            <button className={'ButtonBar'} onClick={handlePOIsClick}>Start</button>
           </header>
         </div>
     );
@@ -107,21 +109,81 @@ function AppWrapper() {
   else
     return <GuestGreeting/>
       }
+export function GeoLocat(props){
+
+  let [laltitude, setLaltitude] = useState([]);
+  let [longtitude, setLongtitude] = useState([]);
+  let [available, setAvailable] = useState(false);
+  let [message, setMessage] = useState('Browser does not support geolocation.');
+  var myPostionIcon = L.icon({
+    iconUrl:'https://www.iconsdb.com/icons/download/green/map-marker-2-128.png',
+    iconSize: [20, 25],
+    iconAnchor: [10, 30],
+    popupAnchor: [0, -20]
+  });
+
+  function getPosition(position) {
+    setLaltitude(position.coords.latitude);
+    setLongtitude(position.coords.longitude);
+
+    setAvailable(true);
+    props.upGeoLocalisation(position);
+  }
+
+  function getError(error){
+    {(() => {
+      switch(error.code) {
+        case error.PERMISSION_DENIED:
+          setMessage('permission denied for geolocation');
+          setAvailable(false);
+          break;
+        case error.TIMEOUT:
+          setMessage('timeout geolocation');
+          setAvailable(false);
+          break;
+        case error.POSITION_UNAVAILABLE:
+          setMessage('position unavailable for geolocation');
+          setAvailable(false);
+          break;
+        case error.UNKNOWN_ERROR:
+          setMessage('unknown error for geolocation');
+          setAvailable(false);
+          break;
+      }
+    })()}
+  }
+
+  (navigator.geolocation) ?
+      navigator.geolocation.getCurrentPosition(getPosition, getError) :
+      setAvailable(false);
+  console.log( {laltitude}+"   "+ {longtitude});
+  return(available) ? <Marker position={{lat:laltitude,lng:longtitude}} icon={myPostionIcon}>
+    <Popup>
+      My Position
+    </Popup>
+  </Marker>: <p>{message}</p>
+
+}
 
 class App extends Component {
+
   constructor(props) {
     super(props);
-    let poisList=props.poisList;
+    this.mapRef = React.createRef()
     this.state = {
       markers: [],
       POIs: [],
       Routes:[],
+      geoLat:'',
+      geoLng:'',
+      message:'Browser does not support geolocation.',
+      available:false,
       Map:{ minZoom :1,
         center:[-0.09, 41.505],
         View:[0,0],
         zoom:1},
       isMapInit: false,
-
+      active:false,
       citiesData:[
         { name: "Tokyo", coordinates: [139.6917, 35.6895], population: 37843000 ,displayed:true},
         { name: "Jakarta", coordinates: [106.8650, -6.1751], population: 30539000 ,displayed:false},
@@ -141,7 +203,7 @@ class App extends Component {
     };
 
   }
-
+  scrollToMyRef = () => window.scrollTo(0, this.mapRef.current.offsetTop)
   componentDidMount() {
 
 
@@ -150,6 +212,7 @@ class App extends Component {
       o.isSaved = true;
       return o;
     })
+
     this.setState({POIs:result})
 
 
@@ -157,6 +220,7 @@ class App extends Component {
 
   }
   componentDidUpdate(prevProps, prevState, snapshot) {
+
   }
 
 
@@ -170,44 +234,50 @@ class App extends Component {
  //   var test={lat:e.latlng.lat,lng:e.latlng.lng,name:'dsf',description:'sdf',"group": 0}
     console.log('Point '+newPoi.id+ ' at '+newPoi.lat +"/"+newPoi.lng)
     pois.push(newPoi)
-
+      this.state.Map.zoom=3;
     this.state.Map.center=[e.latlng.lat,e.latlng.lng];
     this.setState(pois);
    //this.props.addPOI(newPoi);
   }
   deleteMarker= (e) =>  {
+    if (window.confirm('Are you sure you wish to delete this point of interest?'))
+    {
+      let deletedPOI = this.state.POIs.find(poi=>poi.name==e.target.value);
 
-    ;
-    let deletedPOI = this.state.POIs.find(poi=>poi.id==e.target.id);
-
-    console.log(deletedPOI.id +' '+deletedPOI.position.lng)
-    const POIs= this.state.POIs.filter(item => item !== deletedPOI)
-    this.setState({POIs:POIs})
+      const POIs= this.state.POIs.filter(item => item !== deletedPOI)
+      this.setState({POIs:POIs})
+    }
   }
-  zoomOnMarker= (e) =>
+
+
+  upGeoLocalisation=(position)=>
   {
-    let map = this.state.Map;
-    map.zoom=10;
-    console.log(e.target.value)
-    let postion=this.state.POIs.find(poi=> poi.id==e.target.value).position
-    map.center=[postion.lat,postion.lng];
-
-    this.setState({Map:map});
-  }
-
-  updatePOIsfromParent= () => {
-    this.setState({POIs: this.props.poisList});
+    this.setState({geoLat:position.coords.latitude})
+    this.setState({geoLng:position.coords.longitude})
   }
   updatePOIs= (pois) => {
     this.setState({POIs: pois});
   }
   zoomOnMarker= (e) =>
   {
+    this.scrollToMyRef()
     let map = this.state.Map;
-    map.zoom=10;
-    map.center=[postion.lat,postion.lng];
+    map.zoom=15;
     console.log(e.target.value)
-    let postion=this.state.POI.find(poi=> poi.id==e.target.value).position
+    let lat=this.state.POIs.find(poi=> poi.name==e.target.value).lat;
+    let lng =this.state.POIs.find(poi=> poi.name==e.target.value).lng;
+    map.center=[lat,lng];
+
+    this.setState({Map:map});
+  }
+  ZoomOnMyLoca= (e) =>
+  {
+    this.scrollToMyRef()
+    let map = this.state.Map;
+    map.zoom=17;
+
+    map.center=[this.state.geoLat,this.state.geoLng];
+
     this.setState({Map:map});
   }
   render() {
@@ -223,8 +293,8 @@ class App extends Component {
                    view={this.state.Map.view}
                    onClick={this.addMarker}
                    zoom={this.state.Map.zoom}
-                   ref={this.saveMap}
-              >
+                   ref={this.mapRef}>
+                <div>Zrd</div>
                 <LayersControl>
 
                   <BaseLayer checked name="Default">
@@ -269,7 +339,7 @@ class App extends Component {
 
                     />
                   </BaseLayer>
-                  <Overlay checked name="Markers">
+                  <Overlay checked name="Pois">
                     <LayerGroup>
                       { this.state.POIs.map((poi) =>
                    <POIMarker addPOI={this.props.addPOI} isSaved={poi.isSaved} lat={poi.lat} lng={poi.lng} poi={poi} updatePOIs={this.updatePOIs} poisList={this.state.POIs} id={poi.id}/>
@@ -288,6 +358,11 @@ class App extends Component {
                       }
                     </LayerGroup>
                   </Overlay>
+                    <Overlay checked name="my position">
+                        <LayerGroup>
+                           <GeoLocat upGeoLocalisation={this.upGeoLocalisation}></GeoLocat>
+                        </LayerGroup>
+                    </Overlay>
                   <Overlay name="Feature group">
                     <FeatureGroup color="purple">
                       <Popup>Popup in FeatureGroup</Popup>
@@ -300,14 +375,15 @@ class App extends Component {
 
 
               </Map>
-
+  <button className={'ButtonBar'} onClick={this.ZoomOnMyLoca} >Where am I..?</button>
       <ul className="POI-List">
         {this.state.POIs.map(poi => (
 
-              <POI {...poi} />
+              <POI {...poi} zoomOnMarker={this.zoomOnMarker} deleteMarker={this.deleteMarker}/>
 
         ))}
       </ul>
+
 </div>
     );
   }
@@ -424,12 +500,8 @@ class POIForm extends React.Component {
 
   };
   render() {
-    let {position,updatePOI,updatePOIs,poisList,id} = this.props;
-
-
-
     return (
-        //Render a form for adding a new book
+
         <div>
           <form onSubmit={this.handlePOIAdd}>
             <p>Save a point at {this.props.position.lat.toFixed(2)}  {this.props.position.lng.toFixed(2)} </p>
@@ -448,7 +520,8 @@ class POIForm extends React.Component {
                 value={this.state.newPOI.description}
                 onChange={this.handleInputChange}
             />
-            <button type="submit">Save</button>
+            <br />
+            <button className={'ButtonBar'} type="submit">Save</button>
             <br />
             <br />
           </form>

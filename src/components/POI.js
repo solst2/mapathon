@@ -4,7 +4,7 @@ import "./POI.css";
 export default function POI(props) {
   const { name, description, lat, lng, image, url, } = props;
   const { Categories, Tags, User, Status } = props;
-
+    const {zoomOnMarker,deleteMarker}=props;
   let statusColor;
   if (Status) {
     switch (Status.id) {
@@ -71,7 +71,8 @@ export default function POI(props) {
         </>
       )}
 
-
+      <button value={name} onClick={zoomOnMarker}>Show</button>
+      <button value={name} onClick={ deleteMarker}>delete</button>
     </div>
   );
 }
