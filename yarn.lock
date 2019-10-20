@@ -6100,7 +6100,19 @@ lcid@^2.0.0:
   dependencies:
     invert-kv "^2.0.0"
 
-leaflet@^1.5.1:
+leaflet-search@^2.9.8:
+  version "2.9.8"
+  resolved "https://registry.yarnpkg.com/leaflet-search/-/leaflet-search-2.9.8.tgz#67adbd06016e67459e84a0493e946dd4384169b4"
+  integrity sha512-w/0qcllcNVzlfhup7apLc7hamOaZrtGfxMDqX6ItlUjNBz08CMk7bxcwITIVbL8wFYqTnVsBI8zUBKzypQo2uw==
+  dependencies:
+    leaflet "*"
+
+leaflet.sync@^0.2.4:
+  version "0.2.4"
+  resolved "https://registry.yarnpkg.com/leaflet.sync/-/leaflet.sync-0.2.4.tgz#76d4095a61470882d72e092190090d0a1fa55ca2"
+  integrity sha1-dtQJWmFHCILXLgkhkAkNCh+lXKI=
+
+leaflet@*, leaflet@^1.5.1:
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/leaflet/-/leaflet-1.5.1.tgz#9afb9d963d66c870066b1342e7a06f92840f46bf"
   integrity sha512-ekM9KAeG99tYisNBg0IzEywAlp0hYI5XRipsqRXyRTeuU8jcuntilpp+eFf5gaE0xubc9RuSNIVtByEKwqFV0w==

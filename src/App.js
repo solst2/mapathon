@@ -81,7 +81,7 @@ function AppWrapper() {
     setPoisList(newPoiList);
 
   }
-  function UserGreeting(props) {
+  function AfterLoad(props) {
     return (
         <div className="App">
           <header className="App-header">
@@ -93,7 +93,7 @@ function AppWrapper() {
     );
   }
 
-  function GuestGreeting(props) {
+  function BeforLoad(props) {
     return (
         <div className="App">
           <header className="App-header">
@@ -106,9 +106,9 @@ function AppWrapper() {
   }
 
   if(isSat)
-    return <UserGreeting poisList={poisList}/>
+    return <AfterLoad poisList={poisList}/>
   else
-    return <GuestGreeting/>
+    return <BeforLoad/>
       }
 export function GeoLocat(props){
 
@@ -171,6 +171,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.mapRef = React.createRef()
+    this.mapRef2 = React.createRef()
     this.state = {
       markers: [],
       POIs: [],
@@ -300,7 +301,7 @@ class App extends Component {
     return (
 <div >
               <Map className="map"
-                   id="map"
+                   id="map1"
                    minZoom ={this.state.Map.minZoom}
                    center={this.state.Map.center}
                    view={this.state.Map.view}
@@ -361,7 +362,9 @@ class App extends Component {
                       { this.state.POIs.map((poi) =>
                         console.log(poi.lat)
                       )}
+
                     </LayerGroup>
+
                   </Overlay>
                   <Overlay  name="cities">
                     <LayerGroup>
@@ -389,12 +392,12 @@ class App extends Component {
                 </Control>
                 <Control position="bottomleft" >
                   <div className={'poiLegend'} >
-                    <h3>Points of interest</h3>
-                  { this.state.POIs.map((poi) =>
-                      <div>
-                      <a href={'#'} id={poi.name} onClick={this.zoomOnMarkerL}>{poi.name}</a>
+                    <h3 >Points of interest</h3>
+                    { this.state.POIs.map((poi) =>
+                        <div>
+                          <a href={'#'} id={poi.name} onClick={this.zoomOnMarkerL}>{poi.name}</a>
                         </div>
-                  )}
+                    )}
                   </div>
                 </Control>
 
@@ -438,6 +441,12 @@ class App extends Component {
     };
     L.control.layers(baseMaps, overlayMaps).addTo(map);
   }
+}
+function SynchMap() {
+  var map1=this.mapRef.current;
+  var map2=this.mapRef2.current;
+  map1.sync(map2);
+  map2.sync(map1);
 }
 class LegendControlPOI extends MapControl {
 
