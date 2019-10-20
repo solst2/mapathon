@@ -6,8 +6,8 @@
   height: 40vmin;
 }
 .map{
-  height:500px;
-  width: 900px;
+  height:600px;
+  width: 1000px;
 }
 .cityPan{
   padding-top : 100px;
@@ -30,7 +30,12 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
+.poiLegend{
+  background-color: rgba(0,0,0,.2);
+  color: darkblue;
 
+
+}
 .App-link {
   color: #09d3ac;
 }
