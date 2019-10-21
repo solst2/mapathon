@@ -4,6 +4,7 @@ export class requestPOI {
         try {
             let token = await getTokenSilently();
             console.log(JSON.stringify(updatePOI));
+            console.log('request pass');
             let response = await fetch(
                 `${process.env.REACT_APP_SERVER_URL}/poi/` + id,
                 {

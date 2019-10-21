@@ -15,23 +15,54 @@ import Control from 'react-leaflet-control';
 import * as ReactDOM from "react-dom";
 import targetIcon from './icons/target.png';
 import positionIcon from './icons/postionIcon.png';
+import grp4IconImg from './icons/pin/green_pin.png';
+import grp3IconImg from './icons/pin/blue_pin.png';
+import grp2IconImg from './icons/pin/orange_pin.png';
+import grp1IconImg from './icons/pin/red_pin.png';
+
+
 var myIcon = L.icon({
   iconUrl: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAApCAYAAADAk4LOAAAFgUlEQVR4Aa1XA5BjWRTN2oW17d3YaZtr2962HUzbDNpjszW24mRt28p47v7zq/bXZtrp/lWnXr337j3nPCe85NcypgSFdugCpW5YoDAMRaIMqRi6aKq5E3YqDQO3qAwjVWrD8Ncq/RBpykd8oZUb/kaJutow8r1aP9II0WmLKLIsJyv1w/kqw9Ch2MYdB++12Onxee/QMwvf4/Dk/Lfp/i4nxTXtOoQ4pW5Aj7wpici1A9erdAN2OH64x8OSP9j3Ft3b7aWkTg/Fm91siTra0f9on5sQr9INejH6CUUUpavjFNq1B+Oadhxmnfa8RfEmN8VNAsQhPqF55xHkMzz3jSmChWU6f7/XZKNH+9+hBLOHYozuKQPxyMPUKkrX/K0uWnfFaJGS1QPRtZsOPtr3NsW0uyh6NNCOkU3Yz+bXbT3I8G3xE5EXLXtCXbbqwCO9zPQYPRTZ5vIDXD7U+w7rFDEoUUf7ibHIR4y6bLVPXrz8JVZEql13trxwue/uDivd3fkWRbS6/IA2bID4uk0UpF1N8qLlbBlXs4Ee7HLTfV1j54APvODnSfOWBqtKVvjgLKzF5YdEk5ewRkGlK0i33Eofffc7HT56jD7/6U+qH3Cx7SBLNntH5YIPvODnyfIXZYRVDPqgHtLs5ABHD3YzLuespb7t79FY34DjMwrVrcTuwlT55YMPvOBnRrJ4VXTdNnYug5ucHLBjEpt30701A3Ts+HEa73u6dT3FNWwflY86eMHPk+Yu+i6pzUpRrW7SNDg5JHR4KapmM5Wv2E8Tfcb1HoqqHMHU+uWDD7zg54mz5/2BSnizi9T1Dg4QQXLToGNCkb6tb1NU+QAlGr1++eADrzhn/u8Q2YZhQVlZ5+CAOtqfbhmaUCS1ezNFVm2imDbPmPng5wmz+gwh+oHDce0eUtQ6OGDIyR0uUhUsoO3vfDmmgOezH0mZN59x7MBi++WDL1g/eEiU3avlidO671bkLfwbw5XV2P8Pzo0ydy4t2/0eu33xYSOMOD8hTf4CrBtGMSoXfPLchX+J0ruSePw3LZeK0juPJbYzrhkH0io7B3k164hiGvawhOKMLkrQLyVpZg8rHFW7E2uHOL888IBPlNZ1FPzstSJM694fWr6RwpvcJK60+0HCILTBzZLFNdtAzJaohze60T8qBzyh5ZuOg5e7uwQppofEmf2++DYvmySqGBuKaicF1blQjhuHdvCIMvp8whTTfZzI7RldpwtSzL+F1+wkdZ2TBOW2gIF88PBTzD/gpeREAMEbxnJcaJHNHrpzji0gQCS6hdkEeYt9DF/2qPcEC8RM28Hwmr3sdNyht00byAut2k3gufWNtgtOEOFGUwcXWNDbdNbpgBGxEvKkOQsxivJx33iow0Vw5S6SVTrpVq11ysA2Rp7gTfPfktc6zhtXBBC+adRLshf6sG2RfHPZ5EAc4sVZ83yCN00Fk/4kggu40ZTvIEm5g24qtU4KjBrx/BTTH8ifVASAG7gKrnWxJDcU7x8X6Ecczhm3o6YicvsLXWfh3Ch1W0k8x0nXF+0fFxgt4phz8QvypiwCCFKMqXCnqXExjq10beH+UUA7+nG6mdG/Pu0f3LgFcGrl2s0kNNjpmoJ9o4B29CMO8dMT4Q5ox8uitF6fqsrJOr8qnwNbRzv6hSnG5wP+64C7h9lp30hKNtKdWjtdkbuPA19nJ7Tz3zR/ibgARbhb4AlhavcBebmTHcFl2fvYEnW0ox9xMxKBS8btJ+KiEbq9zA4RthQXDhPa0T9TEe69gWupwc6uBUphquXgf+/FrIjweHQS4/pduMe5ERUMHUd9xv8ZR98CxkS4F2n3EUrUZ10EYNw7BWm9x1GiPssi3GgiGRDKWRYZfXlON+dfNbM+GgIwYdwAAAAASUVORK5CYII=',
   iconSize: [20, 30],
   iconAnchor: [10, 30],
   popupAnchor: [0, -20]
 });
-
+var grp4Icon = L.icon({
+  iconUrl:grp4IconImg,
+  iconSize: [20, 30],
+  iconAnchor: [10, 30],
+  popupAnchor: [0, -20]
+});
+var grp3Icon = L.icon({
+  iconUrl:grp3IconImg,
+  iconSize: [20, 30],
+  iconAnchor: [10, 30],
+  popupAnchor: [0, -20]
+});
+var grp2Icon = L.icon({
+  iconUrl:grp2IconImg,
+  iconSize: [20, 30],
+  iconAnchor: [10, 30],
+  popupAnchor: [0, -20]
+});
+var grp1Icon = L.icon({
+  iconUrl:grp1IconImg,
+  iconSize: [20, 30],
+  iconAnchor: [10, 30],
+  popupAnchor: [0, -20]
+});
 const {  BaseLayer, Overlay} = LayersControl
 const center = [51.505, -0.09]
 const rectangle = [[51.49, -0.08], [51.5, -0.06]]
 
 
+//main app, at the top of the tree
 function AppWrapper() {
   const { isAuthenticated, loginWithRedirect, loading,getTokenSilently } = useAuth0();
   let [poisList, setPoisList] = useState([]);
   let [isSat,setSat]=useState(false);
 
+  //get the pois on load
   useEffect(() => {
     const fn = async () => {
       if (loading === false ) {
@@ -46,9 +77,15 @@ function AppWrapper() {
     fn();
   }, [isAuthenticated, loginWithRedirect, loading]);
 
- function addPOI(newPOI)
+ async function addPOI(newPOI)
   {
-    return requestPOI.addNewPOI(newPOI,getTokenSilently,loginWithRedirect);
+    console.log('new POIIII added');
+    return await requestPOI.addNewPOI(newPOI,getTokenSilently,loginWithRedirect);
+  }
+  async function deletePOI(poi)
+  {
+    console.log('poi add');
+    return await requestPOI.deletePOI(poi.id,getTokenSilently,loginWithRedirect);
   }
 
 
@@ -56,43 +93,36 @@ function AppWrapper() {
   if (loading) {
     return <Loading />;
   }
+
   let handlePOIsClick = async e => {
     e.preventDefault();
     let poisList = await request(
-        `${process.env.REACT_APP_SERVER_URL}${endpoints.pois}?group=4`,
+        `${process.env.REACT_APP_SERVER_URL}${endpoints.pois}`,
         getTokenSilently,
         loginWithRedirect
     );
     setSat(true)
 
     if (poisList && poisList.length > 0) {
-      console.log(poisList);
+
       setPoisList(poisList);
     }
   };
-  function updatedPOIList(newPoiList) {
-    console.log('poi updated');
-    setPoisList(newPoiList);
-  }
-  function addPOItoList(newPoi) {
-    console.log('poi updated')
-    var newPoiList=poisList;
-    newPoiList.push(newPoi);
-    setPoisList(newPoiList);
 
-  }
+  //called once to button start is pressed
   function AfterLoad(props) {
     return (
         <div className="App">
           <header className="App-header">
             <h1>Mapathon </h1>
             <br />
-            <App poisList={props.poisList} addPOI={addPOI} key="app"></App>
+            <App poisList={props.poisList} addPOI={addPOI} deletePOI={deletePOI} key="app"></App>
           </header>
         </div>
     );
   }
 
+  //while the button start is not pressed
   function BeforLoad(props) {
     return (
         <div className="App">
@@ -110,6 +140,8 @@ function AppWrapper() {
   else
     return <BeforLoad/>
       }
+
+      //enable you to get your geoloaction
 export function GeoLocat(props){
 
   let [laltitude, setLaltitude] = useState([]);
@@ -118,7 +150,7 @@ export function GeoLocat(props){
   let [message, setMessage] = useState('Browser does not support geolocation.');
   var myPostionIcon = L.icon({
     iconUrl:positionIcon,
-    iconSize: [30, 35],
+    iconSize: [34, 35],
     iconAnchor: [10, 30],
     popupAnchor: [0, -20]
   });
@@ -157,7 +189,7 @@ export function GeoLocat(props){
   (navigator.geolocation) ?
       navigator.geolocation.getCurrentPosition(getPosition, getError) :
       setAvailable(false);
-  console.log( {laltitude}+"   "+ {longtitude});
+  //console.log( {laltitude}+"   "+ {longtitude});
   return(available) ? <Marker position={{lat:laltitude,lng:longtitude}} icon={myPostionIcon}>
     <Popup>
       My Position
@@ -166,6 +198,7 @@ export function GeoLocat(props){
 
 }
 
+//App class at the second level of the tree
 class App extends Component {
 
   constructor(props) {
@@ -205,6 +238,8 @@ class App extends Component {
     };
 
   }
+
+  //scroll on the map when you click on a marker
   scrollToMyRef = () => window.scrollTo(0, this.mapRef.current.offsetTop)
   componentDidMount() {
 
@@ -230,24 +265,31 @@ class App extends Component {
     this.setState({citiesData: cities});
   }
 
+
+  //add a marker when you clic on the map
   addMarker = (e) => {
+
     const pois=this.state.POIs
-    var newPoi={id:this.state.POIs.length,lat:e.latlng.lat,lng:e.latlng.lng,name:'',description:'',"group": 0,isSaved:false}
- //   var test={lat:e.latlng.lat,lng:e.latlng.lng,name:'dsf',description:'sdf',"group": 0}
+
+    var newPoi={id:this.state.POIs.length,lat:e.latlng.lat,lng:e.latlng.lng,name:'',description:'',"group": 4,isSaved:false}
+   var test={lat:e.latlng.lat,lng:e.latlng.lng,name:'dsf',description:'sdf',"group": 4}
     console.log('Point '+newPoi.id+ ' at '+newPoi.lat +"/"+newPoi.lng)
     pois.push(newPoi)
       this.state.Map.zoom=3;
     this.state.Map.center=[e.latlng.lat,e.latlng.lng];
     this.setState(pois);
-   //this.props.addPOI(newPoi);
+   // this.props.addPOI(test);
   }
   deleteMarker= (e) =>  {
     if (window.confirm('Are you sure you wish to delete this point of interest?'))
     {
+
       let deletedPOI = this.state.POIs.find(poi=>poi.name==e.target.value);
 
       const POIs= this.state.POIs.filter(item => item !== deletedPOI)
       this.setState({POIs:POIs})
+
+      this.props.deletePOI(deletedPOI);
     }
   }
 
@@ -284,6 +326,9 @@ class App extends Component {
 
     this.setState({Map:map});
   }
+
+  //zoom on the my location
+
   ZoomOnMyLoca= (e) =>
   {
     this.scrollToMyRef()
@@ -310,13 +355,10 @@ class App extends Component {
                    ref={this.mapRef}>
                 <div>Zrd</div>
                 <LayersControl>
-
                   <BaseLayer checked name="Default">
                     <TileLayer
                         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                        url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
-
-                    />
+                        url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'/>
                   </BaseLayer>
                   <BaseLayer  name="Satelit">
                     <TileLayer
@@ -353,19 +395,64 @@ class App extends Component {
 
                     />
                   </BaseLayer>
-                  <Overlay checked name="Pois">
+                      <Overlay name="Group 4 Pois" checked>
+
+                        <LayerGroup>
+                          { this.state.POIs.filter((poi)=>poi.group==4).map((poi) =>
+                              <POIMarker icon={grp4Icon} addPOI={this.props.addPOI} isSaved={poi.isSaved} lat={poi.lat} lng={poi.lng} poi={poi} updatePOIs={this.updatePOIs} poisList={this.state.POIs} id={poi.id}/>
+
+                          )}
+                          { this.state.POIs.map((poi) =>
+                              console.log(poi.lat)
+                          )}
+
+                        </LayerGroup>
+                      </Overlay>
+                      <Overlay name="Group 3 Pois">
+                        <LayerGroup>
+                          { this.state.POIs.filter((poi)=>poi.group==3).map((poi) =>
+                              <POIMarker icon={grp3Icon} addPOI={this.props.addPOI} isSaved={poi.isSaved} lat={poi.lat} lng={poi.lng} poi={poi} updatePOIs={this.updatePOIs} poisList={this.state.POIs} id={poi.id}/>
+
+                          )}
+                        </LayerGroup>
+                      </Overlay>
+                      <Overlay name="Group 2 Pois">
+                        <LayerGroup>
+                          { this.state.POIs.filter((poi)=>poi.group==3).map((poi) =>
+                              <POIMarker icon={grp2Icon} addPOI={this.props.addPOI} isSaved={poi.isSaved} lat={poi.lat} lng={poi.lng} poi={poi} updatePOIs={this.updatePOIs} poisList={this.state.POIs} id={poi.id}/>
+
+                          )}
+                        </LayerGroup>
+                      </Overlay>
+                  <Overlay name="Group 0 Pois">
                     <LayerGroup>
-                      { this.state.POIs.map((poi) =>
-                   <POIMarker addPOI={this.props.addPOI} isSaved={poi.isSaved} lat={poi.lat} lng={poi.lng} poi={poi} updatePOIs={this.updatePOIs} poisList={this.state.POIs} id={poi.id}/>
+                      { this.state.POIs.filter((poi)=>poi.group==0).map((poi) =>
+                          <POIMarker icon={myIcon} addPOI={this.props.addPOI} isSaved={poi.isSaved} lat={poi.lat} lng={poi.lng} poi={poi} updatePOIs={this.updatePOIs} poisList={this.state.POIs} id={poi.id}/>
 
                       )}
-                      { this.state.POIs.map((poi) =>
-                        console.log(poi.lat)
-                      )}
-
                     </LayerGroup>
-
                   </Overlay>
+                  <Overlay name="Group1">
+                    <FeatureGroup color="purple">
+                      { this.state.POIs.filter((poi)=>poi.group==2).map((poi) =>
+                          <POIMarker icon={grp1Icon} addPOI={this.props.addPOI} isSaved={poi.isSaved} lat={poi.lat} lng={poi.lng} poi={poi} updatePOIs={this.updatePOIs} poisList={this.state.POIs} id={poi.id}/>
+
+                      )}
+
+                    </FeatureGroup>
+                  </Overlay>
+                      <Overlay name="Group 1 Pois">
+                        <LayerGroup>
+                          { this.state.POIs.filter((poi)=>poi.group==2).map((poi) =>
+                              <POIMarker icon={grp1Icon} addPOI={this.props.addPOI} isSaved={poi.isSaved} lat={poi.lat} lng={poi.lng} poi={poi} updatePOIs={this.updatePOIs} poisList={this.state.POIs} id={poi.id}/>
+
+                          )}
+
+
+                        </LayerGroup>
+
+                      </Overlay>
+
                   <Overlay  name="cities">
                     <LayerGroup>
                       {filteredCities.map((city) => {
@@ -379,27 +466,12 @@ class App extends Component {
                            <GeoLocat upGeoLocalisation={this.upGeoLocalisation}></GeoLocat>
                         </LayerGroup>
                     </Overlay>
-                  <Overlay name="Feature group">
-                    <FeatureGroup color="purple">
-                      <Popup>Popup in FeatureGroup</Popup>
-                      <Circle center={[51.51, -0.06]} radius={200} />
-                      <Rectangle bounds={rectangle} />
-                    </FeatureGroup>
-                  </Overlay>
+
                 </LayersControl>
                 <Control position="topleft" >
                   <img src={targetIcon} onClick={this.ZoomOnMyLoca} width={20} height={20}></img>
                 </Control>
-                <Control position="bottomleft" >
-                  <div className={'poiLegend'} >
-                    <h3 >Points of interest</h3>
-                    { this.state.POIs.map((poi) =>
-                        <div>
-                          <a href={'#'} id={poi.name} onClick={this.zoomOnMarkerL}>{poi.name}</a>
-                        </div>
-                    )}
-                  </div>
-                </Control>
+
 
               </Map>
   <button className={'ButtonBar'} onClick={this.ZoomOnMyLoca} >Where am I..?</button>
@@ -480,6 +552,7 @@ class POIMarker extends  React.Component
         name:this.props.poi.name,
         description:this.props.poi.description,
         position:{lng:this.props.poi.lng,lat:this.props.poi.lat},
+        image:this.props.poi.image,
         isSaved:props.isSaved
       }
     };
@@ -496,10 +569,11 @@ class POIMarker extends  React.Component
     if(this.state.newPOI.isSaved)
       return (
           <div>
-            <Marker position={position} icon={myIcon} draggable='true'>
+            <Marker position={position} icon={this.props.icon} draggable='true'>
               <Popup>
                 <h1>{this.state.newPOI.name}</h1>
                 <p>{this.state.newPOI.description}</p>
+                <img width={100} height={100} src={this.state.newPOI.image}></img>
                 <span><img width={10} height={10} src="https://image.flaticon.com/icons/svg/61/61456.svg" onClick= { (e) => {this.state.newPOI.isSaved=false; this.updatePOI(this.state.newPOI)}} /><br/></span>
               </Popup>
             </Marker>
@@ -508,7 +582,7 @@ class POIMarker extends  React.Component
     else
       return (
           <div >
-            <Marker position={position} icon={myIcon}>
+            <Marker position={position} icon={this.props.icon}>
               <Popup>
                 <POIForm updatePOIs={updatePOIs} poisList={poisList} updatePOI={this.updatePOI} position={position} id={id}/>
               </Popup>
@@ -606,5 +680,21 @@ export function FormInput({
       </>
   );
 }
+class Legend extends MapControl {
+  constructor(props) {
+    super(props);
 
+  }
+
+  componentDidMount() {
+
+    let{grpNbr,color,poiList}=this.props
+    const legend = L.control({ position: "bottomleft" });
+
+
+    const { map } = this.props.leaflet;
+    legend.addTo(map);
+  }
+
+}
 export default AppWrapper;
