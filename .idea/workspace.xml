@@ -2,7 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9d99ef1f-6be9-48ac-88ce-0e79a9308b07" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/GPXtest.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/gpx/sample.gpx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.test.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/userRequest.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/userRequest.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -57,18 +64,19 @@
     <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Romain\WebstormProjects\mapathon\src\gpx" />
+      <recent name="C:\mapathon2\src\icons" />
+      <recent name="C:\Users\Romain\WebstormProjects\mapathon" />
+      <recent name="C:\Users\Romain\WebstormProjects\mapathon\src" />
+      <recent name="$PROJECT_DIR$/src/components" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Romain\WebstormProjects\mapathon\src" />
       <recent name="D:\Schule Fächerunterlagen\5. Semester\Project\Project\mapathon\public" />
       <recent name="$PROJECT_DIR$/src/assets" />
       <recent name="$PROJECT_DIR$/src/components" />
       <recent name="$PROJECT_DIR$" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\mapathon2\src\icons" />
-      <recent name="C:\Users\Romain\WebstormProjects\mapathon" />
-      <recent name="C:\Users\Romain\WebstormProjects\mapathon\src" />
-      <recent name="$PROJECT_DIR$/src/components" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -124,7 +132,7 @@
       <workItem from="1571416433310" duration="11916000" />
       <workItem from="1571458445599" duration="1034000" />
       <workItem from="1571473473487" duration="3864000" />
-      <workItem from="1571682957228" duration="259000" />
+      <workItem from="1571682957228" duration="17136000" />
     </task>
     <task id="LOCAL-00001" summary="map">
       <created>1570781121132</created>
@@ -189,7 +197,14 @@
       <option name="project" value="LOCAL" />
       <updated>1571578738262</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="filter text">
+      <created>1571683230355</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1571683230355</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
