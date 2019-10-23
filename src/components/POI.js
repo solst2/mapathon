@@ -2,7 +2,7 @@ import React from "react";
 import "./POI.css";
 
 export default function POI(props) {
-  const { name, description, lat, lng, image, url, } = props;
+  const { name, description, lat, lng, image, url, group} = props;
   const { Categories, Tags, User, Status } = props;
     const {zoomOnMarker,deleteMarker}=props;
   let statusColor;
@@ -24,7 +24,7 @@ export default function POI(props) {
     <div className="poi" style={{ borderColor: statusColor }}>
       {Status && (
         <span className="status" style={{ color: statusColor }}>
-          <small>{Status.name}</small>
+          <small>{Status.name }  </small>
         </span>
       )}
       {Categories && Categories.length > 0 && (
@@ -45,7 +45,7 @@ export default function POI(props) {
             {name}
           </a>
         ) : (
-          <span>{name}</span>
+          <span>{name}{group}</span>
         )}
       </h2>
       {image && <img className="poi-image" alt={name} src={image} />}
