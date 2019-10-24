@@ -25,7 +25,6 @@ const {  BaseLayer, Overlay} = LayersControl
 const center = [51.505, -0.09]
 const rectangle = [[51.49, -0.08], [51.5, -0.06]]
 
-
 //main app, at the top of the tree
 function AppWrapper() {
   const { isAuthenticated, loginWithRedirect, loading,getTokenSilently,logout,user } = useAuth0();
@@ -47,18 +46,17 @@ function AppWrapper() {
     fn();
   }, [isAuthenticated, loginWithRedirect, loading]);
 
- async function addPOI(newPOI)
+  async function addPOI(newPOI)
   {
     console.log('new POIIII added');
     return await requestPOI.addNewPOI(newPOI,getTokenSilently,loginWithRedirect);
   }
+
   async function deletePOI(poi)
   {
-    console.log('poi add');
+    console.log('poi delete');
     return await requestPOI.deletePOI(poi.id,getTokenSilently,loginWithRedirect);
   }
-
-
 
   if (loading) {
     return <Loading />;
@@ -74,8 +72,8 @@ function AppWrapper() {
     setSat(true)
 
     if (poisList && poisList.length > 0) {
-
-      setPoisList(poisList.filter((poi)=>poi.group!=0));
+      setPoisList(poisList);
+      // setPoisList(poisList.filter((poi)=>poi.group!=0));
     }
   };
 
@@ -91,9 +89,6 @@ function AppWrapper() {
         <div>
           <div className="sidebar"  id="sidebar">
             <a className="active" href="#home">Map</a>
-            <a href="#news">News</a>
-            <a href="#contact">Contact</a>
-            <a href="#about">About</a>
             {isAuthenticated && <button className="ButtonLogout" onClick={() => logout()}>Log out</button>}
           </div>
 
@@ -118,9 +113,9 @@ function AppWrapper() {
           {isAuthenticated && <button onClick={() => logout()}>Log out</button>}
           <header className="App-header">
             <h1>Mapathon </h1>
-            {isAuthenticated && <h2>Welcom {user.nickname} {user.id_token}</h2>}
-            {isAuthenticated &&    <img src={user.picture}/>}
-
+            {isAuthenticated && <h2>Welcome {user.nickname} {user.id_token}</h2>}
+            {isAuthenticated &&    <img src={user.picture} style={{width: 100 + 'px', height: 100 + 'px'}}/>}
+            <br />
             <br />
             <button className={'ButtonBar'} onClick={handlePOIsClick}>Start</button>
           </header>
@@ -136,7 +131,7 @@ function AppWrapper() {
     return <BeforLoad/>
       }
 
-      //enable you to get your geoloaction
+//enable you to get your geoloaction
 export function GeoLocat(props){
 
   let [laltitude, setLaltitude] = useState([]);
@@ -214,7 +209,6 @@ function MenuOptions(props) {
 
 //App class at the second level of the tree
 class App extends Component {
-
   constructor(props) {
     super(props);
     this.mapRef = React.createRef()
@@ -254,7 +248,6 @@ class App extends Component {
         { name: "Istanbul", coordinates: [28.9784, 41.0082], population: 13287000 ,displayed:true},
       ]
     };
-
   }
 
   //scroll on the map when you click on a marker
@@ -276,36 +269,32 @@ class App extends Component {
     this.setState({citiesData: cities});
   };
 
-
   //add a marker when you clic on the map
   addMarker = (e) => {
-
     const pois=this.state.POIs;
-
-    var newPoi={id:this.state.POIs.length,lat:e.latlng.lat,lng:e.latlng.lng,name:'',description:'',"group": 4,isSaved:false,Creator:{id:this.props.currentUser.sub}}
-    var test={lat:e.latlng.lat,lng:e.latlng.lng,name:'dsf',description:'sdf',"group": 4};
+    var newPoi={lat:e.latlng.lat,lng:e.latlng.lng,name:'',description:'',"group": 4,isSaved:false,Creator:{id:this.props.currentUser.sub}}
     console.log('Point '+newPoi.id+ ' at '+newPoi.lat +"/"+newPoi.lng);
     pois.push(newPoi);
     this.state.Map.zoom=3;
     this.state.Map.center=[e.latlng.lat,e.latlng.lng];
     this.setState({POIs:pois});
     this.changeOfPois();
-   // this.props.addPOI(test);
   };
 
   deleteMarker= (e) =>  {
-    if (window.confirm('Are you sure you wish to delete this point of interest?'))
-    {
-
-      let deletedPOI = this.state.POIs.find(poi=>poi.name==e.target.value);
-
-      const POIs= this.state.POIs.filter(item => item !== deletedPOI);
-      this.setState({POIs:POIs});
-      this.changeOfPois();
-
-      this.props.deletePOI(deletedPOI);
+    let deletedPOI = this.state.POIs.find(poi=>poi.name==e.target.value);
+    if (deletedPOI.Creator.id === this.props.user.sub) {
+      if (window.confirm('Are you sure you wish to delete this point of interest?')) {
+          console.log("answer: "+this.props.deletePOI(deletedPOI)+":");
+          const POIs = this.state.POIs.filter(item => item !== deletedPOI);
+          this.setState({POIs: POIs});
+          this.changeOfPois();
+      } else {
+        window.alert('You are not allowed to delete this.')
+      }
     }
   };
+
 
   upGeoLocalisation=(position)=>
   {
@@ -398,7 +387,7 @@ class App extends Component {
   render() {
     let filteredCities = this.state.citiesData.filter((city) => city.displayed);
     //let filterPOIs = this.state.POIs.filter((poi) => poi.user.Creator.id==this.props.currentUser);
-    let filterPOIs = this.state.POIs.filter((poi) => poi.group==this.state.groupvalue);
+    // let filterPOIs = this.state.POIs.filter((poi) => poi.group==this.state.groupvalue);
 
     return (
       <div >
@@ -453,56 +442,54 @@ class App extends Component {
 
                           />
                         </BaseLayer>
-                            <Overlay name="My poi">
-                              <LayerGroup>
-                                { this.state.filteredPoisToShow.filter((poi)=>poi.Creator.id==this.props.currentUser.sub).map((poi) =>
-                                    <POIMarker group={poi.group} addPOI={this.props.addPOI} isSaved={poi.isSaved} lat={poi.lat} lng={poi.lng} poi={poi} updatePOIs={this.updatePOIs} poisList={this.state.filteredPoisToShow} id={poi.id}/>
-                                )}
-                              </LayerGroup>
-                            </Overlay>
-                        <Overlay name="pois" checked>
+                        <Overlay name="My poi">
+                          <LayerGroup>
+                            { this.state.filteredPoisToShow.filter((poi)=>poi.Creator.id==this.props.currentUser.sub).map((poi) =>
+                                <POIMarker group={poi.group} addPOI={this.props.addPOI} isSaved={poi.isSaved} lat={poi.lat} lng={poi.lng} poi={poi} updatePOIs={this.updatePOIs} poisList={this.state.filteredPoisToShow} id={poi.id}/>
+                            )}
+                          </LayerGroup>
+                        </Overlay>
+                        <Overlay key="pois" name="pois" checked>
                           <LayerGroup>
                             { this.state.filteredPoisToShow.map((poi) =>
                                 <POIMarker addPOI={this.props.addPOI} isSaved={poi.isSaved} lat={poi.lat} lng={poi.lng} poi={poi} updatePOIs={this.updatePOIs} poisList={this.state.POIs} id={poi.id}/>
                             )}
                           </LayerGroup>
                         </Overlay>
-                          <Overlay checked name="my position">
-                              <LayerGroup>
-                                 <GeoLocat upGeoLocalisation={this.upGeoLocalisation}></GeoLocat>
-                              </LayerGroup>
-                          </Overlay>
+                        <Overlay checked name="my position">
+                            <LayerGroup>
+                               <GeoLocat upGeoLocalisation={this.upGeoLocalisation}></GeoLocat>
+                            </LayerGroup>
+                        </Overlay>
 
-                      </LayersControl>
+                        </LayersControl>
 
-                      <Control position="topleft" >
-                        <img src={targetIcon} onClick={this.ZoomOnMyLoca} width={20} height={20}></img>
-                      </Control>
-                    {/*  <Control position="topleft" >*/}
-                    {/*    <div>Group</div>*/}
-                    {/*    <select onChange={this.DisplayGroup} >*/}
-                    {/*      <option value={0}>None</option>*/}
-                    {/*      <option value={1}>Group 1</option>*/}
-                    {/*      <option value={2}>Group 2</option>*/}
-                    {/*      <option value={3}>Group 3</option>*/}
-                    {/*      <option value={4}>Group 4</option>*/}
-                    {/*    </select>*/}
-                    {/*  </Control>*/}
-                    {/*  <Control position="topleft" >*/}
-                    {/*    <div>Group</div>*/}
-                    {/*<s/>*/}
-                    {/*  </Control>*/}
+                        <Control position="topleft" >
+                          <img src={targetIcon} onClick={this.ZoomOnMyLoca} width={20} height={20}></img>
+                        </Control>
+                      {/*  <Control position="topleft" >*/}
+                      {/*    <div>Group</div>*/}
+                      {/*    <select onChange={this.DisplayGroup} >*/}
+                      {/*      <option value={0}>None</option>*/}
+                      {/*      <option value={1}>Group 1</option>*/}
+                      {/*      <option value={2}>Group 2</option>*/}
+                      {/*      <option value={3}>Group 3</option>*/}
+                      {/*      <option value={4}>Group 4</option>*/}
+                      {/*    </select>*/}
+                      {/*  </Control>*/}
+                      {/*  <Control position="topleft" >*/}
+                      {/*    <div>Group</div>*/}
+                      {/*<s/>*/}
+                      {/*  </Control>*/}
 
-                    </Map>
+                        </Map>
 
         <button className={'ButtonBar'} onClick={this.ZoomOnMyLoca} >Where am I..?</button>
         <MenuOptions handleFilter={this.handleFilter} handleJustOwnClick={this.handleJustOwnClick} justOwn={this.state.justOwn}/>
         <div>
             <ul className="POI-List">
               {this.state.filteredPoisToShow.map(poi => (
-
                     <POI {...poi} zoomOnMarker={this.zoomOnMarker} deleteMarker={this.deleteMarker}/>
-
               ))}
             </ul>
         </div>
@@ -512,10 +499,7 @@ class App extends Component {
 }
 
 
-class POIMarker extends  React.Component
-{
-
-
+class POIMarker extends  React.Component{
   constructor(props) {
     super(props);
     this.state = {
@@ -531,17 +515,15 @@ class POIMarker extends  React.Component
         icon:''
       }
     };
-
   }
 
   updatePOI = (poi) => {
     this.setState({newPOI: poi});
-  }
+  };
 
   render() {
-
-    let {updatePOIs,poisList,id} = this.props;
-  let position={lat:this.props.lat,lng:this.props.lng};
+    let {updatePOIs,poisList,id,addPOI} = this.props;
+    let position={lat:this.props.lat,lng:this.props.lng};
 
     var myIcon = L.icon({
       iconUrl:getIcon({group:this.state.newPOI.group}),
@@ -564,19 +546,20 @@ class POIMarker extends  React.Component
               </Popup>
             </Marker>
           </div>
-      )
+      );
     else
       return (
           <div >
             <Marker position={position} icon={myIcon}>
               <Popup>
-                <POIForm updatePOIs={updatePOIs} poisList={poisList} updatePOI={this.updatePOI} position={position} id={id}/>
+                <POIForm addPOI={addPOI} updatePOIs={updatePOIs} poisList={poisList} updatePOI={this.updatePOI} position={position} id={id}/>
               </Popup>
             </Marker>
           </div>
       )
   }
 }
+
 function getIcon({ group, category }) {
           switch(group) {
             case 1:return grp1IconImg;
@@ -587,9 +570,8 @@ function getIcon({ group, category }) {
               ;
 
         }
-
-  ;
 }
+
 class POIForm extends React.Component {
   constructor(props) {
     super(props);
@@ -599,11 +581,14 @@ class POIForm extends React.Component {
         id:this.props.id,
         name:poiInfo.name,
         description:poiInfo.description,
-        position:'',
-        isSaved: false
+        isSaved: false,
+        group:4,
+        lat: this.props.position.lat,
+        lng: this.props.position.lng
       }
     };
   }
+
   handleInputChange = event => {
     const target = event.target;
     const value = target.value;
@@ -612,18 +597,20 @@ class POIForm extends React.Component {
       newPOI: { ...prevState.newPOI, [name]: value }
     }));
   };
+
   handlePOIAdd = event => {
     // Avoid reloading the page on form submission
     event.preventDefault();
     this.state.newPOI.isSaved=true;
     this.props.updatePOI(this.state.newPOI);
-    let updatedPoisData = this.props.poisList;
-    let updatedPOI = updatedPoisData.find((c) => c.id === this.state.newPOI.id);
-    updatedPOI.name = this.state.newPOI.name;
-    updatedPOI.description =this.state.newPOI.description;
-    this.props.updatePOIs(updatedPoisData);
-
+    this.props.addPOI(this.state.newPOI);
+      let updatedPoisData = this.props.poisList;
+      let updatedPOI = updatedPoisData.find((c) => c.id === this.state.newPOI.id);
+      updatedPOI.name = this.state.newPOI.name;
+      updatedPOI.description =this.state.newPOI.description;
+      this.props.updatePOIs(updatedPoisData);
   };
+
   render() {
     return (
 
@@ -678,6 +665,7 @@ export function FormInput({
       </>
   );
 }
+
 class Legend extends MapControl {
   createLeafletElement() {
     {

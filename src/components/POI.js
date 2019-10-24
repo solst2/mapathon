@@ -4,7 +4,8 @@ import "./POI.css";
 export default function POI(props) {
   const { name, description, lat, lng, image, url, group} = props;
   const { Categories, Tags, User, Status } = props;
-    const {zoomOnMarker,deleteMarker}=props;
+  const {zoomOnMarker,deleteMarker}=props;
+
   let statusColor;
   if (Status) {
     switch (Status.id) {
@@ -45,7 +46,7 @@ export default function POI(props) {
             {name}
           </a>
         ) : (
-          <span>{name}{group}</span>
+          <span>{name}</span>
         )}
       </h2>
       {image && <img className="poi-image" alt={name} src={image} />}
@@ -72,7 +73,7 @@ export default function POI(props) {
       )}
 
       <button value={name} onClick={zoomOnMarker}>Show</button>
-      <button value={name} onClick={ deleteMarker}>delete</button>
+      <button value={name} onClick={deleteMarker}>delete</button>
     </div>
   );
 }

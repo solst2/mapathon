@@ -40,7 +40,7 @@ export class requestPOI {
                     Authorization: `Bearer ${token}`
                 }
             });
-                console.log('save poi method called')
+            console.log('save poi method called')
             let data = await response.json();
             console.log(data)
             return data;
