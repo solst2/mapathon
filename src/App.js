@@ -19,8 +19,10 @@ import grp4IconImg from './icons/pin/green_pin.png';
 import grp3IconImg from './icons/pin/blue_pin.png';
 import grp2IconImg from './icons/pin/orange_pin.png';
 import grp1IconImg from './icons/pin/red_pin.png';
-
-
+import  currentPosition from './icons/my_position.gif'
+import Map3d from './3dMa'
+import 'leaflet.sync/L.Map.Sync'
+import PO from "./PO";
 const {  BaseLayer, Overlay} = LayersControl
 const center = [51.505, -0.09]
 const rectangle = [[51.49, -0.08], [51.5, -0.06]]
@@ -120,7 +122,7 @@ function AppWrapper() {
             <h1>Mapathon </h1>
             {isAuthenticated && <h2>Welcom {user.nickname} {user.id_token}</h2>}
             {isAuthenticated &&    <img src={user.picture}/>}
-
+              {isAuthenticated &&   <h3>{user.sub}</h3>}
             <br />
             <button className={'ButtonBar'} onClick={handlePOIsClick}>Start</button>
           </header>
@@ -145,9 +147,9 @@ export function GeoLocat(props){
   let [message, setMessage] = useState('Browser does not support geolocation.');
 
   var myPostionIcon = L.icon({
-    iconUrl:positionIcon,
-    iconSize: [34, 35],
-    iconAnchor: [10, 30],
+    iconUrl:currentPosition,
+    iconSize: [20, 20],
+    iconAnchor: [10, 10],
     popupAnchor: [0, -20]
   });
 
@@ -218,7 +220,8 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.mapRef = React.createRef()
-    this.mapRef2 = React.createRef()
+    this.leafletMap = React.createRef()
+      this.domElem = React.createRef();
     this.state = {
       markers: [],
       POIs: [],
@@ -230,8 +233,7 @@ class App extends Component {
       message:'Browser does not support geolocation.',
       available:false,
       Map:{ minZoom :2,
-        center:[5, 100],
-       view:[-1000,-1000],
+        center:[0, 5],
         zoom:2},
       isMapInit: false,
       active:false,
@@ -258,7 +260,7 @@ class App extends Component {
   }
 
   //scroll on the map when you click on a marker
-  scrollToMyRef = () => window.scrollTo(0, this.map);
+  scrollToMyRef = () => window.scrollTo(0, this.leafletMap);
   componentDidMount() {
     var result = this.props.poisList.map(el => {
       var o = Object.assign({}, el);
@@ -274,6 +276,7 @@ class App extends Component {
 
   updateCities = ( cities ) => {
     this.setState({citiesData: cities});
+    
   };
 
 
@@ -292,7 +295,9 @@ class App extends Component {
     this.changeOfPois();
    // this.props.addPOI(test);
   };
-
+    getElem = () => {
+        return this.domElem;
+    }
   deleteMarker= (e) =>  {
     if (window.confirm('Are you sure you wish to delete this point of interest?'))
     {
@@ -330,10 +335,7 @@ class App extends Component {
     this.setState({Map:map});
   };
 
-  testFunction()
-  {
-  console.log('called');
-  }
+v
 
   //zoom on the my location
   ZoomOnMyLoca= (e) =>
@@ -355,9 +357,11 @@ class App extends Component {
   // };
 
   handleFilter = async e => {
+
     console.log(e.target.value);
     this.setState({filterPoi:e.target.value});
     this.changeOfPois();
+    
   };
 
   handleJustOwnClick = e => {
@@ -403,6 +407,7 @@ class App extends Component {
     return (
       <div >
         <div>dsffffffffffff</div>
+
                     <Map className="map"
                          id="map"
                          minZoom ={this.state.Map.minZoom}
@@ -410,7 +415,7 @@ class App extends Component {
                          view={this.state.Map.view}
                          onClick={this.addMarker}
                          zoom={this.state.Map.zoom}
-                         ref={Map => this.map = Map}>
+                         ref={m => { this.leafletMap = m; }}>
                       <div>Zrd</div>
                       <LayersControl>
                         <BaseLayer checked name="Default">
@@ -474,7 +479,7 @@ class App extends Component {
                           </Overlay>
 
                       </LayersControl>
-
+                       <PO user={this.props.currentUser} geoLat={this.state.geoLat} geoLng={this.state.geoLng} Map={this.state.Map} pois={this.state.POIs} snycMap={this.snycMap}/>
                       <Control position="topleft" >
                         <img src={targetIcon} onClick={this.ZoomOnMyLoca} width={20} height={20}></img>
                       </Control>
@@ -506,11 +511,16 @@ class App extends Component {
               ))}
             </ul>
         </div>
+
       </div>
     );
   }
+  snycMap(map2)
+  {
+  this.leafletMap.leafletMap.sync(map2);
+   // map2.sync(this.leafletMap);
+  }
 }
-
 
 class POIMarker extends  React.Component
 {
@@ -554,7 +564,7 @@ class POIMarker extends  React.Component
     if(this.state.newPOI.isSaved)
       return (
           <div>
-            <Marker position={position} icon={myIcon} draggable='true'>
+            <Marker elevation={260.0}  position={position} icon={myIcon} draggable='true'>
               <Popup>
                 <h1>{this.state.newPOI.name}</h1>
                 <p>{this.state.newPOI.description}</p>
