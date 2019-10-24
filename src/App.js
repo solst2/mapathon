@@ -391,7 +391,7 @@ class App extends Component {
 
     return (
       <div >
-        <div>dsffffffffffff</div>
+        <div>Overview of Points of Interest (POIs)</div>
                     <Map className="map"
                          id="map"
                          minZoom ={this.state.Map.minZoom}
