@@ -2,8 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9d99ef1f-6be9-48ac-88ce-0e79a9308b07" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/3dMa.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Div.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/icons/my_position.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/wrld.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.test.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wrld.js/src/private/eegeo_map_controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/wrld.js/src/private/eegeo_map_controller.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wrld.js/src/wrld.js" beforeDir="false" afterPath="$PROJECT_DIR$/wrld.js/src/wrld.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -60,18 +71,18 @@
     <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\mapathon2\src" />
-      <recent name="C:\Users\Romain\WebstormProjects\mapathon\src" />
-      <recent name="D:\Schule Fächerunterlagen\5. Semester\Project\Project\mapathon\public" />
-      <recent name="$PROJECT_DIR$/src/assets" />
-      <recent name="$PROJECT_DIR$/src/components" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Romain\WebstormProjects\mapathon\src\gpx" />
       <recent name="C:\mapathon2\src\icons" />
       <recent name="C:\Users\Romain\WebstormProjects\mapathon" />
       <recent name="C:\Users\Romain\WebstormProjects\mapathon\src" />
+      <recent name="$PROJECT_DIR$/src/components" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\mapathon2\src" />
+      <recent name="C:\Users\Romain\WebstormProjects\mapathon\src" />
+      <recent name="D:\Schule Fächerunterlagen\5. Semester\Project\Project\mapathon\public" />
+      <recent name="$PROJECT_DIR$/src/assets" />
       <recent name="$PROJECT_DIR$/src/components" />
     </key>
   </component>

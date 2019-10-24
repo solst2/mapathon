@@ -22,7 +22,7 @@ import grp1IconImg from './icons/pin/red_pin.png';
 import  currentPosition from './icons/my_position.gif'
 import Map3d from './3dMa'
 import 'leaflet.sync/L.Map.Sync'
-import PO from "./PO";
+import Div from "./Div";
 const {  BaseLayer, Overlay} = LayersControl
 const center = [51.505, -0.09]
 const rectangle = [[51.49, -0.08], [51.5, -0.06]]
@@ -479,7 +479,6 @@ v
                           </Overlay>
 
                       </LayersControl>
-                       <PO user={this.props.currentUser} geoLat={this.state.geoLat} geoLng={this.state.geoLng} Map={this.state.Map} pois={this.state.POIs} snycMap={this.snycMap}/>
                       <Control position="topleft" >
                         <img src={targetIcon} onClick={this.ZoomOnMyLoca} width={20} height={20}></img>
                       </Control>
@@ -497,6 +496,8 @@ v
                     {/*    <div>Group</div>*/}
                     {/*<s/>*/}
                     {/*  </Control>*/}
+
+                      {this.state.Map!=null &&   <Div user={this.props.currentUser} geoLat={this.state.geoLat} geoLng={this.state.geoLng} Map={this.state.Map} pois={this.state.POIs} snycMap={this.snycMap}/>}
 
                     </Map>
 
