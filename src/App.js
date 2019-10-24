@@ -67,7 +67,7 @@ function AppWrapper() {
   let handlePOIsClick = async e => {
     e.preventDefault();
     let poisList = await request(
-        `${process.env.REACT_APP_SERVER_URL}${endpoints.pois}`,
+        `${process.env.REACT_APP_SERVER_URL}${endpoints.pois}?group=4`,
         getTokenSilently,
         loginWithRedirect
     );
@@ -347,12 +347,12 @@ class App extends Component {
     this.setState({Map:map});
   };
 
-  DisplayGroup= (e) =>
-  {
-    console.log("changed"+" gr : "+e.target.value);
-    let poisFiltered=this.state.POIs.filter((poi) => poi.group==e.target.value);
-    this.setState({filteredPois:poisFiltered})
-  };
+  // DisplayGroup= (e) =>
+  // {
+  //   console.log("changed"+" gr : "+e.target.value);
+  //   let poisFiltered=this.state.POIs.filter((poi) => poi.group==e.target.value);
+  //   this.setState({filteredPois:poisFiltered})
+  // };
 
   handleFilter = async e => {
     console.log(e.target.value);
@@ -478,20 +478,20 @@ class App extends Component {
                       <Control position="topleft" >
                         <img src={targetIcon} onClick={this.ZoomOnMyLoca} width={20} height={20}></img>
                       </Control>
-                      <Control position="topleft" >
-                        <div>Group</div>
-                        <select onChange={this.DisplayGroup} >
-                          <option value={0}>None</option>
-                          <option value={1}>Group 1</option>
-                          <option value={2}>Group 2</option>
-                          <option value={3}>Group 3</option>
-                          <option value={4}>Group 4</option>
-                        </select>
-                      </Control>
-                      <Control position="topleft" >
-                        <div>Group</div>
-                    <s/>
-                      </Control>
+                    {/*  <Control position="topleft" >*/}
+                    {/*    <div>Group</div>*/}
+                    {/*    <select onChange={this.DisplayGroup} >*/}
+                    {/*      <option value={0}>None</option>*/}
+                    {/*      <option value={1}>Group 1</option>*/}
+                    {/*      <option value={2}>Group 2</option>*/}
+                    {/*      <option value={3}>Group 3</option>*/}
+                    {/*      <option value={4}>Group 4</option>*/}
+                    {/*    </select>*/}
+                    {/*  </Control>*/}
+                    {/*  <Control position="topleft" >*/}
+                    {/*    <div>Group</div>*/}
+                    {/*<s/>*/}
+                    {/*  </Control>*/}
 
                     </Map>
 
