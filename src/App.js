@@ -54,9 +54,15 @@ function AppWrapper() {
   {
     console.log('new POIIII added'+{...newPOI});
     if (newPOI.id === undefined){
-      return await requestPOI.addNewPOI(newPOI,getTokenSilently,loginWithRedirect)
+      let answer = await requestPOI.addNewPOI(newPOI,getTokenSilently,loginWithRedirect);
+      console.log(answer);
+      console.log('answer add');
+      return answer;
     } else {
-      return await requestPOI.updatePOI(newPOI.id,newPOI,getTokenSilently,loginWithRedirect)
+      let answer = await requestPOI.updatePOI(newPOI.id,newPOI,getTokenSilently,loginWithRedirect)
+      console.log(answer);
+      console.log('answer update');
+      return answer;
     }
   }
 
@@ -287,8 +293,6 @@ class App extends Component {
 
     this.setState({POIs:result});
     this.changeOfPois();
-
-
   }
 
   updateCities = ( cities ) => {
@@ -513,7 +517,7 @@ componentWillUnmount(): void {
                       {/*{this.state.Map!=null &&   <Div user={this.props.currentUser} geoLat={this.state.geoLat} geoLng={this.state.geoLng} Map={this.state.Map} pois={this.state.POIs} snycMap={this.snycMap}/>}*/}
 
                     </Map>
-        <Timout/>
+
         <button className={'ButtonBar'} onClick={this.ZoomOnMyLoca} >Where am I..?</button>
         <MenuOptions handleFilter={this.handleFilter} handleJustOwnClick={this.handleJustOwnClick} justOwn={this.state.justOwn}/>
         <div>
@@ -556,7 +560,11 @@ class POIMarker extends  React.Component{
   }
 
   updatePOI = (poi) => {
+    console.log(poi);
+    console.log('oldpoi');
     this.setState({newPOI: poi});
+    console.log(this.state.newPOI);
+    console.log('this.state.newPOI');
   };
 
   render() {
@@ -570,6 +578,9 @@ class POIMarker extends  React.Component{
       popupAnchor: [0, -20]
     });
 
+
+    console.log(this.state.newPOI);
+    console.log('this.state.newPOI render');
 
     if(this.state.newPOI.isSaved)
       return (
@@ -645,14 +656,27 @@ class POIForm extends React.Component {
     // Avoid reloading the page on form submission
     event.preventDefault();
     console.log('added'+this.state.newPOI.id);
-    this.state.newPOI.isSaved=true;
-    this.props.updatePOI(this.state.newPOI);
-    this.props.addPOI(this.state.newPOI);
-    let updatedPoisData = this.props.poisList;
-    let updatedPOI = updatedPoisData.find((c) => c.id === this.state.newPOI.id);
-    updatedPOI.name = this.state.newPOI.name;
-    updatedPOI.description =this.state.newPOI.description;
-    this.props.updatePOIs(updatedPoisData);
+    let safedPOI = this.props.addPOI(this.state.newPOI);
+    safedPOI.then((result) => {
+      console.log(result);
+      console.log('result in handlePOIADdd');
+
+      let resultWithSetTrue = {...result};
+      resultWithSetTrue.isSaved=true;
+      this.props.updatePOI(resultWithSetTrue);
+
+      // get the poi list
+      let updatedPoisData = this.props.poisList;
+      let updatedPOI = updatedPoisData.find((c) => c.id === resultWithSetTrue.id);
+      if (updatedPOI){
+        //the id existed before, so it is an update
+        updatedPOI = {...resultWithSetTrue};
+      } else {
+        //the id was not there before, so it is a new poi
+        updatedPoisData.push(resultWithSetTrue);
+      }
+      this.props.updatePOIs(updatedPoisData);
+    });
   };
 
   render() {
