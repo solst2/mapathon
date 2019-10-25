@@ -58,6 +58,10 @@ function AppWrapper() {
     }
   }
 
+  async function getAlls()
+  {
+    return await requestPOI.getAllPOI(getTokenSilently,loginWithRedirect);
+  }
   async function deletePOI(poi)
   {
     console.log('poi delete');
@@ -79,7 +83,7 @@ function AppWrapper() {
 
     if (poisList && poisList.length > 0) {
       setPoisList(poisList);
-      // setPoisList(poisList.filter((poi)=>poi.group!=0));
+
     }
   };
 
@@ -103,7 +107,7 @@ function AppWrapper() {
 
           <div className="w3-teal">
             <div className="w3-container">
-              <App poisList={props.poisList} addPOI={addPOI} deletePOI={deletePOI}  currentUser={user} key="app" user={user}></App>
+              <App poisList={props.poisList} getAlls={getAlls} addPOI={addPOI} deletePOI={deletePOI}  currentUser={user} key="app" user={user}></App>
             </div>
           </div>
 
@@ -258,6 +262,13 @@ class App extends Component {
 
   }
 
+
+
+  testtimeOut()
+  {
+    this.setState({POIs:this.props.getAlls}) ;
+    console.log('relaod');
+  }
   //scroll on the map when you click on a marker
   scrollToMyRef = () => window.scrollTo(0, this.leafletMap);
   componentDidMount() {
@@ -266,17 +277,25 @@ class App extends Component {
       o.isSaved = true;
       return o;
     });
+    this.props.setTimeout(function () {
+      //(this.setState({POIs:this.props.getAlls}) ;
+      console.log('pois list up to déate')
+    }.bind(this),1000)
+
 
     this.setState({POIs:result});
     this.changeOfPois();
 
-    console.log('POIS'+this.state.POIs.length)
+
   }
 
   updateCities = ( cities ) => {
     this.setState({citiesData: cities});
 
   };
+componentDidUpdate(prevProps: Readonly<P>, prevState: Readonly<S>, snapshot: SS): void {
+
+}
 
   //add a marker when you clic on the map
   addMarker = (e) => {
