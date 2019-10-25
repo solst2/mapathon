@@ -20,8 +20,8 @@ import grp3IconImg from './icons/pin/blue_pin.png';
 import grp2IconImg from './icons/pin/orange_pin.png';
 import grp1IconImg from './icons/pin/red_pin.png';
 import  currentPosition from './icons/my_position.gif'
-import Map3d from './3dMa'
-import 'leaflet.sync/L.Map.Sync'
+// import Map3d from './3dMa'
+// import 'leaflet.sync/L.Map.Sync'
 import Div from "./Div";
 const {  BaseLayer, Overlay} = LayersControl
 const center = [51.505, -0.09]
