@@ -55,13 +55,9 @@ function AppWrapper() {
     console.log('new POIIII added'+{...newPOI});
     if (newPOI.id === undefined){
       let answer = await requestPOI.addNewPOI(newPOI,getTokenSilently,loginWithRedirect);
-      console.log(answer);
-      console.log('answer add');
       return answer;
     } else {
-      let answer = await requestPOI.updatePOI(newPOI.id,newPOI,getTokenSilently,loginWithRedirect)
-      console.log(answer);
-      console.log('answer update');
+      let answer = await requestPOI.updatePOI(newPOI.id,newPOI,getTokenSilently,loginWithRedirect);
       return answer;
     }
   }
@@ -199,7 +195,6 @@ export function GeoLocat(props){
   (navigator.geolocation) ?
       navigator.geolocation.getCurrentPosition(getPosition, getError) :
       setAvailable(false);
-  //console.log( {laltitude}+"   "+ {longtitude});
   return(available) ? <Marker position={{lat:laltitude,lng:longtitude}} icon={myPostionIcon}>
     <Popup>
       My Position
@@ -321,7 +316,6 @@ componentDidUpdate(prevProps: Readonly<P>, prevState: Readonly<S>, snapshot: SS)
     let deletedPOI = this.state.POIs.find(poi=>poi.name==e.target.value);
     if (deletedPOI.Creator.id === this.props.user.sub) {
       if (window.confirm('Are you sure you wish to delete this point of interest?')) {
-        console.log("answer: "+this.props.deletePOI(deletedPOI)+":");
         const POIs = this.state.POIs.filter(item => item !== deletedPOI);
         this.setState({POIs: POIs});
         this.changeOfPois();
@@ -380,7 +374,6 @@ componentDidUpdate(prevProps: Readonly<P>, prevState: Readonly<S>, snapshot: SS)
   };
 
   handleJustOwnClick = e => {
-    console.log("Change just show own to:"+!this.state.justOwn);
     this.setState((state, props) => ({justOwn:!state.justOwn}),this.changeOfPois);
   };
 
@@ -560,11 +553,7 @@ class POIMarker extends  React.Component{
   }
 
   updatePOI = (poi) => {
-    console.log(poi);
-    console.log('oldpoi');
     this.setState({newPOI: poi});
-    console.log(this.state.newPOI);
-    console.log('this.state.newPOI');
   };
 
   render() {
@@ -577,10 +566,6 @@ class POIMarker extends  React.Component{
       iconAnchor: [10, 30],
       popupAnchor: [0, -20]
     });
-
-
-    console.log(this.state.newPOI);
-    console.log('this.state.newPOI render');
 
     if(this.state.newPOI.isSaved)
       return (
@@ -655,12 +640,8 @@ class POIForm extends React.Component {
   handlePOIAdd = event => {
     // Avoid reloading the page on form submission
     event.preventDefault();
-    console.log('added'+this.state.newPOI.id);
     let safedPOI = this.props.addPOI(this.state.newPOI);
     safedPOI.then((result) => {
-      console.log(result);
-      console.log('result in handlePOIADdd');
-
       let resultWithSetTrue = {...result};
       resultWithSetTrue.isSaved=true;
       this.props.updatePOI(resultWithSetTrue);
