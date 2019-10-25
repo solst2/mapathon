@@ -20,8 +20,8 @@ import grp3IconImg from './icons/pin/blue_pin.png';
 import grp2IconImg from './icons/pin/orange_pin.png';
 import grp1IconImg from './icons/pin/red_pin.png';
 import  currentPosition from './icons/my_position.gif'
-import Map3d from './3dMa'
-import 'leaflet.sync/L.Map.Sync'
+// import Map3d from './3dMa'
+// import 'leaflet.sync/L.Map.Sync'
 import Div from "./Div";
 const {  BaseLayer, Overlay} = LayersControl
 const center = [51.505, -0.09]
@@ -483,7 +483,7 @@ class App extends Component {
                       {/*<s/>*/}
                       {/*  </Control>*/}
 
-                      {this.state.Map!=null &&   <Div user={this.props.currentUser} geoLat={this.state.geoLat} geoLng={this.state.geoLng} Map={this.state.Map} pois={this.state.POIs} snycMap={this.snycMap}/>}
+                      {/*{this.state.Map!=null &&   <Div user={this.props.currentUser} geoLat={this.state.geoLat} geoLng={this.state.geoLng} Map={this.state.Map} pois={this.state.POIs} snycMap={this.snycMap}/>}*/}
 
                     </Map>
 
