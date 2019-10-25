@@ -23,6 +23,8 @@ import  currentPosition from './icons/my_position.gif'
 // import Map3d from './3dMa'
 // import 'leaflet.sync/L.Map.Sync'
 import Div from "./Div";
+import ReactTimeout from 'react-timeout'
+import Timout from './timout'
 const {  BaseLayer, Overlay} = LayersControl
 const center = [51.505, -0.09]
 const rectangle = [[51.49, -0.08], [51.5, -0.06]]
@@ -273,9 +275,9 @@ class App extends Component {
       o.isSaved = true;
       return o;
     });
-    this.props.setTimeout(function () {
+    setTimeout(function () {
       //(this.setState({POIs:this.props.getAlls}) ;
-      console.log('pois list up to déate')
+      console.log('pois list up to date')
     }.bind(this),1000)
 
 
@@ -403,6 +405,8 @@ componentDidUpdate(prevProps: Readonly<P>, prevState: Readonly<S>, snapshot: SS)
       this.setState((state,props)=> ({filteredPoisToShow: state.POIs}))
     }
   };
+componentWillUnmount(): void {
+}
 
   render() {
     let filteredCities = this.state.citiesData.filter((city) => city.displayed);
@@ -505,7 +509,7 @@ componentDidUpdate(prevProps: Readonly<P>, prevState: Readonly<S>, snapshot: SS)
                       {/*{this.state.Map!=null &&   <Div user={this.props.currentUser} geoLat={this.state.geoLat} geoLng={this.state.geoLng} Map={this.state.Map} pois={this.state.POIs} snycMap={this.snycMap}/>}*/}
 
                     </Map>
-
+        <Timout/>
         <button className={'ButtonBar'} onClick={this.ZoomOnMyLoca} >Where am I..?</button>
         <MenuOptions handleFilter={this.handleFilter} handleJustOwnClick={this.handleJustOwnClick} justOwn={this.state.justOwn}/>
         <div>
