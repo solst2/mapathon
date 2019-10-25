@@ -52,8 +52,12 @@ function AppWrapper() {
 
   async function addPOI(newPOI)
   {
-    console.log('new POIIII added');
-    return await requestPOI.addNewPOI(newPOI,getTokenSilently,loginWithRedirect);
+    console.log('new POIIII added'+{...newPOI});
+    if (newPOI.id === undefined){
+      return await requestPOI.addNewPOI(newPOI,getTokenSilently,loginWithRedirect)
+    } else {
+      return await requestPOI.updatePOI(newPOI.id,newPOI,getTokenSilently,loginWithRedirect)
+    }
   }
 
   async function getAlls()
@@ -313,12 +317,12 @@ componentDidUpdate(prevProps: Readonly<P>, prevState: Readonly<S>, snapshot: SS)
     let deletedPOI = this.state.POIs.find(poi=>poi.name==e.target.value);
     if (deletedPOI.Creator.id === this.props.user.sub) {
       if (window.confirm('Are you sure you wish to delete this point of interest?')) {
-          console.log("answer: "+this.props.deletePOI(deletedPOI)+":");
-          const POIs = this.state.POIs.filter(item => item !== deletedPOI);
-          this.setState({POIs: POIs});
-          this.changeOfPois();
+        console.log("answer: "+this.props.deletePOI(deletedPOI)+":");
+        const POIs = this.state.POIs.filter(item => item !== deletedPOI);
+        this.setState({POIs: POIs});
+        this.changeOfPois();
       } else {
-        window.alert('You are not allowed to delete this.')
+        window.alert('You are not allowed to delete this.');
       }
     }
   };
@@ -543,6 +547,7 @@ class POIMarker extends  React.Component{
         description:this.props.poi.description,
         position:{lng:this.props.poi.lng,lat:this.props.poi.lat},
         image:this.props.poi.image,
+        url:this.props.poi.url,
         isSaved:props.isSaved,
         group:this.props.poi.group,
         icon:''
@@ -613,12 +618,12 @@ class POIForm extends React.Component {
     let poiInfo=props.poisList.find(poi=> poi.id==props.id);
     this.state = {
       newPOI: {
-        id:this.props.id,
+        id:poiInfo.id,
         name:poiInfo.name,
         description:poiInfo.description,
         isSaved: false,
-        image:'',
-        url:'',
+        image:poiInfo.image,
+        url:poiInfo.url,
         group:4,
         lat: this.props.position.lat,
         lng: this.props.position.lng,
@@ -639,14 +644,15 @@ class POIForm extends React.Component {
   handlePOIAdd = event => {
     // Avoid reloading the page on form submission
     event.preventDefault();
+    console.log('added'+this.state.newPOI.id);
     this.state.newPOI.isSaved=true;
     this.props.updatePOI(this.state.newPOI);
     this.props.addPOI(this.state.newPOI);
-      let updatedPoisData = this.props.poisList;
-      let updatedPOI = updatedPoisData.find((c) => c.id === this.state.newPOI.id);
-      updatedPOI.name = this.state.newPOI.name;
-      updatedPOI.description =this.state.newPOI.description;
-      this.props.updatePOIs(updatedPoisData);
+    let updatedPoisData = this.props.poisList;
+    let updatedPOI = updatedPoisData.find((c) => c.id === this.state.newPOI.id);
+    updatedPOI.name = this.state.newPOI.name;
+    updatedPOI.description =this.state.newPOI.description;
+    this.props.updatePOIs(updatedPoisData);
   };
 
   render() {
