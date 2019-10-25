@@ -23,8 +23,8 @@ import  currentPosition from './icons/my_position.gif'
 // import Map3d from './3dMa'
 // import 'leaflet.sync/L.Map.Sync'
 import Div from "./Div";
-import ReactTimeout from 'react-timeout'
-import Timout from './timout'
+import popupsound from './sounds/pop.mp3'
+
 const {  BaseLayer, Overlay} = LayersControl
 const center = [51.505, -0.09]
 const rectangle = [[51.49, -0.08], [51.5, -0.06]]
@@ -60,9 +60,12 @@ function AppWrapper() {
     }
   }
 
-  async function getAlls()
+  async function getAll()
   {
-    return await requestPOI.getAllPOI(getTokenSilently,loginWithRedirect);
+
+      return await requestPOI.getAllPOI(getTokenSilently,loginWithRedirect);
+
+
   }
   async function deletePOI(poi)
   {
@@ -109,7 +112,7 @@ function AppWrapper() {
 
           <div className="w3-teal">
             <div className="w3-container">
-              <App poisList={props.poisList} getAlls={getAlls} addPOI={addPOI} deletePOI={deletePOI}  currentUser={user} key="app" user={user}></App>
+              <App poisList={props.poisList} getAll={getAll} addPOI={addPOI} deletePOI={deletePOI}  currentUser={user} key="app" user={user}></App>
             </div>
           </div>
 
@@ -244,6 +247,11 @@ class App extends Component {
       active:false,
       checkall:false,
       groupvalue:0,
+      poisListSize:0,
+      oldSizevalue:'',
+      notifmessage:'',
+      notifications:[],
+      notification:'',
       citiesData:[
         { name: "Tokyo", coordinates: [139.6917, 35.6895], population: 37843000 ,displayed:true},
         { name: "Jakarta", coordinates: [106.8650, -6.1751], population: 30539000 ,displayed:false},
@@ -266,10 +274,31 @@ class App extends Component {
 
 
 
-  testtimeOut()
+  async testtimeOut()
   {
-    this.setState({POIs:this.props.getAlls}) ;
-    console.log('relaod');
+
+
+
+
+    let updatedList=await this.props.getAll();
+    this.setState({POIs:updatedList});
+    console.log(updatedList);
+
+    if(this.state.oldSizevalue<updatedList.length)
+    {
+      let addNotif = this.state.notifications;
+      let addedElement =updatedList[updatedList.length-1];
+      addNotif.push(addedElement);
+      this.setState({notifications:addNotif})
+      this.notificationSound.src =popupsound;
+      this.notificationSound.play()
+    }
+
+    else
+      this.setState({notifmessage:""})
+
+    this.setState({poisListSize:updatedList.length})
+    this.setState({oldSizevalue:updatedList.length})
   }
   //scroll on the map when you click on a marker
   scrollToMyRef = () => window.scrollTo(0, this.leafletMap);
@@ -279,15 +308,14 @@ class App extends Component {
       o.isSaved = true;
       return o;
     });
-    setTimeout(function () {
-      //(this.setState({POIs:this.props.getAlls}) ;
-      console.log('pois list up to date')
-    }.bind(this),1000)
 
+
+
+    this.interval = setInterval(() =>  this.testtimeOut(), 3000);
 
     this.setState({POIs:result});
     this.changeOfPois();
-
+    this.setState({oldSizevalue:this.state.POIs.length})
 
   }
 
@@ -361,7 +389,16 @@ componentDidUpdate(prevProps: Readonly<P>, prevState: Readonly<S>, snapshot: SS)
 
     this.setState({Map:map});
   };
+  zoomOn(poi)
+  {
+    this.scrollToMyRef();
+    let map = this.state.Map;
+    map.zoom=15;
+    map.center=[poi.lat,poi.lng];
 
+    this.setState({Map:map});
+
+  }
   // DisplayGroup= (e) =>
   // {
   //   console.log("changed"+" gr : "+e.target.value);
@@ -410,6 +447,7 @@ componentDidUpdate(prevProps: Readonly<P>, prevState: Readonly<S>, snapshot: SS)
     }
   };
 componentWillUnmount(): void {
+  clearInterval(this.interval);
 }
 
   render() {
@@ -419,7 +457,40 @@ componentWillUnmount(): void {
 
     return (
       <div >
-        <div>Overview of Points of Interest (POIs)</div>
+
+        <div>
+          <div className="dropdown">
+            <audio ref={ref => this.notificationSound = ref} />
+            <div className="dropdown">
+              <button className="dropbtn">{this.state.notifications.length}</button>
+              <div className="dropdown-content">
+                {this.state.notifications.map((poi)=>
+                <a onClick={()=> { this.scrollToMyRef();
+
+                  let map = this.state.Map;
+                  map.zoom=15;
+                  map.center=[poi.lat,poi.lng];
+                  {this.setState({notifications:[]})}
+                  this.setState({Map:map});}}>
+                  <img width={50} height={50} src={poi.Creator.picture}/> {poi.Creator.name} added : {poi.name}
+
+
+                </a>
+
+                )}
+              </div>
+            </div>
+
+          </div>
+
+
+        </div>
+        <br/>
+        <br/><br/><br/><br/>
+
+
+
+
                     <Map className="map"
                          id="map"
                          minZoom ={this.state.Map.minZoom}
@@ -513,7 +584,7 @@ componentWillUnmount(): void {
                       {/*{this.state.Map!=null &&   <Div user={this.props.currentUser} geoLat={this.state.geoLat} geoLng={this.state.geoLng} Map={this.state.Map} pois={this.state.POIs} snycMap={this.snycMap}/>}*/}
 
                     </Map>
-        <Timout/>
+
         <button className={'ButtonBar'} onClick={this.ZoomOnMyLoca} >Where am I..?</button>
         <MenuOptions handleFilter={this.handleFilter} handleJustOwnClick={this.handleJustOwnClick} justOwn={this.state.justOwn}/>
         <div>
