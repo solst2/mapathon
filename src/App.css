@@ -20,6 +20,7 @@
   font-size: 12px;
   padding: 10px 24px;
   background-color: darkred;
+  color: white;
 }
 .ButtonLogout:hover {
   background-color: red;
@@ -29,4 +30,7 @@
 .ButtonBar:hover {
   background-color: #4CAF50;
   color: white;
+}
+.App-header {
+  text-align: center;
 }

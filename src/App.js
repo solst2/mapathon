@@ -594,9 +594,12 @@ class POIForm extends React.Component {
         name:poiInfo.name,
         description:poiInfo.description,
         isSaved: false,
+        image:'',
+        url:'',
         group:4,
         lat: this.props.position.lat,
-        lng: this.props.position.lng
+        lng: this.props.position.lng,
+        tag:''
       }
     };
   }
@@ -643,6 +646,30 @@ class POIForm extends React.Component {
                 placeholder="Description"
                 value={this.state.newPOI.description}
                 onChange={this.handleInputChange}
+            />
+            <FormInput
+                type="text"
+                name="image"
+                placeholder="Image"
+                value={this.state.newPOI.image}
+                onChange={this.handleInputChange}
+
+            />
+            <FormInput
+                type="text"
+                name="url"
+                placeholder="URL"
+                value={this.state.newPOI.url}
+                onChange={this.handleInputChange}
+
+            />
+            <FormInput
+                type="text"
+                name="tag"
+                placeholder="Tags"
+                value={this.state.newPOI.tag}
+                onChange={this.handleInputChange}
+
             />
             <br />
             <button className={'ButtonBar'} type="submit">Save</button>
