@@ -12,13 +12,16 @@ export class requestPOI {
                     body: JSON.stringify(updatePOI),
                     headers: {
                         Accept: "application/json",
+                        "Content-Type": "application/json",
                         Authorization: `Bearer ${token}`
                     }
                 }
             );
 
-            let data = await response.json();
-            return data;
+            console.log(response);
+            // let data = await response.json();
+            console.log('status'+response.status);
+            return response.status;
         } catch (e) {
             console.error(e);
             //await loginWithRedirect();
@@ -42,7 +45,7 @@ export class requestPOI {
             });
             console.log('save poi method called')
             let data = await response.json();
-            console.log(data)
+            console.log('status'+response.status);
             return data;
         } catch (e) {
             console.error(e);
@@ -59,6 +62,7 @@ export class requestPOI {
                 method: "GET",
                 headers: {
                     Accept: "application/json",
+                    "Content-Type": "application/json",
                     Authorization: `Bearer ${token}`
                 }
             });
@@ -80,6 +84,7 @@ export class requestPOI {
                     method: "GET",
                     headers: {
                         Accept: "application/json",
+                        "Content-Type": "application/json",
                         Authorization: `Bearer ${token}`
                     }
                 }
