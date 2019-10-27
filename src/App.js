@@ -14,21 +14,34 @@ import requestPOI from './requestPOI';
 import Control from 'react-leaflet-control';
 import * as ReactDOM from "react-dom";
 import targetIcon from './icons/target.png';
+import routIcon from './icons/rout.png';
 import positionIcon from './icons/postionIcon.png';
 import grp4IconImg from './icons/pin/green_pin.png';
 import grp3IconImg from './icons/pin/blue_pin.png';
 import grp2IconImg from './icons/pin/orange_pin.png';
 import grp1IconImg from './icons/pin/red_pin.png';
+import map2d from './icons/flatt.PNG';
+import map3d from './icons/globe.PNG';
+import searchResultImg from './icons/pin/searchResult.png';
 import  currentPosition from './icons/my_position.gif'
+import * as ELG from 'esri-leaflet-geocoder';
+import Div from './Div'
 // import Map3d from './3dMa'
 // import 'leaflet.sync/L.Map.Sync'
-import Div from "./Div";
+
+import Routing from "./RoutingMachine";
 import popupsound from './sounds/pop.mp3'
 
 const {  BaseLayer, Overlay} = LayersControl
 const center = [51.505, -0.09]
 const rectangle = [[51.49, -0.08], [51.5, -0.06]]
 
+var searchResultIcon = L.icon({
+  iconUrl:searchResultImg,
+  iconSize: [20, 30],
+  iconAnchor: [10, 30],
+  popupAnchor: [0, -20]
+});
 //main app, at the top of the tree
 function AppWrapper() {
   const { isAuthenticated, loginWithRedirect, loading,getTokenSilently,logout,user } = useAuth0();
@@ -80,7 +93,7 @@ function AppWrapper() {
   let handlePOIsClick = async e => {
     e.preventDefault();
     let poisList = await request(
-        `${process.env.REACT_APP_SERVER_URL}${endpoints.pois}?group=4`,
+        `${process.env.REACT_APP_SERVER_URL}${endpoints.pois}`,
         getTokenSilently,
         loginWithRedirect
     );
@@ -249,9 +262,9 @@ class App extends Component {
       groupvalue:0,
       poisListSize:0,
       oldSizevalue:'',
-      notifmessage:'',
       notifications:[],
-      notification:'',
+      searchResults:[],
+      is2ddisplayed:true,
       citiesData:[
         { name: "Tokyo", coordinates: [139.6917, 35.6895], population: 37843000 ,displayed:true},
         { name: "Jakarta", coordinates: [106.8650, -6.1751], population: 30539000 ,displayed:false},
@@ -271,6 +284,38 @@ class App extends Component {
     };
 
   }
+  componentDidMount() {
+
+    const map = this.leafletMap.leafletElement;
+    const searchControl = new ELG.Geosearch().addTo(map);
+    const results = new L.LayerGroup().addTo(map);
+    let searchResults=[]
+    searchControl.on('results', function(data){
+      results.clearLayers();
+      for (let i = data.results.length - 1; i >= 0; i--) {
+        searchResults.push(data.results[i]);
+
+        //results.addLayer(L.marker(data.results[i].latlng));
+      }
+
+    });
+    this.setState({searchResults:searchResults})
+    var result = this.props.poisList.map(el => {
+      var o = Object.assign({}, el);
+      o.isSaved = true;
+      return o;
+    });
+
+
+
+    // this.interval = setInterval(() =>  this.testtimeOut(), 3000);
+    this.interval = setInterval(() =>  this.testtimeOut(), 3000);
+
+    this.setState({POIs:result});
+    this.changeOfPois();
+    this.setState({oldSizevalue:this.state.POIs.length})
+
+  }
 
 
 
@@ -279,8 +324,13 @@ class App extends Component {
 
 
 
+    let result=await this.props.getAll();
 
-    let updatedList=await this.props.getAll();
+      var updatedList = result.map(el => {
+          var o = Object.assign({}, el);
+          o.isSaved = true;
+          return o;
+      });
     this.setState({POIs:updatedList});
     console.log(updatedList);
 
@@ -302,30 +352,13 @@ class App extends Component {
   }
   //scroll on the map when you click on a marker
   scrollToMyRef = () => window.scrollTo(0, this.leafletMap);
-  componentDidMount() {
-    var result = this.props.poisList.map(el => {
-      var o = Object.assign({}, el);
-      o.isSaved = true;
-      return o;
-    });
 
-
-
-    this.interval = setInterval(() =>  this.testtimeOut(), 3000);
-
-    this.setState({POIs:result});
-    this.changeOfPois();
-    this.setState({oldSizevalue:this.state.POIs.length})
-
-  }
 
   updateCities = ( cities ) => {
     this.setState({citiesData: cities});
 
   };
-componentDidUpdate(prevProps: Readonly<P>, prevState: Readonly<S>, snapshot: SS): void {
 
-}
 
   //add a marker when you clic on the map
   addMarker = (e) => {
@@ -333,10 +366,12 @@ componentDidUpdate(prevProps: Readonly<P>, prevState: Readonly<S>, snapshot: SS)
     var newPoi={lat:e.latlng.lat,lng:e.latlng.lng,name:'',description:'',"group": 4,isSaved:false,Creator:{id:this.props.currentUser.sub}}
     console.log('Point '+newPoi.id+ ' at '+newPoi.lat +"/"+newPoi.lng);
     pois.push(newPoi);
-    this.state.Map.zoom=3;
+    this.state.Map.zoom=10;
     this.state.Map.center=[e.latlng.lat,e.latlng.lng];
     this.setState({POIs:pois});
     this.changeOfPois();
+
+
   };
     getElem = () => {
         return this.domElem;
@@ -364,7 +399,12 @@ componentDidUpdate(prevProps: Readonly<P>, prevState: Readonly<S>, snapshot: SS)
   updatePOIs= (pois) => {
     this.setState({POIs: pois});
   };
-
+  addRoute= (e) =>
+  {
+    const routes=this.state.Routes
+    routes.push({})
+    this.setState({Routes:routes});
+  }
   zoomOnMarker= (e) =>
   {
     this.scrollToMyRef();
@@ -449,7 +489,10 @@ componentDidUpdate(prevProps: Readonly<P>, prevState: Readonly<S>, snapshot: SS)
 componentWillUnmount(): void {
   clearInterval(this.interval);
 }
-
+  setIs2ddisplayed=()=>
+  {
+    this.setState({is2ddisplayed:!this.state.is2ddisplayed})
+  }
   render() {
     let filteredCities = this.state.citiesData.filter((city) => city.displayed);
     //let filterPOIs = this.state.POIs.filter((poi) => poi.user.Creator.id==this.props.currentUser);
@@ -491,7 +534,7 @@ componentWillUnmount(): void {
 
 
 
-                    <Map className="map"
+        {this.state.is2ddisplayed&&<Map className="map"
                          id="map"
                          minZoom ={this.state.Map.minZoom}
                          center={this.state.Map.center}
@@ -499,7 +542,7 @@ componentWillUnmount(): void {
                          onClick={this.addMarker}
                          zoom={this.state.Map.zoom}
                          ref={m => { this.leafletMap = m; }}>
-                      <div>Zrd</div>
+
                       <LayersControl>
                         <BaseLayer checked name="Default">
                           <TileLayer
@@ -548,6 +591,17 @@ componentWillUnmount(): void {
                             )}
                           </LayerGroup>
                         </Overlay>
+                        <Overlay name="search results" checked>
+                          <LayerGroup>
+                            { this.state.searchResults.map((searchpoint) =>
+                                <Marker position={searchpoint.latlng} icon={searchResultIcon}>
+                                  <Popup>
+                                    {searchpoint.text}
+                                  </Popup>
+                                </Marker>
+                            )}
+                          </LayerGroup>
+                        </Overlay>
                         <Overlay key="pois" name="pois" checked>
                           <LayerGroup>
                             { this.state.filteredPoisToShow.map((poi) =>
@@ -566,6 +620,10 @@ componentWillUnmount(): void {
                         <Control position="topleft" >
                           <img src={targetIcon} onClick={this.ZoomOnMyLoca} width={20} height={20}></img>
                         </Control>
+
+                      <Control position="bottomright" >
+                        <img src={routIcon} onClick={this.addRoute} width={20} height={20}></img>
+                      </Control>
                       {/*  <Control position="topleft" >*/}
                       {/*    <div>Group</div>*/}
                       {/*    <select onChange={this.DisplayGroup} >*/}
@@ -581,10 +639,18 @@ componentWillUnmount(): void {
                       {/*<s/>*/}
                       {/*  </Control>*/}
 
-                      {/*{this.state.Map!=null &&   <Div user={this.props.currentUser} geoLat={this.state.geoLat} geoLng={this.state.geoLng} Map={this.state.Map} pois={this.state.POIs} snycMap={this.snycMap}/>}*/}
-
-                    </Map>
-
+                      {/*{this.state.Map!=null &&   }*!/*/}
+                        {this.state.Routes.map((route) =>
+                            <Routing map={this.leafletMap} route={route}/>
+                        )}
+                      <div className='pointer'></div>
+          {/*<Control position="bottomright">*/}
+          {/*  <img width={70} height={70} src={!this.state.is2ddisplayed ? map2d : map3d} onClick={()=>{let updateDisplayed = !this.state.is2ddisplayed*/}
+          {/*    this.setState({is2ddisplayed:updateDisplayed})*/}
+          {/*  } }/>*/}
+          {/*</Control>*/}
+                    </Map>}
+          {/*{!this.state.is2ddisplayed &&   <Div is2ddisplayed={this.setIs2ddisplayed} user={this.props.currentUser} geoLat={this.state.geoLat} geoLng={this.state.geoLng} Map={this.state.Map} pois={this.state.POIs} snycMap={this.snycMap}/>}*/}
         <button className={'ButtonBar'} onClick={this.ZoomOnMyLoca} >Where am I..?</button>
         <MenuOptions handleFilter={this.handleFilter} handleJustOwnClick={this.handleJustOwnClick} justOwn={this.state.justOwn}/>
         <div>
@@ -599,11 +665,7 @@ componentWillUnmount(): void {
       </div>
     );
   }
-  snycMap(map2)
-  {
-  this.leafletMap.leafletMap.sync(map2);
-   // map2.sync(this.leafletMap);
-  }
+
 }
 
 
@@ -633,7 +695,7 @@ class POIMarker extends  React.Component{
   render() {
     let {updatePOIs,poisList,id,addPOI} = this.props;
     let position={lat:this.props.lat,lng:this.props.lng};
-
+    //  this.props.poi.Categories.map((c)=>console.log(c.name))
     var myIcon = L.icon({
       iconUrl:getIcon({group:this.state.newPOI.group}),
       iconSize: [20, 30],
@@ -689,7 +751,6 @@ class POIForm extends React.Component {
     let poiInfo=props.poisList.find(poi=> poi.id==props.id);
     this.state = {
       newPOI: {
-        id:poiInfo.id,
         name:poiInfo.name,
         description:poiInfo.description,
         isSaved: false,

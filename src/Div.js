@@ -14,15 +14,15 @@ class Div extends React.Component{
         if (this.props.user.sub == 'github|48020196')
             return (
 
-                    <Control position="bottomleft">
-                    <Map3d Map={Map} geoLat={this.props.geoLat} geoLng={this.props.geoLng} snycMap={this.props.snycMap} crs={L.CRS.EPSG3395} pois={this.props.pois}>
+
+                    <Map3d is2ddisplayed={this.props.is2ddisplayed} Map={Map} geoLat={this.props.geoLat} geoLng={this.props.geoLng} snycMap={this.props.snycMap} crs={L.CRS.EPSG3395} pois={this.props.pois}>
 
                     </Map3d>
-                </Control>
+
             )
         else
-            return (<div></div>)
+            return (<div>d</div>)
     }
 
 }
-export  default Div;
+export default Div;

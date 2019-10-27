@@ -1,6 +1,8 @@
 // import React, {useState,Component,useEffect,useRef} from 'react';
 // import * as eeGeo from 'wrld.js';
-// import {WrldMarkerController} from 'wrld.js'
+// import L from 'leaflet'
+// import {on} from "leaflet/src/dom/DomEvent";
+// import map2d from './icons/flatt.PNG';
 // class Map3d extends React.Component {
 //
 //     constructor(props)
@@ -21,7 +23,7 @@
 //            // console.log("my position : "+this.state.Map.center);
 //         });
 //
-//
+// let fucn= this.props.is2ddisplayed;
 //         var keys = Object.keys(this.map);
 //
 //         var getKeys = function(obj){
@@ -33,20 +35,47 @@
 //         }
 //
 //         console.log("map "+keys)
-//         this.props.pois.map((poi)=>
-//             eeGeo.marker({lng:poi.lng,lat:poi.lat}, { title: "My marker" }).addTo(this.map))
+//       this.props.pois.map((poi)=>
+//           eeGeo.marker({lng:poi.lng,lat:poi.lat}, { title: "My marker" }).addTo(this.map))
+//
+//         let MyControl =   L.Control.extend({
+//             options: {
+//                 position: 'topright'
+//             },
+//
+//             onAdd: function (map) {
+//                 // create the control container with a particular class name
+//                 let container =   L.DomUtil.create('img', 'my-custom-control')
+//                 L.DomEvent.addListener(container, 'click', fucn)
+//                 // ... initialize other DOM elements, add listeners, etc.
+//                 container.src=map2d;
+//                 container.height=70
+//                 container.width=80
+//                 return container;
+//             },
+//             onClick: function () {
 //
 //
+//                 fucn()
+//             }
+//         });
+//
+//         this.map.addControl(new MyControl());
 //       //  var marker = eeGeo.marker([37.7858, -122.401], { title: "My marker" }).addTo(this.map);
 //
 //     }
+//    callParentfunction ()
+//    {
 //
+//    }
 // componentDidUpdate(prevProps: Readonly<P>, prevState: Readonly<S>, snapshot: SS): void {
 //     this.map.setView(this.props.Map.center, 1, {
 //         animate: false
 //     });
-//     this.props.pois.map((poi)=>
+//      this.props.pois.map((poi)=>
 //         eeGeo.marker({lng:poi.lng,lat:poi.lat}, { title: "My marker" }).addTo(this.map))
+//
+//
 //
 // }
 //

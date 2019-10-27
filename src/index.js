@@ -8,6 +8,8 @@ import { Auth0Provider } from "./react-auth0-spa";
 import { createBrowserHistory } from "history";
 import 'leaflet/dist/leaflet.css';
 import './w3template.css';
+import "esri-leaflet-geocoder/dist/esri-leaflet-geocoder.js";
+import "esri-leaflet-geocoder/dist/esri-leaflet-geocoder.css";
 let history = createBrowserHistory();
 
 const onRedirectCallback = appState => {

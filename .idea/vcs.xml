@@ -2,6 +2,8 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/wrld.js" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/wrld.js/wrld.js" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/wrld.js" vcs="Git" />
   </component>
 </project>
