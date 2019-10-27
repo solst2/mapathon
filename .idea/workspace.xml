@@ -59,18 +59,18 @@
     <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Romain\WebstormProjects\mapathon\src\gpx" />
-      <recent name="C:\mapathon2\src\icons" />
-      <recent name="C:\Users\Romain\WebstormProjects\mapathon" />
-      <recent name="C:\Users\Romain\WebstormProjects\mapathon\src" />
-      <recent name="$PROJECT_DIR$/src/components" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\mapathon2\src" />
       <recent name="C:\Users\Romain\WebstormProjects\mapathon\src" />
       <recent name="D:\Schule Fächerunterlagen\5. Semester\Project\Project\mapathon\public" />
       <recent name="$PROJECT_DIR$/src/assets" />
+      <recent name="$PROJECT_DIR$/src/components" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Romain\WebstormProjects\mapathon\src\gpx" />
+      <recent name="C:\mapathon2\src\icons" />
+      <recent name="C:\Users\Romain\WebstormProjects\mapathon" />
+      <recent name="C:\Users\Romain\WebstormProjects\mapathon\src" />
       <recent name="$PROJECT_DIR$/src/components" />
     </key>
   </component>
@@ -315,14 +315,8 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/App.js</url>
-          <line>524</line>
+          <line>535</line>
           <option name="timeStamp" value="1" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/src/App.js</url>
-          <line>588</line>
-          <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="8" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>

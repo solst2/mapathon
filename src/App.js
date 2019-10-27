@@ -14,21 +14,32 @@ import requestPOI from './requestPOI';
 import Control from 'react-leaflet-control';
 import * as ReactDOM from "react-dom";
 import targetIcon from './icons/target.png';
-import positionIcon from './icons/postionIcon.png';
 import grp4IconImg from './icons/pin/green_pin.png';
 import grp3IconImg from './icons/pin/blue_pin.png';
 import grp2IconImg from './icons/pin/orange_pin.png';
 import grp1IconImg from './icons/pin/red_pin.png';
+import map2d from './icons/flatt.PNG';
+import map3d from './icons/globe.PNG';
+import searchResultImg from './icons/pin/searchResult.png';
 import  currentPosition from './icons/my_position.gif'
+import * as ELG from 'esri-leaflet-geocoder';
+import Div from './Div'
 // import Map3d from './3dMa'
 // import 'leaflet.sync/L.Map.Sync'
-import Div from "./Div";
-import ReactTimeout from 'react-timeout'
-import Timout from './timout'
+
+import Routing from "./RoutingMachine";
+import popupsound from './sounds/pop.mp3'
+
 const {  BaseLayer, Overlay} = LayersControl
 const center = [51.505, -0.09]
 const rectangle = [[51.49, -0.08], [51.5, -0.06]]
 
+var searchResultIcon = L.icon({
+  iconUrl:searchResultImg,
+  iconSize: [20, 30],
+  iconAnchor: [10, 30],
+  popupAnchor: [0, -20]
+});
 //main app, at the top of the tree
 function AppWrapper() {
   const { isAuthenticated, loginWithRedirect, loading,getTokenSilently,logout,user } = useAuth0();
@@ -586,15 +597,15 @@ componentWillUnmount(): void {
                           </LayerGroup>
                         </Overlay>
                         <Overlay name="search results" checked>
-                          <LayerGroup>
-                            { this.state.searchResults.map((searchpoint) =>
-                                <Marker position={searchpoint.latlng} icon={searchResultIcon}>
-                                  <Popup>
-                                    {searchpoint.text}
-                                  </Popup>
-                                </Marker>
-                            )}
-                          </LayerGroup>
+                          {/*<LayerGroup>*/}
+                          {/*  { this.state.searchResults.map((searchpoint) =>*/}
+                          {/*      <Marker position={searchpoint.latlng} icon={searchResultIcon}>*/}
+                          {/*        <Popup>*/}
+                          {/*          {searchpoint.text}*/}
+                          {/*        </Popup>*/}
+                          {/*      </Marker>*/}
+                          {/*  )}*/}
+                          {/*</LayerGroup>*/}
                         </Overlay>
                         <Overlay key="pois" name="pois" checked>
                           <LayerGroup>
@@ -615,9 +626,9 @@ componentWillUnmount(): void {
                           <img src={targetIcon} onClick={this.ZoomOnMyLoca} width={20} height={20}></img>
                         </Control>
 
-                      <Control position="bottomright" >
-                        <img src={routIcon} onClick={this.addRoute} width={20} height={20}></img>
-                      </Control>
+                      {/*<Control position="bottomright" >*/}
+                      {/*  <img src={routIcon} onClick={this.addRoute} width={20} height={20}></img>*/}
+                      {/*</Control>*/}
                       {/*  <Control position="topleft" >*/}
                       {/*    <div>Group</div>*/}
                       {/*    <select onChange={this.DisplayGroup} >*/}
@@ -634,9 +645,9 @@ componentWillUnmount(): void {
                       {/*  </Control>*/}
 
                       {/*{this.state.Map!=null &&   }*!/*/}
-                        {this.state.Routes.map((route) =>
-                            <Routing map={this.leafletMap} route={route}/>
-                        )}
+                      {/*  {this.state.Routes.map((route) =>*/}
+                      {/*      <Routing map={this.leafletMap} route={route}/>*/}
+                      {/*  )}*/}
                       <div className='pointer'></div>
           {/*<Control position="bottomright">*/}
           {/*  <img width={70} height={70} src={!this.state.is2ddisplayed ? map2d : map3d} onClick={()=>{let updateDisplayed = !this.state.is2ddisplayed*/}
