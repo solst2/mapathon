@@ -19,9 +19,9 @@ export class requestPOI {
             );
 
             console.log(response);
-            // let data = await response.json();
+            let data = await response.json();
             console.log('status'+response.status);
-            return response.status;
+            return data;
         } catch (e) {
             console.error(e);
             //await loginWithRedirect();

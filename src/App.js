@@ -14,34 +14,21 @@ import requestPOI from './requestPOI';
 import Control from 'react-leaflet-control';
 import * as ReactDOM from "react-dom";
 import targetIcon from './icons/target.png';
-import routIcon from './icons/rout.png';
 import positionIcon from './icons/postionIcon.png';
 import grp4IconImg from './icons/pin/green_pin.png';
 import grp3IconImg from './icons/pin/blue_pin.png';
 import grp2IconImg from './icons/pin/orange_pin.png';
 import grp1IconImg from './icons/pin/red_pin.png';
-import map2d from './icons/flatt.PNG';
-import map3d from './icons/globe.PNG';
-import searchResultImg from './icons/pin/searchResult.png';
 import  currentPosition from './icons/my_position.gif'
-import * as ELG from 'esri-leaflet-geocoder';
-import Div from './Div'
 // import Map3d from './3dMa'
 // import 'leaflet.sync/L.Map.Sync'
-
-import Routing from "./RoutingMachine";
-import popupsound from './sounds/pop.mp3'
-
+import Div from "./Div";
+import ReactTimeout from 'react-timeout'
+import Timout from './timout'
 const {  BaseLayer, Overlay} = LayersControl
 const center = [51.505, -0.09]
 const rectangle = [[51.49, -0.08], [51.5, -0.06]]
 
-var searchResultIcon = L.icon({
-  iconUrl:searchResultImg,
-  iconSize: [20, 30],
-  iconAnchor: [10, 30],
-  popupAnchor: [0, -20]
-});
 //main app, at the top of the tree
 function AppWrapper() {
   const { isAuthenticated, loginWithRedirect, loading,getTokenSilently,logout,user } = useAuth0();
@@ -67,9 +54,11 @@ function AppWrapper() {
   {
     console.log('new POIIII added'+{...newPOI});
     if (newPOI.id === undefined){
-      return await requestPOI.addNewPOI(newPOI,getTokenSilently,loginWithRedirect)
+      let answer = await requestPOI.addNewPOI(newPOI,getTokenSilently,loginWithRedirect);
+      return answer;
     } else {
-      return await requestPOI.updatePOI(newPOI.id,newPOI,getTokenSilently,loginWithRedirect)
+      let answer = await requestPOI.updatePOI(newPOI.id,newPOI,getTokenSilently,loginWithRedirect);
+      return answer;
     }
   }
 
@@ -305,7 +294,10 @@ class App extends Component {
       o.isSaved = true;
       return o;
     });
-
+    setTimeout(function () {
+      //(this.setState({POIs:this.props.getAlls}) ;
+      console.log('pois list up to date')
+    }.bind(this),1000)
 
 
     // this.interval = setInterval(() =>  this.testtimeOut(), 3000);
@@ -358,7 +350,9 @@ class App extends Component {
     this.setState({citiesData: cities});
 
   };
+componentDidUpdate(prevProps: Readonly<P>, prevState: Readonly<S>, snapshot: SS): void {
 
+}
 
   //add a marker when you clic on the map
   addMarker = (e) => {
@@ -751,6 +745,7 @@ class POIForm extends React.Component {
     let poiInfo=props.poisList.find(poi=> poi.id==props.id);
     this.state = {
       newPOI: {
+        id:poiInfo.id,
         name:poiInfo.name,
         description:poiInfo.description,
         isSaved: false,
