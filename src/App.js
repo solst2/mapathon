@@ -26,14 +26,19 @@ import * as ELG from 'esri-leaflet-geocoder';
 import Div from './Div'
 // import Map3d from './3dMa'
 // import 'leaflet.sync/L.Map.Sync'
-
+import routeIconImg from './icons/rout.png'
 import Routing from "./RoutingMachine";
 import popupsound from './sounds/pop.mp3'
 
 const {  BaseLayer, Overlay} = LayersControl
 const center = [51.505, -0.09]
 const rectangle = [[51.49, -0.08], [51.5, -0.06]]
-
+var routeIcon = L.icon({
+  iconUrl:routeIconImg,
+  iconSize: [20, 30],
+  iconAnchor: [10, 30],
+  popupAnchor: [0, -20]
+});
 var searchResultIcon = L.icon({
   iconUrl:searchResultImg,
   iconSize: [20, 30],
@@ -597,15 +602,15 @@ componentWillUnmount(): void {
                           </LayerGroup>
                         </Overlay>
                         <Overlay name="search results" checked>
-                          {/*<LayerGroup>*/}
-                          {/*  { this.state.searchResults.map((searchpoint) =>*/}
-                          {/*      <Marker position={searchpoint.latlng} icon={searchResultIcon}>*/}
-                          {/*        <Popup>*/}
-                          {/*          {searchpoint.text}*/}
-                          {/*        </Popup>*/}
-                          {/*      </Marker>*/}
-                          {/*  )}*/}
-                          {/*</LayerGroup>*/}
+                          <LayerGroup>
+                            { this.state.searchResults.map((searchpoint) =>
+                                <Marker position={searchpoint.latlng} icon={searchResultIcon}>
+                                  <Popup>
+                                    {searchpoint.text}
+                                  </Popup>
+                                </Marker>
+                            )}
+                          </LayerGroup>
                         </Overlay>
                         <Overlay key="pois" name="pois" checked>
                           <LayerGroup>
@@ -626,9 +631,9 @@ componentWillUnmount(): void {
                           <img src={targetIcon} onClick={this.ZoomOnMyLoca} width={20} height={20}></img>
                         </Control>
 
-                      {/*<Control position="bottomright" >*/}
-                      {/*  <img src={routIcon} onClick={this.addRoute} width={20} height={20}></img>*/}
-                      {/*</Control>*/}
+                      <Control position="bottomright" >
+                        <img src={routeIconImg} onClick={this.addRoute} width={20} height={20}></img>
+                      </Control>
                       {/*  <Control position="topleft" >*/}
                       {/*    <div>Group</div>*/}
                       {/*    <select onChange={this.DisplayGroup} >*/}
@@ -644,10 +649,10 @@ componentWillUnmount(): void {
                       {/*<s/>*/}
                       {/*  </Control>*/}
 
-                      {/*{this.state.Map!=null &&   }*!/*/}
-                      {/*  {this.state.Routes.map((route) =>*/}
-                      {/*      <Routing map={this.leafletMap} route={route}/>*/}
-                      {/*  )}*/}
+
+                        {this.state.Routes.map((route) =>
+                            <Routing map={this.leafletMap} route={route}/>
+                        )}
                       <div className='pointer'></div>
           {/*<Control position="bottomright">*/}
           {/*  <img width={70} height={70} src={!this.state.is2ddisplayed ? map2d : map3d} onClick={()=>{let updateDisplayed = !this.state.is2ddisplayed*/}
