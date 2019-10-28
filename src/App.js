@@ -310,13 +310,8 @@ class App extends Component {
       o.isSaved = true;
       return o;
     });
-    setTimeout(function () {
-      //(this.setState({POIs:this.props.getAlls}) ;
-      console.log('pois list up to date')
-    }.bind(this),1000)
 
 
-    // this.interval = setInterval(() =>  this.testtimeOut(), 3000);
     this.interval = setInterval(() =>  this.testtimeOut(), 3000);
 
     this.setState({POIs:result});
@@ -329,17 +324,15 @@ class App extends Component {
 
   async testtimeOut()
   {
-
-
-
     let result=await this.props.getAll();
 
       var updatedList = result.map(el => {
           var o = Object.assign({}, el);
-          o.isSaved = true;
+          el.name === '' ? o.isSaved = false : o.isSaved = true;
           return o;
       });
     this.setState({POIs:updatedList});
+    this.changeOfPois();
     console.log(updatedList);
 
     if(this.state.oldSizevalue<updatedList.length)
@@ -375,6 +368,7 @@ componentDidUpdate(prevProps: Readonly<P>, prevState: Readonly<S>, snapshot: SS)
     const pois=this.state.POIs;
     var newPoi={lat:e.latlng.lat,lng:e.latlng.lng,name:'',description:'',"group": 4,isSaved:false,Creator:{id:this.props.currentUser.sub}}
     console.log('Point '+newPoi.id+ ' at '+newPoi.lat +"/"+newPoi.lng);
+    this.props.addPOI(newPoi);
     pois.push(newPoi);
     this.state.Map.zoom=10;
     this.state.Map.center=[e.latlng.lat,e.latlng.lng];
@@ -791,11 +785,11 @@ class POIForm extends React.Component {
     this.state.newPOI.isSaved=true;
     this.props.updatePOI(this.state.newPOI);
     this.props.addPOI(this.state.newPOI);
-    let updatedPoisData = this.props.poisList;
-    let updatedPOI = updatedPoisData.find((c) => c.id === this.state.newPOI.id);
-    updatedPOI.name = this.state.newPOI.name;
-    updatedPOI.description =this.state.newPOI.description;
-    this.props.updatePOIs(updatedPoisData);
+    // let updatedPoisData = this.props.poisList;
+    // let updatedPOI = updatedPoisData.find((c) => c.id === this.state.newPOI.id);
+    // updatedPOI.name = this.state.newPOI.name;
+    // updatedPOI.description =this.state.newPOI.description;
+    // this.props.updatePOIs(updatedPoisData);
   };
 
   render() {
