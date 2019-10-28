@@ -58,7 +58,7 @@ export class requestPOI {
     static async getAllPOI(getTokenSilently, loginWithRedirect) {
         try {
             let token = await getTokenSilently();
-            let response = await fetch(`${process.env.REACT_APP_SERVER_URL}/poi`, {
+            let response = await fetch(`${process.env.REACT_APP_SERVER_URL}/poi?group=4`, {
                 method: "GET",
                 headers: {
                     Accept: "application/json",

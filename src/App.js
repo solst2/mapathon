@@ -369,14 +369,12 @@ componentDidUpdate(prevProps: Readonly<P>, prevState: Readonly<S>, snapshot: SS)
     var newPoi={lat:e.latlng.lat,lng:e.latlng.lng,name:'',description:'',"group": 4,isSaved:false,Creator:{id:this.props.currentUser.sub}}
     console.log('Point '+newPoi.id+ ' at '+newPoi.lat +"/"+newPoi.lng);
     this.props.addPOI(newPoi);
-    pois.push(newPoi);
-    this.state.Map.zoom=10;
+    this.state.Map.zoom=17;
     this.state.Map.center=[e.latlng.lat,e.latlng.lng];
     this.setState({POIs:pois});
     this.changeOfPois();
+    };
 
-
-  };
     getElem = () => {
         return this.domElem;
     }
@@ -388,9 +386,9 @@ componentDidUpdate(prevProps: Readonly<P>, prevState: Readonly<S>, snapshot: SS)
         const POIs = this.state.POIs.filter(item => item !== deletedPOI);
         this.setState({POIs: POIs});
         this.changeOfPois();
-      } else {
-        window.alert('You are not allowed to delete this.');
       }
+    } else {
+      window.alert('You are not allowed to delete this.');
     }
   };
 
@@ -400,9 +398,6 @@ componentDidUpdate(prevProps: Readonly<P>, prevState: Readonly<S>, snapshot: SS)
     this.setState({geoLng:position.coords.longitude});
   };
 
-  updatePOIs= (pois) => {
-    this.setState({POIs: pois});
-  };
   addRoute= (e) =>
   {
     const routes=this.state.Routes
@@ -591,7 +586,7 @@ componentWillUnmount(): void {
                         <Overlay name="My poi">
                           <LayerGroup>
                             { this.state.filteredPoisToShow.filter((poi)=>poi.Creator.id==this.props.currentUser.sub).map((poi) =>
-                                <POIMarker group={poi.group} addPOI={this.props.addPOI} isSaved={poi.isSaved} lat={poi.lat} lng={poi.lng} poi={poi} updatePOIs={this.updatePOIs} poisList={this.state.filteredPoisToShow} id={poi.id}/>
+                                <POIMarker group={poi.group} addPOI={this.props.addPOI} isSaved={poi.isSaved} lat={poi.lat} lng={poi.lng} poi={poi} poisList={this.state.filteredPoisToShow} id={poi.id}/>
                             )}
                           </LayerGroup>
                         </Overlay>
@@ -609,7 +604,7 @@ componentWillUnmount(): void {
                         <Overlay key="pois" name="pois" checked>
                           <LayerGroup>
                             { this.state.filteredPoisToShow.map((poi) =>
-                                <POIMarker addPOI={this.props.addPOI} isSaved={poi.isSaved} lat={poi.lat} lng={poi.lng} poi={poi} updatePOIs={this.updatePOIs} poisList={this.state.POIs} id={poi.id}/>
+                                <POIMarker addPOI={this.props.addPOI} isSaved={poi.isSaved} lat={poi.lat} lng={poi.lng} poi={poi} poisList={this.state.POIs} id={poi.id}/>
                             )}
                           </LayerGroup>
                         </Overlay>
@@ -697,7 +692,7 @@ class POIMarker extends  React.Component{
   };
 
   render() {
-    let {updatePOIs,poisList,id,addPOI} = this.props;
+    let {poisList,id,addPOI} = this.props;
     let position={lat:this.props.lat,lng:this.props.lng};
     //  this.props.poi.Categories.map((c)=>console.log(c.name))
     var myIcon = L.icon({
@@ -727,7 +722,7 @@ class POIMarker extends  React.Component{
           <div >
             <Marker position={position} icon={myIcon}>
               <Popup>
-                <POIForm addPOI={addPOI} updatePOIs={updatePOIs} poisList={poisList} updatePOI={this.updatePOI} position={position} id={id}/>
+                <POIForm addPOI={addPOI} poisList={poisList} updatePOI={this.updatePOI} position={position} id={id}/>
               </Popup>
             </Marker>
           </div>
@@ -785,11 +780,6 @@ class POIForm extends React.Component {
     this.state.newPOI.isSaved=true;
     this.props.updatePOI(this.state.newPOI);
     this.props.addPOI(this.state.newPOI);
-    // let updatedPoisData = this.props.poisList;
-    // let updatedPOI = updatedPoisData.find((c) => c.id === this.state.newPOI.id);
-    // updatedPOI.name = this.state.newPOI.name;
-    // updatedPOI.description =this.state.newPOI.description;
-    // this.props.updatePOIs(updatedPoisData);
   };
 
   render() {
