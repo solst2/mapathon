@@ -270,22 +270,6 @@ class App extends Component {
       notifications:[],
       searchResults:[],
       is2ddisplayed:true,
-      citiesData:[
-        { name: "Tokyo", coordinates: [139.6917, 35.6895], population: 37843000 ,displayed:true},
-        { name: "Jakarta", coordinates: [106.8650, -6.1751], population: 30539000 ,displayed:false},
-        { name: "Delhi", coordinates: [77.1025, 28.7041], population: 24998000 ,displayed:false},
-        { name: "Seoul", coordinates: [126.9780, 37.5665], population: 23480000 ,displayed:false},
-        { name: "Shanghai", coordinates: [121.4737, 31.2304], population: 23416000 ,displayed:false},
-        { name: "Karachi", coordinates: [67.0099, 24.8615], population: 22123000 ,displayed:false},
-        { name: "Beijing", coordinates: [116.4074, 39.9042],population: 21009000 ,displayed:false},
-        { name: "Mumbai", coordinates: [72.8777, 19.0760],population: 17712000 ,displayed:false},
-        { name: "Osaka", coordinates: [135.5022, 34.6937], population: 17444000 ,displayed:false},
-        { name: "Moscow", coordinates: [37.6173, 55.7558], population: 16170000 ,displayed:false},
-        { name: "Dhaka", coordinates: [90.4125, 23.8103], population: 15669000 ,displayed:false},
-        { name: "Bangkok", coordinates: [100.5018, 13.7563],population: 14998000 ,displayed:false},
-        { name: "Kolkata", coordinates: [88.3639, 22.5726], population: 14667000 ,displayed:false},
-        { name: "Istanbul", coordinates: [28.9784, 41.0082], population: 13287000 ,displayed:true},
-      ]
     };
 
   }
@@ -398,7 +382,14 @@ componentDidUpdate(prevProps: Readonly<P>, prevState: Readonly<S>, snapshot: SS)
       window.alert('You are not allowed to delete this.');
     }
   };
+  deleteMyPOI= (e) =>  {
 
+    this.state.POIs.map((poi)=>
+    {if (poi.Creator.id === this.props.user.sub) {
+        console.log("answer: "+this.props.deletePOI(poi)+":");
+      }}
+    )
+  };
   upGeoLocalisation=(position)=>
   {
     this.setState({geoLat:position.coords.latitude});
@@ -435,23 +426,6 @@ componentDidUpdate(prevProps: Readonly<P>, prevState: Readonly<S>, snapshot: SS)
 
     this.setState({Map:map});
   };
-  zoomOn(poi)
-  {
-    this.scrollToMyRef();
-    let map = this.state.Map;
-    map.zoom=15;
-    map.center=[poi.lat,poi.lng];
-
-    this.setState({Map:map});
-
-  }
-  // DisplayGroup= (e) =>
-  // {
-  //   console.log("changed"+" gr : "+e.target.value);
-  //   let poisFiltered=this.state.POIs.filter((poi) => poi.group==e.target.value);
-  //   this.setState({filteredPois:poisFiltered})
-  // };
-
   handleFilter = async e => {
     console.log(e.target.value);
     this.setState({filterPoi:e.target.value});
@@ -500,15 +474,15 @@ componentWillUnmount(): void {
     this.setState({is2ddisplayed:!this.state.is2ddisplayed})
   }
   render() {
-    let filteredCities = this.state.citiesData.filter((city) => city.displayed);
-    //let filterPOIs = this.state.POIs.filter((poi) => poi.user.Creator.id==this.props.currentUser);
-    // let filterPOIs = this.state.POIs.filter((poi) => poi.group==this.state.groupvalue);
+
 
     return (
       <div >
 
         <div>
+          <button onClick={this.deleteMyPOI }>Delete all my pois</button>
           <div className="dropdown">
+
             <audio ref={ref => this.notificationSound = ref} />
             <div className="dropdown">
               <button className="dropbtn">{this.state.notifications.length}</button>
