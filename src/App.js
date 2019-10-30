@@ -339,6 +339,7 @@ class App extends Component {
     {
       let addNotif = this.state.notifications;
       let addedElement =updatedList[updatedList.length-1];
+      if(addedElement.Creator.id!=this.props.user)
       addNotif.push(addedElement);
       this.setState({notifications:addNotif})
       this.notificationSound.src =popupsound;
@@ -371,6 +372,12 @@ componentDidUpdate(prevProps: Readonly<P>, prevState: Readonly<S>, snapshot: SS)
     this.props.addPOI(newPoi);
     this.state.Map.zoom=17;
     this.state.Map.center=[e.latlng.lat,e.latlng.lng];
+    console.log("markers");
+    console.log(this.leafletMap.leafletElement._targets);
+    console.log(  this.leafletMap.leafletElement);
+
+
+
     this.setState({POIs:pois});
     this.changeOfPois();
     };
@@ -667,7 +674,11 @@ componentWillUnmount(): void {
 
 }
 
-
+const initMarker = ref => {
+  if (ref) {
+    ref.leafletElement.openPopup()
+  }
+}
 class POIMarker extends  React.Component{
   constructor(props) {
     super(props);
@@ -690,6 +701,9 @@ class POIMarker extends  React.Component{
   updatePOI = (poi) => {
     this.setState({newPOI: poi});
   };
+componentDidMount(): void {
+
+}
 
   render() {
     let {poisList,id,addPOI} = this.props;
@@ -707,7 +721,7 @@ class POIMarker extends  React.Component{
       return (
           <div>
             <Marker elevation={260.0}  position={position} icon={myIcon} draggable='true'>
-              <Popup>
+              <Popup >
                 <h1>{this.state.newPOI.name}</h1>
                 <p>{this.state.newPOI.description}</p>
                 <p>{this.state.newPOI.group}</p>
@@ -720,7 +734,7 @@ class POIMarker extends  React.Component{
     else
       return (
           <div >
-            <Marker position={position} icon={myIcon}>
+            <Marker position={position} icon={myIcon} ref={initMarker}>
               <Popup>
                 <POIForm addPOI={addPOI} poisList={poisList} updatePOI={this.updatePOI} position={position} id={id}/>
               </Popup>
