@@ -2,8 +2,22 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9d99ef1f-6be9-48ac-88ce-0e79a9308b07" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/prettier" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/FormInput.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/GeoLocat.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/Legend.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/MenuOptions.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/POIForm.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/POIMarker.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/mapathon.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/mapathon.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/requestCategories.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/requestCategories.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/requestPOI.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/requestPOI.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/userRequest.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/userRequest.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -60,18 +74,18 @@
     <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\mapathon2\src" />
-      <recent name="C:\Users\Romain\WebstormProjects\mapathon\src" />
-      <recent name="D:\Schule Fächerunterlagen\5. Semester\Project\Project\mapathon\public" />
-      <recent name="$PROJECT_DIR$/src/assets" />
-      <recent name="$PROJECT_DIR$/src/components" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Romain\WebstormProjects\mapathon\src\gpx" />
       <recent name="C:\mapathon2\src\icons" />
       <recent name="C:\Users\Romain\WebstormProjects\mapathon" />
       <recent name="C:\Users\Romain\WebstormProjects\mapathon\src" />
+      <recent name="$PROJECT_DIR$/src/components" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\mapathon2\src" />
+      <recent name="C:\Users\Romain\WebstormProjects\mapathon\src" />
+      <recent name="D:\Schule Fächerunterlagen\5. Semester\Project\Project\mapathon\public" />
+      <recent name="$PROJECT_DIR$/src/assets" />
       <recent name="$PROJECT_DIR$/src/components" />
     </key>
   </component>
@@ -331,8 +345,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/App.js</url>
-          <line>390</line>
-          <properties lambdaOrdinal="-1" />
+          <line>304</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>
