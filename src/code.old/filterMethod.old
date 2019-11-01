@@ -1,0 +1,44 @@
+ changeOfPois = () => {
+    let POIs4gr=this.state.POIs.filter((poi)=>poi.group==4)
+    console.log("filter Poi:" + this.state.filterPoi + ":");
+    console.log("showOwn:" + this.state.justOwn + ":");
+    if (this.state.justOwn) {
+      if (this.state.filterPoi !== undefined && this.state.POIs !== "") {
+        this.setState((state, props) => ({
+          filteredPoisToShow: state.POIs.filter(poi => {
+            if (poi.Creator === undefined) {
+              return poi;
+            }
+            return poi.Creator.id === props.user.sub
+              ? poi.name.toLowerCase().includes(state.filterPoi.toLowerCase())
+                ? poi
+                : poi.description
+                    .toLowerCase()
+                    .includes(state.filterPoi.toLowerCase())
+              : null;
+          })
+        }));
+      } else {
+        this.setState((state, props) => ({
+          filteredPoisToShow: state.POIs.filter(poi => {
+            return poi.Creator.id === props.user.sub ? poi : null;
+          })
+        }));
+      }
+    } else if (
+      this.state.filterPoi !== "" &&
+      this.state.filterPoi !== undefined
+    ) {
+      this.setState((state, props) => ({
+        filteredPoisToShow: state.POIs.filter(poi => {
+          return poi.name.toLowerCase().includes(state.filterPoi.toLowerCase())
+            ? poi
+            : poi.description
+                .toLowerCase()
+                .includes(state.filterPoi.toLowerCase());
+        })
+      }));
+    } else {
+      this.setState((state, props) => ({ filteredPoisToShow: state.POIs }));
+    }
+  };

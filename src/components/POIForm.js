@@ -1,10 +1,16 @@
 import React from "react";
 import {FormInput} from "./FormInput";
-
+import ReactMultiSelectCheckboxes from 'react-multiselect-checkboxes';
 export default class POIForm extends React.Component {
+
+
+
     constructor(props) {
         super(props);
         let poiInfo = props.poisList.find(poi => poi.id == props.id);
+
+
+
         this.state = {
             newPOI: {
                 id: poiInfo.id,
@@ -16,7 +22,8 @@ export default class POIForm extends React.Component {
                 group: 4,
                 lat: this.props.position.lat,
                 lng: this.props.position.lng,
-                tag: ""
+                tag: "",
+                category:[]
             }
         };
     }
@@ -40,7 +47,17 @@ export default class POIForm extends React.Component {
     };
 
     render() {
+
+        console.log("categories")
+        let options=[]
+
+        this.props.categories.map((cat)=>
+        {
+        options.push({ label: cat.name, value: cat.name})}
+        )
+
         return (
+
             <div>
                 <form onSubmit={this.handlePOIAdd}>
                     <p>
@@ -82,6 +99,7 @@ export default class POIForm extends React.Component {
                         value={this.state.newPOI.tag}
                         onChange={this.handleInputChange}
                     />
+                    <ReactMultiSelectCheckboxes options={options}  onChange={this.handleInputChange}   value={this.state.newPOI.category}/>
                     <br />
                     <button className={"ButtonBar"} type="submit">
                         Save

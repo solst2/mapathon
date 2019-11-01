@@ -2,21 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9d99ef1f-6be9-48ac-88ce-0e79a9308b07" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/prettier" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/FormInput.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/GeoLocat.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/Legend.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/MenuOptions.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/POIForm.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/POIMarker.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/mapathon.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/mapathon.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/code.old/filterMethod.old" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/requestCategories.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/requestCategories.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/requestPOI.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/requestPOI.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/userRequest.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/userRequest.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/POIForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/POIForm.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/POIMarker.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/POIMarker.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/requestPOI.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/requestPOI.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -148,6 +140,8 @@
       <workItem from="1571458445599" duration="1034000" />
       <workItem from="1571473473487" duration="3864000" />
       <workItem from="1571682957228" duration="17136000" />
+      <workItem from="1572533956610" duration="12225000" />
+      <workItem from="1572597796622" duration="20161000" />
     </task>
     <task id="LOCAL-00001" summary="map">
       <created>1570781121132</created>
@@ -345,7 +339,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/App.js</url>
-          <line>304</line>
+          <line>276</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>

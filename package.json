@@ -18,6 +18,7 @@
     "react-dom": "^16.9.0",
     "react-leaflet": "^2.4.0",
     "react-leaflet-control": "^2.1.1",
+    "react-multiselect-checkboxes": "^0.1.1",
     "react-scripts": "3.1.2",
     "react-timeout": "^1.2.0",
     "react-webgl-globe-basic-example": "0.0.2",

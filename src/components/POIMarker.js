@@ -7,6 +7,12 @@ import grp2IconImg from "../icons/pin/orange_pin.png";
 import grp3IconImg from "../icons/pin/blue_pin.png";
 import grp4IconImg from "../icons/pin/green_pin.png";
 
+const initMarker = ref => {
+    if (ref) {
+        ref.leafletElement.openPopup()
+    }
+}
+
 export default class POIMarker extends  React.Component{
     constructor(props) {
         super(props);
@@ -21,7 +27,9 @@ export default class POIMarker extends  React.Component{
                 url: this.props.poi.url,
                 isSaved: props.isSaved,
                 group: this.props.poi.group,
-                icon: ""
+                icon: "",
+                Creator:this.props.poi.Creator,
+                category:[]
             }
         };
     }
@@ -50,10 +58,13 @@ export default class POIMarker extends  React.Component{
                     <Marker elevation={260.0}  position={position} icon={myIcon} draggable='true'>
                         <Popup>
                             <h1>{this.state.newPOI.name}</h1>
+                            <img width={100} height={100} src={this.state.newPOI.image}></img>
                             <p>{this.state.newPOI.description}</p>
                             <p>{this.state.newPOI.group}</p>
-                            <img width={100} height={100} src={this.state.newPOI.image}></img>
                             <span><img width={10} height={10} src="https://image.flaticon.com/icons/svg/61/61456.svg" onClick= { (e) => {this.state.newPOI.isSaved=false; this.updatePOI(this.state.newPOI)}} /><br/></span>
+                            {this.state.newPOI.category.map((cat)=>
+                            <p>{cat.name}</p>
+                            )}
                         </Popup>
                     </Marker>
                 </div>
@@ -61,9 +72,10 @@ export default class POIMarker extends  React.Component{
         else
             return (
                 <div >
-                    <Marker position={position} icon={myIcon}>
+                    <Marker  ref={initMarker}  position={position} icon={myIcon}>
                         <Popup>
-                            <POIForm addPOI={addPOI} poisList={poisList} updatePOI={this.updatePOI} position={position} id={id}/>
+                            <div>{this.state.Creator}</div>
+                            <POIForm categories={this.props.categories} getAllO={this.props.getAllO} addPOI={addPOI} poisList={poisList} updatePOI={this.updatePOI} position={position} id={id}/>
                         </Popup>
                     </Marker>
                 </div>
