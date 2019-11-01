@@ -99,7 +99,7 @@ export default class POIForm extends React.Component {
                         value={this.state.newPOI.tag}
                         onChange={this.handleInputChange}
                     />
-                    <ReactMultiSelectCheckboxes options={options}  onChange={this.handleInputChange}   value={this.state.newPOI.category}/>
+                    <ReactMultiSelectCheckboxes options={options}  value={this.state.category}/>
                     <br />
                     <button className={"ButtonBar"} type="submit">
                         Save

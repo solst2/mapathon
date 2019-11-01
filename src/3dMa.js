@@ -69,9 +69,9 @@
 //
 //    }
 // componentDidUpdate(prevProps: Readonly<P>, prevState: Readonly<S>, snapshot: SS): void {
-//     this.map.setView(this.props.Map.center, 1, {
-//         animate: false
-//     });
+//     // this.map.setView(this.props.Map.center, 1, {
+//     //     animate: false
+//     // });
 //      this.props.pois.map((poi)=>
 //         eeGeo.marker({lng:poi.lng,lat:poi.lat}, { title: "My marker" }).addTo(this.map))
 //

@@ -538,6 +538,7 @@ async category()
                         poi={poi}
                         poisList={this.state.POIs}
                         lat={poi.lat}
+                        isSaved={poi.isSaved}
                         lng={poi.lng}
                         id={poi.id}
                         categories={this.state.categories}
