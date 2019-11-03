@@ -1,8 +1,9 @@
 import React from "react";
 import "./POI.css";
-
+import deleteIcon from "../icons/delete.png"
+import targetIcon from "../icons/target.png"
 export default function POI(props) {
-  const { name, description, lat, lng, image, url, group} = props;
+  const { name, description, lat, id,lng, image, url, group} = props;
   const { Categories, Tags, User, Status } = props;
   const {zoomOnMarker,deleteMarker}=props;
 
@@ -72,8 +73,9 @@ export default function POI(props) {
         </>
       )}
 
-      <button value={name} onClick={zoomOnMarker}>Show</button>
-      <button value={name} onClick={deleteMarker}>delete</button>
+      <img width={20} height={20} src={targetIcon} name={id} onClick={zoomOnMarker}></img>
+      <img width={20} height={20} src={deleteIcon} name={id} onClick={deleteMarker}></img>
+
     </div>
   );
 }

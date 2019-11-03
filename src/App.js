@@ -30,7 +30,9 @@ import searchResultImg from "./icons/pin/searchResult.png";
 import * as ELG from "esri-leaflet-geocoder";
 import routeIconImg from "./icons/rout.png";
 import Routing from "./RoutingMachine";
+import aa from "./icons/delete.png";
 import popupsound from "./sounds/pop.mp3";
+import Clocks from  "./components/Clocks"
 // unused imports:
 // import request from "./utils/request";
 // import endpoints from "./endpoints";
@@ -48,6 +50,7 @@ import popupsound from "./sounds/pop.mp3";
 const { BaseLayer, Overlay } = LayersControl;
 const center = [51.505, -0.09];
 const rectangle = [[51.49, -0.08], [51.5, -0.06]];
+const users=[]
 var routeIcon = L.icon({
   iconUrl: routeIconImg,
   iconSize: [20, 30],
@@ -71,6 +74,7 @@ function AppWrapper() {
     user
   } = useAuth0();
   let [poisList, setPoisList] = useState([]);
+let [currentUser,setCurrentUSer]=useState('');
 
   //get the pois on load
   useEffect(() => {
@@ -82,29 +86,56 @@ function AppWrapper() {
           console.log("Load");
           console.log(poisList);
           setPoisList(poisList);
+            setCurrentUSer(await requestPOI.getObjectWithId(user.sub,'user', getTokenSilently,
+                loginWithRedirect));
+            console.log("user")
+            console.log(currentUser)
         }
+
       }
     };
     fn();
   }, [isAuthenticated, loginWithRedirect, loading]);
 
+
+
+  async function insertPOi(newPOI)
+  {
+      if (newPOI.id === undefined) {
+          console.log(newPOI.Categories)
+          let answer =   await requestPOI.addNewPOI(
+              newPOI,
+              getTokenSilently,
+              loginWithRedirect
+          );
+          return answer;
+      } else {
+          let answer = await requestPOI.updatePOI(
+              newPOI.id,
+              newPOI,
+              getTokenSilently,
+              loginWithRedirect
+          );
+          return answer;
+      }
+  }
+
   async function addPOI(newPOI) {
-    if (newPOI.id === undefined) {
-      let answer = await requestPOI.addNewPOI(
-        newPOI,
-        getTokenSilently,
-        loginWithRedirect
-      );
-      return answer;
-    } else {
-      let answer = await requestPOI.updatePOI(
-        newPOI.id,
-        newPOI,
-        getTokenSilently,
-        loginWithRedirect
-      );
-      return answer;
-    }
+      let poiadd =await  insertPOi(newPOI);
+      console.log("category : ")
+      console.log(newPOI.Categories)
+      let idCateArray=[]
+      let idTags=[]
+      newPOI.Categories.map((cat)=>
+      idCateArray.push(cat.id)
+      )
+      newPOI.Tags.map((tag)=>
+          idTags.push(tag.id)
+      )
+              await requestPOI.updatePoiType("category",idCateArray,poiadd.id,getTokenSilently,
+          loginWithRedirect);
+      await requestPOI.updatePoiType("tag",idTags,poiadd.id,getTokenSilently,
+          loginWithRedirect);
   }
 
   async function getAllO(object) {
@@ -133,34 +164,21 @@ function AppWrapper() {
   function AfterLoad(props) {
     return (
        <div>
-      <div className="sidebar" id="sidebar">
-              <a className="active" href="#home">
-                Map
-              </a>
-              {isAuthenticated && (
-                  <button className="ButtonLogout" onClick={() => logout()}>
-                    Log out
-                  </button>
-              )}
-            </div>
-            <div class="content">
-              <div className="w3-teal">
-                <div className="w3-container">
+
 
                   <App
-                      poisList={props.poisList.filter((poi)=>poi.group===4)}
+                      poisList={props.poisList}
                       getAllO={getAllO}
                       addPOI={addPOI}
                       deletePOI={deletePOI}
-                      currentUser={user}
+                      currentUser={currentUser}
                       key="app"
-                      user={user}
+                      user={currentUser}
+                      isAuthenticated={isAuthenticated}
+                      logout={logout}
                   ></App>
                 </div>
-              </div>
-            </div>
 
-          </div>
 
     );
   }
@@ -175,10 +193,12 @@ class App extends Component {
     this.leafletMap = React.createRef();
     this.state = {
       POIs: [],
+        unsavedPOIs:[],
       filteredPois: [],
       filteredPoisToShow: [],
       Routes: [],
         categories:[],
+        tags:[],
       geoLat: "",
       geoLng: "",
       available: false,
@@ -200,8 +220,10 @@ class App extends Component {
       o.isSaved = true;
       return o;
     });
+console.log("user_"+this.props.user.id);
     this.setState({ POIs: result })
-this.category();
+this.getTags();
+    this.getCategories();
     this.setState({ oldSizevalue: result.length });
     this.interval = setInterval(() => this.testtimeOut(), 3000);
     let searchResults = [];
@@ -212,34 +234,36 @@ this.category();
       }
     });
     this.setState({ searchResults: searchResults });
-
-     this.changeOfPois();
+    this.setGroupUsrs(this.props.poisList);
+   this.changeOfPois();
   }
 
   async testtimeOut() {
     let result = await this.props.getAllO('poi');
-
-
       var updatedList = result.map(el => {
           var o = Object.assign({}, el);
           o.isSaved = true;
           return o;
       });
-    this.setState({ POIs: updatedList });
-    this.changeOfPois();
-    console.log(updatedList);
-
-    if (this.state.oldSizevalue < updatedList.length) {
-      let addNotif = this.state.notifications;
       let addedElement =updatedList[updatedList.length-1];
-      if(addedElement.Creator.id!=this.props.user.sub)
+
+    console.log(updatedList);
+      this.setState({ POIs: updatedList });
+      this.changeOfPois();
+    if (this.state.oldSizevalue < result.length&&addedElement.Creator.id!=this.props.user.sub) {
+
+
+
+      let addNotif = this.state.notifications;
+
       addNotif.push(addedElement);
       this.setState({ notifications: addNotif });
       this.notificationSound.src = popupsound;
       this.notificationSound.play();
-    } else this.setState({ notifmessage: "" });
+        this.setState({ oldSizevalue: updatedList.length });
+    }
 
-    this.setState({ oldSizevalue: updatedList.length });
+
   }
   //scroll on the map when you click on a marker
   scrollToMyRef = () => window.scrollTo(0, this.leafletMap);
@@ -252,31 +276,56 @@ this.category();
     prevState: Readonly<S>,
     snapshot: SS
   ): void {}
-async category()
+async getCategories()
 {
     let categories= await this.props.getAllO('category');
     console.log("categories");
     console.log(categories);
     this.setState({categories:categories})
-    return categories;
+
 }
+async getTags()
+{
+    let tags= await this.props.getAllO('tag');
+    this.setState({tags:tags})
+
+}
+    setGroupUsrs(results){
+      console.log('users:')
+        console.log( this.state.POIs.length)
+        results.filter(poi=>poi.group===4).map((poi)=>
+          {
+              if(users.length>0)
+              {
+                  if(!users.some(item => poi.Creator.name === item.name))
+                      users.push(poi.Creator)
+              }
+
+                else
+                  users.push(poi.Creator)
+
+
+          }
+      )
+    }
   //add a marker when you clic on the map
   addMarker = (e) => {
     const pois=this.state.POIs;
-    var newPoi={lat:e.latlng.lat,lng:e.latlng.lng,name:'',description:'',"group": 4,isSaved:false,Creator:{id:this.props.currentUser.sub}}
-    console.log('Point '+newPoi.id+ ' at '+newPoi.lat +"/"+newPoi.lng);
+    var newPoi={lat:e.latlng.lat,lng:e.latlng.lng,name:'',description:'',"group": 4,isSaved:false,Creator:{id:this.props.user.id},Categories:[],Tags:[]}
     this.props.addPOI(newPoi);
-    console.log("markers");
-    console.log(this.leafletMap.leafletElement._targets);
-    console.log(  this.leafletMap.leafletElement);
+        pois.push(newPoi);
     this.setState({POIs:pois});
     this.changeOfPois();
     this.leafletMap.leafletElement.flyTo(e.latlng, 15);
 
     };
   deleteMarker = e => {
-    let deletedPOI = this.state.POIs.find(poi => poi.name == e.target.value);
-    if (deletedPOI.Creator.id == this.props.user.sub) {
+      console.log("id: "+e.target.name)
+
+    let deletedPOI = this.state.POIs.find(poi => poi.id ==e.target.name);
+      console.log(deletedPOI.Creator.id)
+      console.log(this.props.user.id)
+    if (deletedPOI.Creator.id === this.props.user.id) {
       if (
         window.confirm(
           "Are you sure you wish to delete this point of interest?"
@@ -293,11 +342,21 @@ async category()
   };
   deleteMyPOI= (e) =>  {
 
-    this.state.POIs.map((poi)=>
-    {if (poi.Creator.id === this.props.user.sub) {
-        console.log("answer: "+this.props.deletePOI(poi)+":");
-      }}
+      let newPoiList = []
+      this.state.POIs.map((poi)=> {
+          if (poi.Creator.id === this.props.user.id) {
+              console.log("answer: " + this.props.deletePOI(poi) + ":");
+
+          } else {
+              newPoiList.push(poi);
+
+          }
+          this.setState({POIs: newPoiList});
+      }
     )
+
+
+      this.changeOfPois();
   };
 
   upGeoLocalisation=(position)=>
@@ -317,8 +376,8 @@ async category()
     let map = this.state.Map;
     map.zoom = 15;
     console.log(e.target.value);
-    let lat = this.state.POIs.find(poi => poi.name == e.target.value).lat;
-    let lng = this.state.POIs.find(poi => poi.name == e.target.value).lng;
+    let lat = this.state.POIs.find(poi => poi.id == e.target.name).lat;
+    let lng = this.state.POIs.find(poi => poi.id == e.target.name).lng;
     this.leafletMap.leafletElement.flyTo([lat,lng], 15);
 
    // this.setState({ Map: map });
@@ -329,7 +388,12 @@ async category()
     this.scrollToMyRef();
     this.leafletMap.leafletElement.flyTo([this.state.geoLat, this.state.geoLng], 15);
   };
+    updatePOI = poi => {
 
+   let ldPOivalue= this.state.POIs.find((poiOld)=>poiOld.lat==poi.lat&&poiOld.lng==poi.lng)
+        ldPOivalue={...poi}
+
+    };
   handleFilter = async e => {
     console.log(e.target.value);
     this.setState({ filterPoi: e.target.value });
@@ -349,9 +413,9 @@ async category()
         console.log("filter Poi:" + this.state.filterPoi + ":");
         console.log("showOwn:" + this.state.justOwn + ":");
         if (this.state.justOwn) {
-            if (this.state.filterPoi !== undefined && POIs4gr !== "") {
+            if (this.state.filterPoi !== undefined && this.state.POIs !== "") {
                 this.setState((state, props) => ({
-                    filteredPoisToShow: POIs4gr.filter(poi => {
+                    filteredPoisToShow: state.POIs.filter(poi => {
                         if (poi.Creator === undefined) {
                             return poi;
                         }
@@ -366,7 +430,7 @@ async category()
                 }));
             } else {
                 this.setState((state, props) => ({
-                    filteredPoisToShow: POIs4gr.filter(poi => {
+                    filteredPoisToShow: state.POIs.filter(poi => {
                         return poi.Creator.id === props.user.sub ? poi : null;
                     })
                 }));
@@ -376,7 +440,7 @@ async category()
             this.state.filterPoi !== undefined
         ) {
             this.setState((state, props) => ({
-                filteredPoisToShow: POIs4gr.filter(poi => {
+                filteredPoisToShow: state.POIs.filter(poi => {
                     return poi.name.toLowerCase().includes(state.filterPoi.toLowerCase())
                         ? poi
                         : poi.description
@@ -385,7 +449,7 @@ async category()
                 })
             }));
         } else {
-            this.setState((state, props) => ({ filteredPoisToShow: POIs4gr }));
+            this.setState((state, props) => ({ filteredPoisToShow: state.POIs }));
         }
     };
   componentWillUnmount(): void {
@@ -395,6 +459,30 @@ async category()
 
     return (
       <div>
+  <div className="sidebar" id="sidebar">
+  <a className="active" href="#home">
+  Map
+  </a>
+      {this.props.isAuthenticated && (
+          <button className="ButtonLogout" onClick={() => this.props.logout()}>
+              Log out
+          </button>
+      )}
+      {users.map((u)=>
+
+          <div value={u.id}>
+
+          <img height={50} width={50} src={u.picture}/>
+              {u.id}
+          </div>
+
+
+      )}
+      <Clocks></Clocks>
+  </div>
+  <div className="content">
+  <div className="w3-teal">
+  <div className="w3-container">
         <div>
           <button onClick={this.deleteMyPOI }>Delete all my pois</button>
           <div className="dropdown">
@@ -426,6 +514,8 @@ async category()
               </div>
             </div>
           </div>
+
+
         </div>
         <br />
         <br />
@@ -498,6 +588,8 @@ async category()
                         poisList={this.state.filteredPoisToShow}
                         id={poi.id}
                         categories={this.state.categories}
+                        tags={this.state.tags}
+                        user={this.props.currentUser}
                       />
                     ))}
                 </LayerGroup>
@@ -516,7 +608,7 @@ async category()
               </Overlay>
               <Overlay name="all pois">
                 <LayerGroup>
-                      {this.state.POIs.map(poi => (
+                      {this.state.POIs.filter((poi)=>poi.group!=4).map(poi => (
                           <POIMarker
                               addPOI={this.props.addPOI}
                               isSaved={poi.isSaved}
@@ -526,13 +618,15 @@ async category()
                               poisList={this.state.POIs}
                               id={poi.id}
                               categories={this.state.categories}
+                              tags={this.state.tags}
+                              user={this.props.currentUser}
                              />
                       ))}
                 </LayerGroup>
               </Overlay>
             <Overlay key="pois" name="my group pois" checked>
               <LayerGroup>
-                {this.state.filteredPoisToShow.map(poi => (
+                {this.state.filteredPoisToShow.filter((poi)=>poi.group===4).map(poi => (
                     <POIMarker
                         addPOI={this.props.addPOI}
                         poi={poi}
@@ -542,6 +636,8 @@ async category()
                         lng={poi.lng}
                         id={poi.id}
                         categories={this.state.categories}
+                        tags={this.state.tags}
+                        user={this.props.currentUser}
                     />
                 ))}
               </LayerGroup>
@@ -569,20 +665,9 @@ async category()
                 height={20}
               ></img>
             </Control>
-            {/*  <Control position="topleft" >*/}
-            {/*    <div>Group</div>*/}
-            {/*    <select onChange={this.DisplayGroup} >*/}
-            {/*      <option value={0}>None</option>*/}
-            {/*      <option value={1}>Group 1</option>*/}
-            {/*      <option value={2}>Group 2</option>*/}
-            {/*      <option value={3}>Group 3</option>*/}
-            {/*      <option value={4}>Group 4</option>*/}
-            {/*    </select>*/}
-            {/*  </Control>*/}
-            {/*  <Control position="topleft" >*/}
-            {/*    <div>Group</div>*/}
-            {/*<s/>*/}
-            {/*  </Control>*/}
+              <Control position="topleft" >
+            <s/>
+              </Control>
 
             {this.state.Routes.map(route => (
               <Routing map={this.leafletMap} route={route} />
@@ -606,7 +691,7 @@ async category()
         />
         <div>
           <ul className="POI-List">
-            {this.state.filteredPoisToShow.map(poi => (
+            {this.state.filteredPoisToShow.filter((poi)=>poi.group===4).map(poi => (
               <POI
                 {...poi}
                 zoomOnMarker={this.zoomOnMarker}
@@ -615,6 +700,10 @@ async category()
             ))}
           </ul>
         </div>
+      </div>
+  </div>
+  </div>
+
       </div>
     );
   }

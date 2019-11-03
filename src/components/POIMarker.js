@@ -29,13 +29,15 @@ export default class POIMarker extends  React.Component{
                 group: this.props.poi.group,
                 icon: "",
                 Creator:this.props.poi.Creator,
-                category:[]
+                Categories:this.props.poi.Categories,
+                Tags:this.props.poi.Tags
             }
         };
     }
 
     updatePOI = poi => {
-        this.setState({ newPOI: poi });
+        this.setState({ newPOI: poi })
+
     };
     componentDidMount(): void {
 
@@ -45,8 +47,14 @@ export default class POIMarker extends  React.Component{
         let { poisList, id, addPOI } = this.props;
         let position = { lat: this.props.lat, lng: this.props.lng };
         //  this.props.poi.Categories.map((c)=>console.log(c.name))
+let img;
+        if(this.state.newPOI.Categories.length>0)
+        img=    this.state.newPOI.Categories[0].image
+        else
+            img=getIcon({ group: this.state.newPOI.group })
+
         var myIcon = L.icon({
-            iconUrl: getIcon({ group: this.state.newPOI.group }),
+            iconUrl: img ,
             iconSize: [20, 30],
             iconAnchor: [10, 30],
             popupAnchor: [0, -20]
@@ -58,12 +66,13 @@ export default class POIMarker extends  React.Component{
                     <Marker elevation={260.0}  position={position} icon={myIcon} draggable='true'>
                         <Popup>
                             <h1>{this.state.newPOI.name}</h1>
-                            <img width={100} height={100} src={this.state.newPOI.image}></img>
+
+                            {this.state.newPOI.image!=null&&<img width={100} height={100} src={this.state.newPOI.image} ></img>}
                             <p>{this.state.newPOI.description}</p>
                             <p>{this.state.newPOI.group}</p>
-                            <span><img width={10} height={10} src="https://image.flaticon.com/icons/svg/61/61456.svg" onClick= { (e) => {this.state.newPOI.isSaved=false; this.updatePOI(this.state.newPOI)}} /><br/></span>
-                            {this.state.newPOI.category.map((cat)=>
-                            <p>{cat.name}</p>
+                            {this.props.poi.Creator.id===this.props.user.id &&<span><img width={10} height={10} src="https://image.flaticon.com/icons/svg/61/61456.svg" onClick= { (e) => {this.state.newPOI.isSaved=false; this.updatePOI(this.state.newPOI)}} /><br/></span>}
+                            {this.state.newPOI.Categories.map((cat)=>
+                                <img width={25} height={30} src={cat.image}></img>
                             )}
                         </Popup>
                     </Marker>
@@ -75,7 +84,7 @@ export default class POIMarker extends  React.Component{
                     <Marker  ref={initMarker}  position={position} icon={myIcon}>
                         <Popup>
                             <div>{this.state.Creator}</div>
-                            <POIForm categories={this.props.categories} getAllO={this.props.getAllO} addPOI={addPOI} poisList={poisList} updatePOI={this.updatePOI} position={position} id={id}/>
+                            <POIForm poi={this.state.newPOI} tags={this.props.tags} categories={this.props.categories} getAllO={this.props.getAllO} addPOI={addPOI} poisList={poisList} updatePOI={this.updatePOI} position={position} id={id}/>
                         </Popup>
                     </Marker>
                 </div>

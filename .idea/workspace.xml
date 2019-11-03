@@ -2,10 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9d99ef1f-6be9-48ac-88ce-0e79a9308b07" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/components/Clocks.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/icons/delete.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/3dMa.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/3dMa.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/POI.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/POI.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/POIForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/POIForm.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/POIMarker.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/POIMarker.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/requestPOI.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/requestPOI.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -62,18 +68,18 @@
     <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Romain\WebstormProjects\mapathon\src\gpx" />
-      <recent name="C:\mapathon2\src\icons" />
-      <recent name="C:\Users\Romain\WebstormProjects\mapathon" />
-      <recent name="C:\Users\Romain\WebstormProjects\mapathon\src" />
-      <recent name="$PROJECT_DIR$/src/components" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\mapathon2\src" />
       <recent name="C:\Users\Romain\WebstormProjects\mapathon\src" />
       <recent name="D:\Schule Fächerunterlagen\5. Semester\Project\Project\mapathon\public" />
       <recent name="$PROJECT_DIR$/src/assets" />
+      <recent name="$PROJECT_DIR$/src/components" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\mapathon2\src\icons" />
+      <recent name="C:\Users\Romain\WebstormProjects\mapathon\src\gpx" />
+      <recent name="C:\Users\Romain\WebstormProjects\mapathon" />
+      <recent name="C:\Users\Romain\WebstormProjects\mapathon\src" />
       <recent name="$PROJECT_DIR$/src/components" />
     </key>
   </component>
@@ -138,6 +144,9 @@
       <workItem from="1571682957228" duration="17136000" />
       <workItem from="1572533956610" duration="12225000" />
       <workItem from="1572597796622" duration="20161000" />
+      <workItem from="1572685282800" duration="11832000" />
+      <workItem from="1572720427371" duration="13367000" />
+      <workItem from="1572770542801" duration="12578000" />
     </task>
     <task id="LOCAL-00001" summary="map">
       <created>1570781121132</created>
@@ -335,8 +344,13 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/App.js</url>
-          <line>276</line>
+          <line>321</line>
           <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/components/POIMarker.js</url>
+          <line>49</line>
+          <option name="timeStamp" value="3" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>

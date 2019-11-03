@@ -14,6 +14,8 @@
     "leaflet-search": "^2.9.8",
     "leaflet-search-control": "^2.1.2",
     "leaflet.sync": "^0.2.4",
+    "multi-select-react": "^0.1.8",
+    "multiselect-react-dropdown": "^1.2.4",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "react-leaflet": "^2.4.0",
