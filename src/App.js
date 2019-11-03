@@ -32,7 +32,8 @@ import routeIconImg from "./icons/rout.png";
 import Routing from "./RoutingMachine";
 import aa from "./icons/delete.png";
 import popupsound from "./sounds/pop.mp3";
-import Clocks from  "./components/Clocks"
+import Clocks from  "./components/Clocks";
+import * as emailjs from "emailjs-com"
 // unused imports:
 // import request from "./utils/request";
 // import endpoints from "./endpoints";
@@ -317,7 +318,7 @@ async getTags()
     this.setState({POIs:pois});
     this.changeOfPois();
     this.leafletMap.leafletElement.flyTo(e.latlng, 15);
-
+      this.handleSubmit();
     };
   deleteMarker = e => {
       console.log("id: "+e.target.name)
@@ -371,6 +372,20 @@ async getTags()
     routes.push({});
     this.setState({ Routes: routes });
   };
+
+
+    handleSubmit(){
+
+    emailjs.send(
+            'gmail', "template_RCZMQUW7",
+        {message_html: "test", from_name: "Mapathon", send_to: this.props.user.name},"user_QbNXGKWFUNVOK2RAfIVdb"
+        ).then(res => {
+            console.log('Email successfully sent!')
+        })
+        // Handle errors here however you like, or use a React error boundary
+            .catch(err => console.error('Oh well, you failed. Here some thoughts on the error that occured:', err))
+    }
+
   zoomOnMarker = e => {
     this.scrollToMyRef();
     let map = this.state.Map;

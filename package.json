@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@auth0/auth0-spa-js": "^1.2.3",
+    "emailjs-com": "^2.4.0",
     "esri-leaflet-geocoder": "^2.3.1",
     "history": "^4.10.1",
     "leaflet": "^1.5.1",
