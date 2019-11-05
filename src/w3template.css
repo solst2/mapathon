@@ -3,7 +3,7 @@ body {
     font-family: "Lato", sans-serif;
 }
 
-.sidebar {
+.sidebar1 {
     margin: 0;
     padding: 0;
     width: 200px;
@@ -13,19 +13,19 @@ body {
     overflow: auto;
 }
 
-.sidebar a {
+.sidebar1 a {
     display: block;
     color: black;
     padding: 16px;
     text-decoration: none;
 }
 
-.sidebar a.active {
+.sidebar1 a.active {
     background-color: #4CAF50;
     color: white;
 }
 
-.sidebar a:hover:not(.active) {
+.sidebar1 a:hover:not(.active) {
     background-color: #555;
     color: white;
 }
@@ -37,17 +37,17 @@ div.content {
 }
 
 @media screen and (max-width: 700px) {
-    .sidebar {
+    .sidebar1 {
         width: 100%;
         height: auto;
         position: relative;
     }
-    .sidebar a {float: left;}
+    .sidebar1 a {float: left;}
     div.content {margin-left: 0;}
 }
 
 @media screen and (max-width: 400px) {
-    .sidebar a {
+    .sidebar1 a {
         text-align: center;
         float: none;
     }

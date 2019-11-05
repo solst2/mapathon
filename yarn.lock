@@ -6519,6 +6519,11 @@ lcid@^2.0.0:
   dependencies:
     invert-kv "^2.0.0"
 
+leaflet-contextmenu@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/leaflet-contextmenu/-/leaflet-contextmenu-1.4.0.tgz#e2bda481af1026080eabaa32997e531fd44f605c"
+  integrity sha1-4r2kga8QJggOq6oymX5TH9RPYFw=
+
 leaflet-control-geocoder@^1.10.0:
   version "1.10.0"
   resolved "https://registry.yarnpkg.com/leaflet-control-geocoder/-/leaflet-control-geocoder-1.10.0.tgz#634ab52a963e9db1e352123891bba436c3015d1b"
@@ -6538,6 +6543,11 @@ leaflet-gpx@^1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/leaflet-gpx/-/leaflet-gpx-1.4.0.tgz#0845c182687de9f5ddce8e52de35eb8942ea840e"
   integrity sha512-OCtQhOfrQ6nZRowP2tYzdMhxx8FJ4Zspqf4oCNYZ0yMAN/zYOiR0eaAiDBwU7SOZKymeWZh1ypi0sjFLsqy7+A==
+
+leaflet-minimap@^3.6.1:
+  version "3.6.1"
+  resolved "https://registry.yarnpkg.com/leaflet-minimap/-/leaflet-minimap-3.6.1.tgz#2a43ff3b3d947a45a0acf4bdefc96505b673a6c6"
+  integrity sha1-KkP/Oz2UekWgrPS978llBbZzpsY=
 
 leaflet-routing-machine@^3.2.12:
   version "3.2.12"
@@ -6562,6 +6572,11 @@ leaflet-search@^2.9.8:
   integrity sha512-w/0qcllcNVzlfhup7apLc7hamOaZrtGfxMDqX6ItlUjNBz08CMk7bxcwITIVbL8wFYqTnVsBI8zUBKzypQo2uw==
   dependencies:
     leaflet "*"
+
+leaflet-sidebar@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/leaflet-sidebar/-/leaflet-sidebar-0.2.0.tgz#133c1db35dd6d51a602d8e62dba9bc5b066e545a"
+  integrity sha1-Ezwds13W1RpgLY5i26m8WwZuVFo=
 
 leaflet-virtual-grid@^1.0.7:
   version "1.0.7"

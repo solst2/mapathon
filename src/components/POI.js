@@ -1,11 +1,12 @@
 import React from "react";
 import "./POI.css";
-import deleteIcon from "../icons/delete.png";
-import targetIcon from "../icons/target.png";
+import deleteIcon from "../icons/delete.png"
+import targetIcon from "../icons/target.png"
+import shareIcon from "../icons/share.png"
 export default function POI(props) {
-  const { name, description, lat, id, lng, image, url, group } = props;
+  const { name, description, lat, id,lng, image, url, group} = props;
   const { Categories, Tags, User, Status } = props;
-  const { zoomOnMarker, deleteMarker } = props;
+  const {zoomOnMarker,deleteMarker}=props;
 
   let statusColor;
   if (Status) {
@@ -26,7 +27,7 @@ export default function POI(props) {
     <div className="poi" style={{ borderColor: statusColor }}>
       {Status && (
         <span className="status" style={{ color: statusColor }}>
-          <small>{Status.name} </small>
+          <small>{Status.name }  </small>
         </span>
       )}
       {Categories && Categories.length > 0 && (
@@ -69,23 +70,13 @@ export default function POI(props) {
               </span>
             ))}
           </div>
+
         </>
       )}
 
-      <img
-        width={20}
-        height={20}
-        src={targetIcon}
-        name={id}
-        onClick={zoomOnMarker}
-      ></img>
-      <img
-        width={20}
-        height={20}
-        src={deleteIcon}
-        name={id}
-        onClick={deleteMarker}
-      ></img>
+      <img width={20} height={20} src={targetIcon} name={id} onClick={zoomOnMarker}></img>
+      <img width={20} height={20} src={deleteIcon} name={id} onClick={deleteMarker}></img>
+        <img width={20} height={20} src={shareIcon} name={id} ></img>
     </div>
   );
 }
