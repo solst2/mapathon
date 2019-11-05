@@ -2,14 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9d99ef1f-6be9-48ac-88ce-0e79a9308b07" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Settings.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/SideBarUsers.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/CategroyManager.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/code.old/category.old" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/NavBar.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/StartPage.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/CategroyManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/CategroyManager.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/utils/requestPOI.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/requestPOI.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
@@ -69,18 +71,18 @@
     <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\mapathon2\src" />
-      <recent name="C:\Users\Romain\WebstormProjects\mapathon\src" />
-      <recent name="D:\Schule Fächerunterlagen\5. Semester\Project\Project\mapathon\public" />
-      <recent name="$PROJECT_DIR$/src/assets" />
-      <recent name="$PROJECT_DIR$/src/components" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\mapathon2\src\icons" />
       <recent name="C:\Users\Romain\WebstormProjects\mapathon\src\gpx" />
       <recent name="C:\Users\Romain\WebstormProjects\mapathon" />
       <recent name="C:\Users\Romain\WebstormProjects\mapathon\src" />
+      <recent name="$PROJECT_DIR$/src/components" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\mapathon2\src" />
+      <recent name="C:\Users\Romain\WebstormProjects\mapathon\src" />
+      <recent name="D:\Schule Fächerunterlagen\5. Semester\Project\Project\mapathon\public" />
+      <recent name="$PROJECT_DIR$/src/assets" />
       <recent name="$PROJECT_DIR$/src/components" />
     </key>
   </component>
@@ -353,13 +355,18 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/App.js</url>
-          <line>331</line>
+          <line>333</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/components/POIMarker.js</url>
           <line>46</line>
           <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/pages/CategroyManager.js</url>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="5" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>

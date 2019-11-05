@@ -1,7 +1,10 @@
 
 .map{
-  height:600px;
+  height:800px;
   width:100%;
+}
+body{
+  background-color: #333333;
 }
 #mapxyz{
   height:600px;
@@ -48,11 +51,33 @@
   display: inline-block;
 
 }
+.left-align {
+    padding:5px;
+    float: right;
+    float: right;
+    position:relative;
+    display: block;
+}
+.centerd {
+    border:1px solid green;
+    background:gold;
+    padding:90px;
+    display:inline-block;
 
-.dropdown-content {
+}
+#wrapper{
+    display: flex;
+    flex-direction: row;
+    width: 100px;
+    margin: 0 auto;
+    left: 50%;
+}
+
+
+ .dropdown-content {
   display: none;
   position: absolute;
-  right: 0;
+  left: 0;
   background-color: #f9f9f9;
   min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
@@ -70,4 +95,75 @@
 
 .dropdown:hover .dropdown-content {
   display: block;
+}
+
+@media screen and (max-width: 580px) {
+  .table {
+    display: block;
+  }
+}
+.wrapper {
+  margin: 0 auto;
+  padding: 40px;
+  max-width: 800px;
+}
+.row {
+  display: table-row;
+  background: #f6f6f6;
+}
+.poi{
+
+  background: #f6f6f6;
+}
+.row:nth-of-type(odd) {
+  background: #e9e9e9;
+}
+.row.header {
+  font-weight: 900;
+  color: #ffffff;
+  background: #ea6153;
+}
+.row.green {
+  background: #27ae60;
+}
+.row.blue {
+  background: #2980b9;
+}
+@media screen and (max-width: 580px) {
+  .row {
+    padding: 14px 0 7px;
+    display: block;
+  }
+  .row.header {
+    padding: 0;
+    height: 6px;
+  }
+  .row.header .cell {
+    display: none;
+  }
+  .row .cell {
+    margin-bottom: 10px;
+  }
+  .row .cell:before {
+    margin-bottom: 3px;
+    content: attr(data-title);
+    min-width: 98px;
+    font-size: 10px;
+    line-height: 10px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #969696;
+    display: block;
+  }
+}
+
+.cell {
+  padding: 6px 12px;
+  display: table-cell;
+}
+@media screen and (max-width: 580px) {
+  .cell {
+    padding: 2px 16px;
+    display: block;
+  }
 }

@@ -41,10 +41,11 @@ import "leaflet-contextmenu/dist/leaflet.contextmenu";
 import * as emailjs from "emailjs-com"
 import MiniMap from 'leaflet-minimap';
 import "leaflet-sidebar/src/L.Control.Sidebar.css"
-
+import AnalogClock, { Themes } from 'react-analog-clock';
 import "leaflet-sidebar/src/L.Control.Sidebar"
 import SideBarPoi from "./components/SideBarPoi";
 import SideBarUsers from "./components/SideBarUsers";
+import NavBar from "./components/NavBar";
 // unused imports:
 // import request from "./utils/request";
 // import endpoints from "./endpoints";
@@ -114,14 +115,14 @@ let [currentUser,setCurrentUSer]=useState('');
   {
       if (newPOI.id === undefined) {
           console.log(newPOI.Categories)
-          let answer =   await requestPOI.addNewPOI(
+          let answer =   await requestPOI.addNewObject("poi",
               newPOI,
               getTokenSilently,
               loginWithRedirect
           );
           return answer;
       } else {
-          let answer = await requestPOI.updatePOI(
+          let answer = await requestPOI.updateObject("poi",
               newPOI.id,
               newPOI,
               getTokenSilently,
@@ -155,7 +156,7 @@ let [currentUser,setCurrentUSer]=useState('');
 
   async function deletePOI(poi) {
     console.log("poi delete");
-    return await requestPOI.deletePOI(
+    return await requestPOI.deleteObject("poi",
       poi.id,
       getTokenSilently,
       loginWithRedirect
@@ -176,7 +177,9 @@ let [currentUser,setCurrentUSer]=useState('');
     return (
        <div>
 
-
+           <header>
+               <NavBar />
+           </header>
                   <App
                       poisList={props.poisList}
                       getAllO={getAllO}
@@ -227,8 +230,6 @@ class App extends Component {
 
   componentDidMount() {
     const map = this.leafletMap.leafletElement;
-
-
     const searchControl = new ELG.Geosearch().addTo(map);
     const results = new L.LayerGroup().addTo(map);
         console.log(this.props.poisList.length);
@@ -243,7 +244,7 @@ this.getTags();
     this.getCategories();
 
     this.setState({ oldSizevalue: result.length });
-    this.interval = setInterval(() => this.testtimeOut(), 3000);
+    this.interval = setInterval(() => this.testtimeOut(), 4000);
     let searchResults = [];
     searchControl.on("results", function(data) {
       results.clearLayers();
@@ -320,9 +321,10 @@ async getCategories()
 
     }
 
-async getTags(tags)
+async getTags()
 {
-    this.setState({tags:tags})
+    //let tags= await this.props.getAllO('tags');
+    //this.setState({tags:tags})
 
 }
     setGroupUsrs(results){
@@ -531,67 +533,17 @@ this.setState({selectedPoi:e})
             userList={this.props.userList}
         />
     </div>
-  <div className="sidebar1" >
-  <a className="active" href="#home">
-  Map
-  </a>
-      {this.props.isAuthenticated && (
-          <button className="ButtonLogout" onClick={() => this.props.logout()}>
-              Log out
-          </button>
-      )}
-      {users.map((u)=>
 
-          <div value={u.id}>
-
-          <img height={50} width={50} src={u.picture}/>
-              {u.id}
-          </div>
-
-
-      )}
-      <Clocks></Clocks>
-  </div>
-  <div className="content">
   <div className="w3-teal">
   <div className="w3-container">
-        <div>
-          <button onClick={this.deleteMyPOI }>Delete all my pois</button>
-          <div className="dropdown">
+      <button onClick={this.deleteMyPOI }>Delete all my pois</button>
+        <div id="wrapper">
 
-            <audio ref={ref => this.notificationSound = ref} />
-            <div className="dropdown">
-              <button className="dropbtn">
-                {this.state.notifications.length}
-              </button>
-              <div className="dropdown-content">
-                {this.state.notifications.map(poi => (
-                  <a
-                    onClick={() => {
-                      this.scrollToMyRef();
 
-                      let map = this.state.Map;
-                      map.zoom = 15;
-                      map.center = [poi.lat, poi.lng];
-                      {
-                        this.setState({ notifications: [] });
-                      }
-                      this.setState({ Map: map });
-                    }}
-                  >
-                    <img width={50} height={50} src={poi.Creator.picture} />{" "}
-                    {poi.Creator.name} added : {poi.name}
-                  </a>
-                ))}
-              </div>
-            </div>
-          </div>
+            <div id="c1">   <AnalogClock gmtOffset="+4:30"  width={100} theme={Themes.dark} /></div>
+            <div id="c2"><AnalogClock   width={100} theme={Themes.dark} /></div>
         </div>
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
+
 
         {this.state.is2ddisplayed && (
           <Map
@@ -741,6 +693,37 @@ this.setState({selectedPoi:e})
                   ))}
               </LayerGroup>
             </Overlay>
+                <Control position="topleft" >
+                    <div className="dropdown">
+
+                        <audio ref={ref => this.notificationSound = ref} />
+                        <div className="dropdown">
+                            <button className="dropbtn">
+                                {this.state.notifications.length}
+                            </button>
+                            <div className="dropdown-content">
+                                {this.state.notifications.map(poi => (
+                                    <a
+                                        onClick={() => {
+                                            this.scrollToMyRef();
+
+                                            let map = this.state.Map;
+                                            map.zoom = 15;
+                                            map.center = [poi.lat, poi.lng];
+                                            {
+                                                this.setState({ notifications: [] });
+                                            }
+                                            this.setState({ Map: map });
+                                        }}
+                                    >
+                                        <img width={50} height={50} src={poi.Creator.picture} />{" "}
+                                        {poi.Creator.name} added : {poi.name}
+                                    </a>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                </Control>
                 <Overlay key="pois" name="my position " checked>
                     <LayerGroup>
                         <GeoLocat upGeoLocalisation={this.upGeoLocalisation}/>
@@ -764,9 +747,7 @@ this.setState({selectedPoi:e})
                 height={20}
               ></img>
             </Control>
-              <Control position="topleft" >
-            <s/>
-              </Control>
+
 
             {this.state.Routes.map(route => (
               <Routing map={this.leafletMap} route={route} />
@@ -801,7 +782,7 @@ this.setState({selectedPoi:e})
         </div>
       </div>
   </div>
-  </div>
+
 
       </div>
     );

@@ -1,15 +1,15 @@
 export class requestPOI {
   //Update some Information for a POI
-  static async updatePOI(id, updatePOI, getTokenSilently, loginWithRedirect) {
+  static async updateObject(objectType,id, updateObject, getTokenSilently, loginWithRedirect) {
     try {
       let token = await getTokenSilently();
-      console.log(JSON.stringify(updatePOI));
+      console.log(JSON.stringify(updateObject));
       console.log("request pass");
       let response = await fetch(
-          `${process.env.REACT_APP_SERVER_URL}/poi/` + id,
+          `${process.env.REACT_APP_SERVER_URL}`+"/"+objectType+"/" + id,
           {
             method: "PATCH",
-            body: JSON.stringify(updatePOI),
+            body: JSON.stringify(updateObject),
             headers: {
               Accept: "application/json",
               "Content-Type": "application/json",
@@ -98,13 +98,13 @@ export class requestPOI {
     }
   }
   //Create a new POI in the Database
-  static async addNewPOI(newPOI, getTokenSilently, loginWithRedirect) {
+  static async addNewObject(object,newObject, getTokenSilently, loginWithRedirect) {
     try {
       let token = await getTokenSilently();
-      console.log(JSON.stringify(newPOI));
-      let response = await fetch(`${process.env.REACT_APP_SERVER_URL}/poi`, {
+      console.log(JSON.stringify(newObject));
+      let response = await fetch(`${process.env.REACT_APP_SERVER_URL}/`+object, {
         method: "POST",
-        body: JSON.stringify(newPOI),
+        body: JSON.stringify(newObject),
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
@@ -169,11 +169,11 @@ export class requestPOI {
     }
   }
   //Delete a POI in the Database
-  static async deletePOI(id, getTokenSilently, loginWithRedirect) {
+  static async deleteObject(object,id, getTokenSilently, loginWithRedirect) {
     try {
       let token = await getTokenSilently();
       let response = await fetch(
-        `${process.env.REACT_APP_SERVER_URL}/poi/` + id,
+        `${process.env.REACT_APP_SERVER_URL}/`+object+"/" + id,
         {
           method: "DELETE",
           headers: {
