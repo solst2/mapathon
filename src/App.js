@@ -44,6 +44,7 @@ import "leaflet-sidebar/src/L.Control.Sidebar.css"
 
 import "leaflet-sidebar/src/L.Control.Sidebar"
 import SideBarPoi from "./components/SideBarPoi";
+import SideBarUsers from "./components/SideBarUsers";
 // unused imports:
 // import request from "./utils/request";
 // import endpoints from "./endpoints";
@@ -86,7 +87,7 @@ function AppWrapper() {
   } = useAuth0();
   let [poisList, setPoisList] = useState([]);
 let [currentUser,setCurrentUSer]=useState('');
-
+    let [allUser, setAllUser] = useState([]);
   //get the pois on load
   useEffect(() => {
     const fn = async () => {
@@ -99,8 +100,7 @@ let [currentUser,setCurrentUSer]=useState('');
           setPoisList(poisList);
             setCurrentUSer(await requestPOI.getObjectWithId(user.sub,'user', getTokenSilently,
                 loginWithRedirect));
-            console.log("user")
-            console.log(currentUser)
+            setAllUser(await requestPOI.getAllObject(getTokenSilently,loginWithRedirect,'user'));
         }
 
       }
@@ -187,6 +187,7 @@ let [currentUser,setCurrentUSer]=useState('');
                       user={currentUser}
                       isAuthenticated={isAuthenticated}
                       logout={logout}
+                      userList={allUser}
                   ></App>
                 </div>
 
@@ -211,6 +212,7 @@ class App extends Component {
       Routes: [],
         categories:[],
         tags:[],
+        selecteduser:[],
       geoLat: "",
       geoLng: "",
       available: false,
@@ -239,6 +241,7 @@ console.log("user_"+this.props.user.id);
     this.setState({ POIs: result })
 this.getTags();
     this.getCategories();
+
     this.setState({ oldSizevalue: result.length });
     this.interval = setInterval(() => this.testtimeOut(), 3000);
     let searchResults = [];
@@ -258,7 +261,11 @@ this.getTags();
       map.addLayer(osm);
 
 
-
+      this.sideBarLeft = L.control.sidebar('sidebar', {
+          position: 'left',
+          closeButton:true
+      });
+      this.leafletMap.leafletElement.addControl( this.sideBarLeft);
 
     this.setState({ searchResults: searchResults });
     this.setGroupUsrs(this.props.poisList);
@@ -303,19 +310,16 @@ this.getTags();
     prevProps: Readonly<P>,
     prevState: Readonly<S>,
     snapshot: SS
-  ): void {      this.sideBarLeft = L.control.sidebar('sidebar', {
-      position: 'left',
-      closeButton:true
-  });
-      this.leafletMap.leafletElement.addControl( this.sideBarLeft);}
+  ): void {     }
 async getCategories()
-{
-    let categories= await this.props.getAllO('category');
-    console.log("categories");
-    console.log(categories);
-    this.setState({categories:categories})
+    {
+        let categories= await this.props.getAllO('category');
+        console.log("categories");
+        console.log(categories);
+        this.setState({categories:categories})
 
-}
+    }
+
 async getTags(tags)
 {
     this.setState({tags:tags})
@@ -513,20 +517,18 @@ this.setState({selectedPoi:e})
         alert(e.latlng);
        this.sideBarLeft.show();
             }
-    hidesideBar=e=>
+    showSidebar=e=>
     {
-        alert("sadas");
-        this.sideBarLeft.hide();
+
+        this.sideBarLeft.show();
     }
   render() {
 
     return (
 <div>
     <div id="sidebar">
-        <SideBarPoi {...this.state.selectedPoi}
-                    zoomOnMarker={this.zoomOnMarker}
-                    deleteMarker={this.deleteMarker}
-                    hideSide={this.hidesideBar}
+        <SideBarUsers
+            userList={this.props.userList}
         />
     </div>
   <div className="sidebar1" >

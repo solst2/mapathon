@@ -1,6 +1,33 @@
 export class requestPOI {
   //Update some Information for a POI
+  static async updatePOI(id, updatePOI, getTokenSilently, loginWithRedirect) {
+    try {
+      let token = await getTokenSilently();
+      console.log(JSON.stringify(updatePOI));
+      console.log("request pass");
+      let response = await fetch(
+          `${process.env.REACT_APP_SERVER_URL}/poi/` + id,
+          {
+            method: "PATCH",
+            body: JSON.stringify(updatePOI),
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`
+            }
+          }
+      );
 
+      console.log(response);
+      let data = await response.json();
+      console.log("status" + response.status);
+      return data;
+    } catch (e) {
+      console.error(e);
+      //await loginWithRedirect();
+      return null;
+    }
+  }
   static async updatePOICat(
     idCateArray,
     id,
