@@ -2,13 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9d99ef1f-6be9-48ac-88ce-0e79a9308b07" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/icons/forbidden.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/TagManager.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/NavBar.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/NavBar.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/CategroyManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/CategroyManager.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/w3template.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/w3template.css" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -146,7 +143,7 @@
       <workItem from="1572720427371" duration="13367000" />
       <workItem from="1572770542801" duration="14365000" />
       <workItem from="1572859012287" duration="1140000" />
-      <workItem from="1573032753653" duration="3545000" />
+      <workItem from="1573032753653" duration="5519000" />
     </task>
     <task id="LOCAL-00001" summary="map">
       <created>1570781121132</created>
@@ -274,7 +271,14 @@
       <option name="project" value="LOCAL" />
       <updated>1572823725937</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="fix bug">
+      <created>1573036683516</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1573036683516</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
