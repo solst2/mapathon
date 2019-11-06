@@ -14,6 +14,7 @@ import "esri-leaflet-geocoder/dist/esri-leaflet-geocoder.js";
 import "esri-leaflet-geocoder/dist/esri-leaflet-geocoder.css";
 import { Route, Link, BrowserRouter as Router } from 'react-router-dom'
 import {Map} from "react-leaflet";
+import TagManager from "./pages/TagManager";
 let history = createBrowserHistory();
 
 const onRedirectCallback = appState => {
@@ -37,6 +38,7 @@ const routing = (
 
        <Route exact  path="/" component={App} />
        <Route path="/categories" component={CategoryManager} ></Route>
+        <Route path="/tags" component={TagManager} ></Route>
         <Route path="/settings" component={Settings} />
     </Router>
     </Auth0Provider>

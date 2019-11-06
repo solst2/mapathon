@@ -8,6 +8,7 @@ import {Redirect} from "react-router-dom";
 import deleteIcon from "../icons/delete.png"
 import targetIcon from "../icons/target.png"
 import shareIcon from "../icons/share.png"
+import forbidden from "../icons/forbidden.png"
 import NavBar from "../components/NavBar";
 export default function CategoryManager(props) {
     let [categories, setAllcategories] = useState([]);
@@ -44,13 +45,16 @@ export default function CategoryManager(props) {
         }
 
       async  function  handlecatAdd  (event) {
-            // Avoid reloading the page on form submission
             event.preventDefault();
-            if(category.id===0)
-            await requestPOI.addNewObject("category",category, getTokenSilently, loginWithRedirect);
+
+            if(category.id==null)
+            {await requestPOI.addNewObject("category",category, getTokenSilently, loginWithRedirect);}
             else
-                await requestPOI.updateObject("category",category, getTokenSilently, loginWithRedirect);
+            {     let answer = await requestPOI.updateObject("category",category.id, category, getTokenSilently, loginWithRedirect);}
+
+          event.preventDefault();
           setAllcategories (await getAllO('category'));
+
         }  async function  AddCategory  (event) {
 
             event.preventDefault();
@@ -65,10 +69,22 @@ export default function CategoryManager(props) {
 
     function  AddCategory  (event) {
 
-
-
         setCategory(categories.push({name:'',group:'',image:'',iscreated:true}));
 
+    }
+    function  ModifyCat  (event) {
+
+        let updatecatList=categories
+
+        let findCat= updatecatList.find(c=>c.id==event.target.name)
+        console.log(findCat.id)
+
+        updatecatList= categories.filter(c=>c!==findCat)
+        findCat.iscreated=true;
+       updatecatList.push(findCat);
+
+        setAllcategories(updatecatList)
+        setCategory(findCat)
     }
     if(!isAuthenticated)
     {return (
@@ -130,7 +146,9 @@ export default function CategoryManager(props) {
                             <div className="cell" >{cat.name}     </div>
                             <div className="cell" ><img width={50} height={50} src={cat.image}/>   </div>
                             <div className="cell" >{cat.Creator.name}   </div>
-                            {cat.Creator.id===user.sub&&<div className="cell" ><img width={20} height={20} src={deleteIcon} onClick={deleteCategory} name={cat.id}></img> <img width={10} height={10} src="https://image.flaticon.com/icons/svg/61/61456.svg" onClick= { (e) => {cat.iscreated=false; setCategory(cat)}} /> </div>           }
+                            {cat.Creator.id===user.sub&&<div className="cell" ><img width={20} height={20} src={deleteIcon} onClick={deleteCategory} name={cat.id}></img> <img width={10} height={10} src="https://image.flaticon.com/icons/svg/61/61456.svg" name={cat.id} onClick= { ModifyCat} /> </div>           }
+                            {cat.Creator.id!==user.sub&&<div className="cell" ><img width={20} height={20} src={forbidden} ></img> </div>           }
+
                         </div>
                     })}
                 </div>

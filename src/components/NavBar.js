@@ -11,10 +11,10 @@ const NavBar = () => {
 
         <div >
             <ul className={"cast"} id="ulNav" >
-                <li><Link className="divLink" to="/">Map</Link></li>
-                <li><Link className="divLink">Settings</Link></li>
-                <li> <Link className="divLink" to="/categories">Categories</Link></li>
-                <li><Link className="divLink" href="#about">Tags</Link></li>
+                <li className="liNav"><Link className="divLink" to="/">Map</Link></li>
+                <li className="liNav"><Link className="divLink">Settings</Link></li>
+                <li className="liNav"> <Link className="divLink" to="/categories">Categories</Link></li>
+                <li className="liNav"><Link className="divLink" to="/tags">Tags</Link></li>
                 <li>
             {!isAuthenticated && (
                 <button
