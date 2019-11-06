@@ -6,7 +6,7 @@ import shareIcon from "../icons/share.png"
 export default function POI(props) {
   const { name, description, lat, id,lng, image, url, group} = props;
   const { Categories, Tags, User, Status } = props;
-  const {zoomOnMarker,deleteMarker}=props;
+  const {zoomOnMarker,deleteMarker,sendEmail}=props;
 
   let statusColor;
   if (Status) {
@@ -76,7 +76,7 @@ export default function POI(props) {
 
       <img width={20} height={20} src={targetIcon} name={id} onClick={zoomOnMarker}></img>
       <img width={20} height={20} src={deleteIcon} name={id} onClick={deleteMarker}></img>
-        <img width={20} height={20} src={shareIcon} name={id} ></img>
+        <img width={20} height={20} src={shareIcon} name={id} onClick={sendEmail}></img>
     </div>
   );
 }

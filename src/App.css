@@ -5,6 +5,7 @@
 }
 body{
   background-color: #333333;
+    padding: 20px;
 }
 #mapxyz{
   height:600px;

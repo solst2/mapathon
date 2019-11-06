@@ -127,13 +127,7 @@ componentDidMount(): void {
                         value={this.state.newPOI.url}
                         onChange={this.handleInputChange}
                     />
-                    <FormInput
-                        type="text"
-                        name="tag"
-                        placeholder="Tags"
-                        value={this.state.newPOI.tag}
-                        onChange={this.handleInputChange}
-                    />
+
                     <Multiselect options={ this.props.categories}
                                  displayValue="name"
                                  selectedvalues={this.state.newPOI.Categories}

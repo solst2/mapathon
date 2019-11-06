@@ -46,17 +46,17 @@ import "leaflet-sidebar/src/L.Control.Sidebar"
 import SideBarPoi from "./components/SideBarPoi";
 import SideBarUsers from "./components/SideBarUsers";
 import NavBar from "./components/NavBar";
+import { Multiselect } from 'multiselect-react-dropdown';
 // unused imports:
-// import request from "./utils/request";
-// import endpoints from "./endpoints";
-// import { latLng, marker } from "leaflet/dist/leaflet-src.esm";
-// import { closestPointOnSegment } from "leaflet/src/geometry/LineUtil";
-// import { City, CityForm, CityMarker, CitiesList } from "./Cities";
-// import Div from "./Div";
-// import Map3d from './3dMa'
-// import 'leaflet.sync/L.Map.Sync'
-// import map2d from "./icons/flatt.PNG";
-// import map3d from "./icons/globe.PNG";
+import request from "./utils/request";
+import endpoints from "./endpoints";
+import { latLng, marker } from "leaflet/dist/leaflet-src.esm";
+import { closestPointOnSegment } from "leaflet/src/geometry/LineUtil";
+import Div from "./Div";
+import Map3d from './3dMa'
+import 'leaflet.sync/L.Map.Sync'
+import map2d from "./icons/flatt.PNG";
+import map3d from "./icons/globe.PNG";
 
 
 
@@ -215,14 +215,16 @@ class App extends Component {
       Routes: [],
         categories:[],
         tags:[],
-        selecteduser:[],
+        selectedUsers:[],
+        users:[],
       geoLat: "",
       geoLng: "",
-      available: false,
+      sharepoiId: '',
       Map: { minZoom: 2, center: [0, 5], zoom: 2 },
       oldSizevalue:'',
       notifications:[],
       searchResults:[],
+        displayDiv:false,
       is2ddisplayed:true,
         selectedPoi:'',
     };
@@ -252,7 +254,7 @@ this.getTags();
         searchResults.push(data.results[i]);
       }
     });
-      let osmUrl='http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}';
+      let osmUrl='http://{s}.tile.osm.org/{z}/{x}/{y}.png';
       let osmAttrib='Map data &copy; OpenStreetMap contributors';
       let osm = new L.TileLayer(osmUrl, {minZoom: 5, maxZoom: 18, attribution: osmAttrib});
       var osm2 = new L.TileLayer(osmUrl, {minZoom: 0, maxZoom: 13, attribution: osmAttrib });
@@ -262,11 +264,11 @@ this.getTags();
       map.addLayer(osm);
 
 
-      this.sideBarLeft = L.control.sidebar('sidebar', {
+   /*   this.sideBarLeft = L.control.sidebar('sidebar', {
           position: 'left',
           closeButton:true
-      });
-      this.leafletMap.leafletElement.addControl( this.sideBarLeft);
+      });*/
+      // this.leafletMap.leafletElement.addControl( this.sideBarLeft);
 
     this.setState({ searchResults: searchResults });
     this.setGroupUsrs(this.props.poisList);
@@ -283,8 +285,9 @@ this.getTags();
       });
       let addedElement =updatedList[updatedList.length-1];
 
-    console.log(updatedList);
-      this.setState({ POIs: updatedList });
+
+
+  this.setState({ POIs: updatedList });
       this.changeOfPois();
     if (this.state.oldSizevalue < result.length&&addedElement.Creator.id!=this.props.user.sub) {
 
@@ -318,7 +321,11 @@ async getCategories()
         console.log("categories");
         console.log(categories);
         this.setState({categories:categories})
+let tags= await this.props.getAllO('tag');
+    this.setState({tags:tags})
 
+        let users= await this.props.getAllO('user');
+        this.setState({users:users})
     }
 
 async getTags()
@@ -409,12 +416,17 @@ async getTags()
     this.setState({ Routes: routes });
   };
 
+    dispalyDiv=e=>{
+        this.setState({displayDiv:true})
+this.setState({sharepoiId:e.target.name})
+    }
+    sendEmail=e=>{
 
-    sendEmail(template,poi){
-
+console.log(e.target.name);
+        let poi=this.state.POIs.find(poi=>poi.id==this.state.sharepoiId)
     emailjs.send(
-            'gmail', template,
-        {message_html: "test", from_name: "Mapathon", send_to: this.props.user.name},"user_QbNXGKWFUNVOK2RAfIVdb"
+            'gmail', "sharepoi",
+        {message_html: "test", poi_image:poi.image,from_name: this.props.user.name,poi_name:poi.name,poi_lat:poi.lat,poi_lng:poi.lng, send_to: this.props.user.name},"user_QbNXGKWFUNVOK2RAfIVdb"
         ).then(res => {
             console.log('Email successfully sent!')
         })
@@ -524,16 +536,49 @@ this.setState({selectedPoi:e})
 
         this.sideBarLeft.show();
     }
+
+    setIs2ddisplayed()
+    {
+        this.setState({is2ddisplayed:!this.state.is2ddisplayed})
+    }
+    courseRow(poi) {
+       try{return(
+               <POIMarker
+                   addPOI={this.props.addPOI}
+                   isSaved={poi.isSaved}
+                   lat={poi.lat}
+                   lng={poi.lng}
+                   poi={poi}
+                   poisList={this.state.POIs}
+                   id={poi.id}
+                   categories={this.state.categories}
+                   tags={this.state.tags}
+                   user={this.props.currentUser}
+                   displayPoi={this.displayPoi}
+               />
+       )}
+catch{
+        return null;
+}
+
+    }
   render() {
 
     return (
 <div>
-    <div id="sidebar">
-        <SideBarUsers
-            userList={this.props.userList}
-        />
-    </div>
 
+    {this.state.displayDiv&&<div id="shareDiv">//
+        <form onClick={this.sendEmail}>
+            <Multiselect options={this.props.userList}
+                         displayValue="name"
+                         placeholder="Users"// Preselected value to persist in dropdown
+                         selectedvalues={this.state.selectedUsers}
+                         onSelect={this.onSelect}
+                //onRemove={this.onRemove} // Function will trigger on remove event
+                // Property name to display in the dropdown options
+            />
+        </form>
+    </div>}
   <div className="w3-teal">
   <div className="w3-container">
       <button onClick={this.deleteMyPOI }>Delete all my pois</button>
@@ -543,6 +588,7 @@ this.setState({selectedPoi:e})
             <div id="c1">   <AnalogClock gmtOffset="+4:30"  width={100} theme={Themes.dark} /></div>
             <div id="c2"><AnalogClock   width={100} theme={Themes.dark} /></div>
         </div>
+
 
 
         {this.state.is2ddisplayed && (
@@ -642,21 +688,8 @@ this.setState({selectedPoi:e})
               </Overlay>
               <Overlay name="all pois">
                 <LayerGroup>
-                      {this.state.POIs.filter((poi)=>poi.Creator.group!=4).map(poi => (
-                          <POIMarker
-                              addPOI={this.props.addPOI}
-                              isSaved={poi.isSaved}
-                              lat={poi.lat}
-                              lng={poi.lng}
-                              poi={poi}
-                              poisList={this.state.POIs}
-                              id={poi.id}
-                              categories={this.state.categories}
-                              tags={this.state.tags}
-                              user={this.props.currentUser}
-                              displayPoi={this.displayPoi}
-                             />
-                      ))}
+                     {this.state.POIs.filter((poi)=>poi.Creator.group!=4).map(poi => (
+                             this.courseRow(poi)))}
                 </LayerGroup>
               </Overlay>
             <Overlay key="pois" name="my group pois" checked>
@@ -752,7 +785,7 @@ this.setState({selectedPoi:e})
             {this.state.Routes.map(route => (
               <Routing map={this.leafletMap} route={route} />
             ))}
-            <div className="pointer"></div>
+            {/*<div className="pointer"></div>*/}
             {/*<Control position="bottomright">*/}
             {/*  <img width={70} height={70} src={!this.state.is2ddisplayed ? map2d : map3d} onClick={()=>{let updateDisplayed = !this.state.is2ddisplayed*/}
             {/*    this.setState({is2ddisplayed:updateDisplayed})*/}
@@ -760,7 +793,7 @@ this.setState({selectedPoi:e})
             {/*</Control>*/}
           </Map>
         )}
-        {/*{!this.state.is2ddisplayed &&   <Div is2ddisplayed={this.setIs2ddisplayed} user={this.props.currentUser} geoLat={this.state.geoLat} geoLng={this.state.geoLng} Map={this.state.Map} pois={this.state.POIs} snycMap={this.snycMap}/>}*/}
+        {!this.state.is2ddisplayed &&   <Div is2ddisplayed={this.setIs2ddisplayed} geoLat={this.state.geoLat} geoLng={this.state.geoLng} Map={this.state.Map} pois={this.state.POIs} />}
         <button className={"ButtonBar"} onClick={this.ZoomOnMyLoca}>
           Where am I..?
         </button>
@@ -776,6 +809,7 @@ this.setState({selectedPoi:e})
                 {...poi}
                 zoomOnMarker={this.zoomOnMarker}
                 deleteMarker={this.deleteMarker}
+                sendEmail={this.sendEmail}
               />
             ))}
           </ul>

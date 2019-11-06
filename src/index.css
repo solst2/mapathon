@@ -6,6 +6,20 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+#shareDiv {
+  width: 500px;
+  height: 500px;
+  background-color: #333333;
+
+  position: absolute;
+  top:0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  z-index: 999999999;
+}
 .cast {
   list-style-type: none;
   margin: 0;

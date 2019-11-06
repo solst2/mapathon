@@ -59,7 +59,7 @@ componentDidUpdate(prevProps: Readonly<P>, prevState: Readonly<S>, snapshot: SS)
 showSideBar=e=>
 {
 
-    this.props.displayPoi(this.state.newPOI);
+   // this.props.displayPoi(this.state.newPOI);
 
 }
     render() {
@@ -67,11 +67,17 @@ showSideBar=e=>
         let position = { lat: this.props.lat, lng: this.props.lng };
         //  this.props.poi.Categories.map((c)=>console.log(c.name))
 let img;
-        if(this.state.newPOI.Categories.length>0)
-        img=    this.state.newPOI.Categories[0].image
+
+
+        if(this.state.newPOI.Categories[0]!=null)
+        {
+            if(this.state.newPOI.Categories[0].image.length>0)////&&this.state.newPOI.Categories[0].creatorId==="github|3367593"
+        img= this.state.newPOI.Categories[0].image
         else
             img=getIcon({ group: this.state.newPOI.group })
-
+        }
+        else
+            img=getIcon({ group: this.state.newPOI.group })
         var myIcon = L.icon({
             iconUrl: img ,
             iconSize: [20, 30],
