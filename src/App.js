@@ -577,13 +577,10 @@ this.setState({selectedPoi:e})
               return poi;
             }
             return poi.Creator.id === props.user.sub
-              ? poi.name.toLowerCase().includes(state.filterPoi.toLowerCase())
-                ? poi
-                : poi.description
-                    .toLowerCase()
-                    .includes(state.filterPoi.toLowerCase())
+              ? this.filterThePoi(poi, state.filterPoi)
               : null;
           })
+
         }));
       } else {    //without filter
         this.setState((state, props) => ({
@@ -598,16 +595,34 @@ this.setState({selectedPoi:e})
     ) {
       this.setState((state, props) => ({
         filteredPoisToShow: state.POIs.filter(poi => {
-          return poi.name.toLowerCase().includes(state.filterPoi.toLowerCase())
-            ? poi
-            : poi.description
-                .toLowerCase()
-                .includes(state.filterPoi.toLowerCase());
+            return this.filterThePoi(poi, state.filterPoi);
         })
       }));
     } else {   //no filter and show all
       this.setState((state, props) => ({ filteredPoisToShow: state.POIs }));
     }
+  };
+
+  filterThePoi = (poi, filterPoi) =>{
+      let value="";
+      poi.Tags.map((tag) => value=value+tag.name);
+      poi.Categories.map((cat) => value=value+cat.name);
+      return poi.name.toLowerCase().includes(filterPoi.toLowerCase())         //if
+          ? poi                                                                       //yes
+          : poi.description                                                           //else    if
+              .toLowerCase()
+              .includes(filterPoi.toLowerCase())
+              ? poi                                                                             // yes
+              :   poi.Creator.name                                                              //  else  if
+                  .toLowerCase()
+                  .includes(filterPoi.toLowerCase())
+                  ? poi                                                                                    //yes
+                  :  value                                                                                 //else if
+                      .toLowerCase()
+                      .includes(filterPoi.toLowerCase())
+                      ? poi                                                                                      //yes
+                      : null                                                                                     //else
+          ;
   };
 
   // handle the like click
