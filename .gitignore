@@ -93,3 +93,4 @@ auth_config.json
 
 # Docker & local config
 .env
+/package-lock.json

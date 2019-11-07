@@ -27,7 +27,7 @@ export default class POIMarker extends  React.Component{
                 position: { lng: this.props.poi.lng, lat: this.props.poi.lat },
                 image: this.props.poi.image,
                 url: this.props.poi.url,
-                isSaved: props.isSaved,
+                isSaved: this.props.poi.isSaved,
                 group: this.props.poi.group,
                 icon: "",
                 Creator:this.props.poi.Creator,
@@ -42,7 +42,6 @@ export default class POIMarker extends  React.Component{
 
     };
     componentDidMount(): void {
-
         this.leafletMarker.leafletElement.on('mouseover', function (e) {
             this.openPopup();
         });
@@ -63,7 +62,7 @@ showSideBar=e=>
 
 }
     render() {
-        let { poisList, id, addPOI } = this.props;
+        let { poisList, id, addPoi } = this.props;
         let position = { lat: this.props.lat, lng: this.props.lng };
         //  this.props.poi.Categories.map((c)=>console.log(c.name))
 let img;
@@ -115,7 +114,7 @@ let img;
                     }}   position={position} icon={myIcon}>
                         <Popup>
                             <div>{this.state.Creator}</div>
-                            <POIForm parentRef={this.leafletMarker} poi={this.state.newPOI} tags={this.props.tags} categories={this.props.categories} getAllO={this.props.getAllO} addPOI={addPOI} poisList={poisList} updatePOI={this.updatePOI} position={position} id={id}/>
+                            <POIForm parentRef={this.leafletMarker} poi={this.state.newPOI} tags={this.props.tags} categories={this.props.categories} getAllO={this.props.getAllO} addPoi={addPoi} poisList={poisList} updatePOI={this.updatePOI} position={position} id={id}/>
                         </Popup>
                     </Marker>
                 </div>
