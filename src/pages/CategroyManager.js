@@ -55,7 +55,8 @@ export default function CategoryManager(props) {
           event.preventDefault();
           setAllcategories (await getAllO('category'));
 
-        }  async function  AddCategory  (event) {
+        }
+        async function  AddCategory  (event) {
 
             event.preventDefault();
 
@@ -90,7 +91,7 @@ export default function CategoryManager(props) {
     {return (
         <Redirect to="/" />)
     }
-
+    let catcreat=false;
     return (
 
 
@@ -152,8 +153,9 @@ export default function CategoryManager(props) {
                         </div>
                     })}
                 </div>
-                <br/>
-                <button className="PersoBtn" style={{width:"75%"}} onClick={AddCategory}>Add category</button>
+                <br/>{categories.map((category)=> category.iscreated? catcreat=true : null)}
+                { !catcreat &&
+                <button className="PersoBtn" style={{width:"75%"}} onClick={AddCategory}>Add category</button>}
             </form>
         </div>
 </div>

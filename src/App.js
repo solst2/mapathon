@@ -148,6 +148,7 @@ function AppWrapper() {
             getTokenSilently,
             loginWithRedirect
         );
+
         return answer;
     }
     // add POI and call the insertPOi and then update the category and tags
@@ -628,6 +629,7 @@ this.setState({selectedPoi:e})
     let likepoi = updatedPois.find(poi => poi.id === poiID);
     this.props.setLike(poiID, likepoi.liked ? "unlike" : "like");
     //update directly, and it will be proved with the next load
+    likepoi.liked ? likepoi.likes-- : likepoi.likes++;
     likepoi.liked = !likepoi.liked;
     this.setState({ POIs: updatedPois });
   };
