@@ -139,6 +139,17 @@ let [currentUser,setCurrentUSer]=useState('');
       }
   }
 
+    async function setLike(poiID, like) {
+        let answer = await requestPOI.updateLike(
+            "poi",
+            poiID,
+            like,
+            getTokenSilently,
+            loginWithRedirect
+        );
+        return answer;
+    }
+
   async function addPOI(newPOI) {
       let poiadd =await  insertPOi(newPOI);
       console.log("category : ")

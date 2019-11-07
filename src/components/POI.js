@@ -3,8 +3,9 @@ import "./POI.css";
 import deleteIcon from "../icons/delete.png"
 import targetIcon from "../icons/target.png"
 import shareIcon from "../icons/share.png"
+import {preventDefault} from "leaflet/src/dom/DomEvent";
 export default function POI(props) {
-  const { name, description, lat, id,lng, image, url, group} = props;
+  const { name, description, lat, id,lng, image, url, group, liked} = props;
   const { Categories, Tags, User, Status } = props;
 const creator={...props.Creator}
 console.log(creator.email)
