@@ -476,17 +476,25 @@ this.setState({sharepoiId:e.target.name})
         this.setState({selectedUsers:selectedUsers});
         let poi=this.state.POIs.find(poi=>poi.id==this.state.sharepoiId)
 
-        this.state.selectedUsers.map((u)=>
-
+        this.state.selectedUsers.map((u)=> {
+            console.log("sending..");
             emailjs.send(
                 'gmail', "sharepoi",
-                {message_html: "test", poi_image:poi.image,from_name: this.props.user.name,poi_name:poi.name,poi_lat:poi.lat,poi_lng:poi.lng, send_to:u.name},"user_QbNXGKWFUNVOK2RAfIVdb"
+                {
+                    message_html: "test",
+                    poi_image: poi.image,
+                    from_name: this.props.user.name,
+                    poi_name: poi.name,
+                    poi_lat: poi.lat,
+                    poi_lng: poi.lng,
+                    send_to: u.name
+                }, "user_QbNXGKWFUNVOK2RAfIVdb"
             ).then(res => {
                 console.log('Email successfully sent!')
             })
             // Handle errors here however you like, or use a React error boundary
                 .catch(err => console.error('Oh well, you failed. Here some thoughts on the error that occured:', err))
-        )
+        } )
         this.setState({displayDiv:false})
     }
 

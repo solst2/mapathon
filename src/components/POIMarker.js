@@ -42,7 +42,6 @@ export default class POIMarker extends  React.Component{
 
     };
     componentDidMount(): void {
-
         this.leafletMarker.leafletElement.on('mouseover', function (e) {
             this.openPopup();
         });
