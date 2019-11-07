@@ -874,7 +874,7 @@ catch{
                 </Control>
                 <Overlay key="pois" name="my position " checked>
                     <LayerGroup>
-                        <GeoLocat upGeoLocalisation={this.upGeoLocalisation}/>
+
                     </LayerGroup>
                 </Overlay>
           </LayersControl>
@@ -931,7 +931,7 @@ catch{
                 {...currentPoi}
                 zoomOnMarker={this.zoomOnMarker}
                 deleteMarker={this.deleteMarker}
-                sendEmail={this.sendEmail}
+                sendEmail={this.dispalyDiv}
                 setLike={this.setLike}
             />
             </div>
