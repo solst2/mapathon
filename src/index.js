@@ -1,6 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
 import App from "./App";
 import CategoryManager from './pages/CategroyManager'
 import Settings from "./Settings";
@@ -37,7 +36,6 @@ const routing = (
        <Route exact  path="/" component={App} />
        <Route path="/categories" component={CategoryManager} ></Route>
         <Route path="/tags" component={TagManager} ></Route>
-        <Route path="/settings" component={Settings} />
     </Router>
     </Auth0Provider>
 )

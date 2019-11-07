@@ -130,7 +130,7 @@ export default function CategoryManager(props) {
                                         onChange={handleInputChange}
                                     />
                                 </div>
-                                <div className="cell" >
+                                <div className="AddForm" >
                                     <FormInput
                                         type="text"
                                         name="image"
@@ -139,11 +139,11 @@ export default function CategoryManager(props) {
                                         onChange={handleInputChange}
                                     />
                                 </div>
-                                <div className="cell" data-title="Location"><button>Save</button> </div>
+                                <div className="cell" data-title="Location"><button  className="PersoBtn" >Save</button> </div>
                             </div>
 
                         return <div className="row">
-                            <div className="cell" >{cat.name}     </div>
+                            <div className="cell" >{cat.name} </div>
                             <div className="cell" ><img width={50} height={50} src={cat.image}/>   </div>
                             <div className="cell" >{cat.Creator.name}   </div>
                             {cat.Creator.id===user.sub&&<div className="cell" ><img width={20} height={20} src={deleteIcon} onClick={deleteCategory} name={cat.id}></img> <img width={10} height={10} src="https://image.flaticon.com/icons/svg/61/61456.svg" name={cat.id} onClick= { ModifyCat} /> </div>           }
@@ -152,7 +152,8 @@ export default function CategoryManager(props) {
                         </div>
                     })}
                 </div>
-                <button style={{width:"75%"}} onClick={AddCategory}>Add category</button>
+                <br/>
+                <button className="PersoBtn" style={{width:"75%"}} onClick={AddCategory}>Add category</button>
             </form>
         </div>
 </div>

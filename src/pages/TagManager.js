@@ -130,7 +130,7 @@ export default function TagManger(props) {
                                             onChange={handleInputChange}
                                         />
                                     </div>
-                                    <div className="cell" >
+                                    <div className="AddForm" >
                                         <FormInput
                                             type="text"
                                             name="image"
@@ -139,7 +139,7 @@ export default function TagManger(props) {
                                             onChange={handleInputChange}
                                         />
                                     </div>
-                                    <div className="cell" data-title="Location"><button>Save</button> </div>
+                                    <div className="cell" data-title="Location"><button className="PersoBtn">Save</button> </div>
                                 </div>
 
                             return <div className="row">
@@ -151,7 +151,8 @@ export default function TagManger(props) {
                             </div>
                         })}
                     </div>
-                    <button style={{width:"100%"}} onClick={AddCategory}>Add tag</button>
+                    <br/>
+                    <button className="PersoBtn" style={{width:"100%"}} onClick={AddCategory}>Add tag</button>
 
                 </form>
             </div>

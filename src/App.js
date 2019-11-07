@@ -707,59 +707,50 @@ catch{
         </form>
         <button onClick={e=>this.setState({displayDiv:false})}>X</button>
     </div>}
-    <div id="ContainerForClocksContainer">
         <div id="ClocksContainer">
 
             <div className="Clock">
-            <div className="ClockCountry">
                 <AnalogClock gmtOffset="-8:00"  width={100} theme={Themes.dark} />
+                <div className="ClockCountry">
                 Los Angeles
-                <br/>
-                <img src="https://c.tadst.com/gfx/n/fl/32/us.png" />
-            </div>
+                </div>
+                <img className="CountryFlag" src="https://c.tadst.com/gfx/n/fl/32/us.png" />
             </div>
 
             <div className="Clock">
-            <div>
                 <AnalogClock gmtOffset="-4:30"  width={100} theme={Themes.dark} />
+                <div className="ClockCountry">
                 New York
-            <br/>
-                <img src="https://c.tadst.com/gfx/n/fl/32/us.png" />
+                </div>
+                <img className="CountryFlag" src="https://c.tadst.com/gfx/n/fl/32/us.png" />
 
-            </div>
             </div>
 
             <div className="Clock">
-            <div>
                 <AnalogClock   width={100} theme={Themes.dark} />
-           Zurich
-                <br/>
-                <img src="https://c.tadst.com/gfx/n/fl/32/ch.png" />
+                <div className="ClockCountry">
+                Zurich
+                </div>
+                <img  className="CountryFlag" src="https://c.tadst.com/gfx/n/fl/32/ch.png" />
 
-            </div>
             </div>
 
             <div className="Clock">
-            <div>
                 <AnalogClock  gmtOffset="+7:00"  width={100} theme={Themes.dark} />
+                <div className="ClockCountry">
                 Bangkok
-                <br/>
-                <img width={30} height={20} src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Flag_of_Thailand.svg/1200px-Flag_of_Thailand.svg.png" />
-
-            </div>
+                </div>
+                <img className="CountryFlag" width={30} height={20} src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Flag_of_Thailand.svg/1200px-Flag_of_Thailand.svg.png" />
             </div>
 
             <div className="Clock">
-            <div>
                 <AnalogClock  gmtOffset="+10:00"  width={100} theme={Themes.dark} />
+                <div className="ClockCountry">
                 Sydney
-                <br/>
-                <img width={30} height={20} src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Flag_of_New_Zealand.svg/1200px-Flag_of_New_Zealand.svg.png" />
-            </div>
+                </div>
+                <img className="CountryFlag" width={30} height={20} src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Flag_of_New_Zealand.svg/1200px-Flag_of_New_Zealand.svg.png" />
             </div>
         </div>
-    </div>
-
       <button className={"PersoBtn"} onClick={this.ZoomOnMyLoca}>
           Locate Me
       </button>
@@ -977,9 +968,19 @@ catch{
           </Map>
         )}
         {!this.state.is2ddisplayed &&   <Div is2ddisplayed={this.setIs2ddisplayed} geoLat={this.state.geoLat} geoLng={this.state.geoLng} Map={this.state.Map} pois={this.state.POIs} />}
-        <div className="POI">
-        <div  className="singlePoi">
-            <button onClick={(e)=>{
+        <div className="DetailsPoi">
+            <div className="leftDetails">
+            <div  className="ListPoi">
+                <ul>My Group Poi :
+                    {this.state.filteredPoisToShow.filter((poi)=>poi.Creator.group===4).map(poi=>
+                        <li value={getIndex(poi.name,this.state.filteredPoisToShow.filter((poi)=>poi.Creator.group===4),"name")} onClick={(e)=>this.setState({indexPoiPage:e.target.value})}>{poi.name}</li>
+                    )
+                    }
+                </ul>
+            </div>
+            </div>
+            <div className="rightDetails">
+            <button className="PersoBtn" onClick={(e)=>{
                 if(this.state.indexPoiPage>0)
                     this.setState({indexPoiPage:this.state.indexPoiPage-1})
                 else
@@ -993,8 +994,7 @@ catch{
                 setLike={this.setLike}
             />
             </div>
-
-             <button onClick={(e)=>{
+             <button className="PersoBtn" onClick={(e)=>{
             if(this.state.indexPoiPage<this.state.filteredPoisToShow.filter((poi)=>poi.Creator.group===4).length-1)
                 this.setState({indexPoiPage:this.state.indexPoiPage+1})
             else
@@ -1004,14 +1004,6 @@ catch{
                 console.log(currentPoi)
             }
         }}>{'>'}</button>
-            <div  className="POI-List">
-                <ul>My Group Poi :
-                    {this.state.filteredPoisToShow.filter((poi)=>poi.Creator.group===4).map(poi=>
-                        <li value={getIndex(poi.name,this.state.filteredPoisToShow.filter((poi)=>poi.Creator.group===4),"name")} onClick={(e)=>this.setState({indexPoiPage:e.target.value})}>{poi.name}</li>
-                    )
-                    }
-                </ul>
-            </div>
         </div>
 
 

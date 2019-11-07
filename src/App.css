@@ -1,5 +1,11 @@
 body{
     background-color: #333333;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 .PersoBtn{
@@ -61,6 +67,12 @@ li .divLink:hover:not(.active) {
 
 .ClockCountry{
     padding: 10px;
+    text-align: center;
+}
+
+.CountryFlag {
+    display:block;
+    margin:auto;
 }
 
 .map{
@@ -88,32 +100,28 @@ li .divLink:hover:not(.active) {
     display:inline-block;
 
 }
-.POI{
-    display: flex;
-    flex-direction: row;
-    width: 100%;
+.DetailsPoi{
+display: flex;
 }
-.poi{
-    height: 100%;
+
+.leftDetails{
+    flex-basis: 20%;
 }
-.poiimg{
-    margin-left: -500px;
-}
-.singlePoi{
-    text-align: center;
-    width:60%;
-    display: inline-block;
-    height:500px;
-}
-.POI-List
+
+.ListPoi
 {
     color:white;
 }
 
-#c2{
-    margin: 0 10px 10px 10px;
+.rightDetails{
+    flex-grow: 1;
 }
- .dropdown-content {
+
+
+
+
+
+.dropdown-content {
   display: none;
   position: absolute;
   left: 0;
@@ -200,6 +208,25 @@ li .divLink:hover:not(.active) {
   padding: 6px 12px;
   display: table-cell;
 }
+
+#shareDiv {
+    width: 500px;
+    height: 500px;
+    background-color: #333333;
+
+    position: absolute;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    z-index: 999999999;
+}
+code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
 @media screen and (max-width: 580px) {
   .cell {
     padding: 2px 16px;
