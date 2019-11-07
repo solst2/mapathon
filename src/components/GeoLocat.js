@@ -9,19 +9,14 @@ export default function GeoLocat(props) {
   let [available, setAvailable] = useState(false);
   let [message, setMessage] = useState("Browser does not support geolocation.");
 
-  var myPostionIcon = L.icon({
-    iconUrl: currentPosition,
-    iconSize: [20, 20],
-    iconAnchor: [10, 10],
-    popupAnchor: [0, -20]
-  });
+
 
   function getPosition(position) {
     setLaltitude(position.coords.latitude);
     setLongtitude(position.coords.longitude);
 
     setAvailable(true);
-    props.upGeoLocalisation(position);
+    props.upGeoLocalisation({lat:position.coords.latitude,lng:position.coords.longitude});
   }
 
   function getError(error) {
@@ -54,9 +49,7 @@ export default function GeoLocat(props) {
     : setAvailable(false);
   //console.log( {laltitude}+"   "+ {longtitude});
   return available ? (
-    <Marker position={{ lat: laltitude, lng: longtitude }} icon={myPostionIcon}>
-      <Popup>My Position</Popup>
-    </Marker>
+   <div/>
   ) : (
     <p>{message}</p>
   );

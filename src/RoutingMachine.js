@@ -7,7 +7,7 @@ import 'leaflet-routing-machine/dist/leaflet-routing-machine.css';
 import  'leaflet-control-geocoder/dist/Control.Geocoder.js'
 class Routing extends MapLayer {
     createLeafletElement() {
-        const {map,route} = this.props;
+        const {map,route,addroute} = this.props;
         let leafletElement = L.Routing.control({
              waypoints: [L.latLng(46.272 , 7.487), L.latLng(46.283, 7.497)],
             // lineOptions: {
@@ -34,7 +34,27 @@ class Routing extends MapLayer {
                 return sexagesimal(latLng.lat, 'N', 'S') + ' ' + sexagesimal(latLng.lng, 'E', 'W');
             }
         }).addTo(map.leafletElement);
+
+        leafletElement.on('routeselected', function(routes) {
+            console.log(routes);
+            console.log(routes.route.instructions);
+        }, this);
+      //  this.props.addroute(leafletElement);
+        //https://stackoverflow.com/questions/36228273/leaflet-routing-machine-how-to-export-route-details-and-coordinates-in-json-g
+        //https://gis.stackexchange.com/questions/186757/leaflet-routing-machine-how-to-export-route-details-and-coordinates-in-json-g
         return leafletElement.getPlan();
     }
+    componentDidMount() {
+        super.componentDidMount();
+
+
+
+
+    }
+
+bindLeafletEvents(next: EventsObject = {}, prev: EventsObject = {}): EventsObject {
+
+    }
+
 }
 export default withLeaflet(Routing);

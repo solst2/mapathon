@@ -66,15 +66,44 @@ body{
     display:inline-block;
 
 }
+.POI{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+.poi{
+    height: 100%;
+}
+.poiimg{
+    margin-left: -500px;
+}
+.singlePoi{
+    text-align: center;
+    width:60%;
+    display: inline-block;
+    height:500px;
+}
+.POI-List
+{
+    color:white;
+}
 #wrapper{
     display: flex;
     flex-direction: row;
-    width: 100px;
-    margin: 0 auto;
-    left: 50%;
+    width: 100%;
+    pading: 10px 10px 50px 50px;
+    color:white;
+    background-color: #111111;
+    align-items: center;
+    alignment: center;
 }
+#c1{
+    margin: 0 10px 10px 10px;
 
-
+}
+#c2{
+    margin: 0 10px 10px 10px;
+}
  .dropdown-content {
   display: none;
   position: absolute;
