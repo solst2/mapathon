@@ -218,7 +218,7 @@ function AppWrapper() {
                       currentUser={currentUser}
                       position={position}
                       key="app"
-                      user={currentUser}
+                      user={user}
                       isAuthenticated={isAuthenticated}
                       logout={logout}
                       userList={allUser}
@@ -568,6 +568,7 @@ this.setState({selectedPoi:e})
     let POIs4gr = this.state.POIs.filter(poi => poi.group == 4);
     console.log("filter Poi:" + this.state.filterPoi + ":");
     console.log("showOwn:" + this.state.justOwn + ":");
+      console.log("user:" + this.props.user.sub + ":");
     // Show just own pois
     if (this.state.justOwn) {
         // with filter
