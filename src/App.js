@@ -395,6 +395,7 @@ async getTags()
     }
   //add a marker when you clic on the map
   addMarker = e => {
+this.leafletMap.leafletElement.closePopup();
     const unsavedpois = this.state.unsavedPois;
     var newPoi = {
       lat: e.latlng.lat,
@@ -412,14 +413,10 @@ async getTags()
       this.setState({unsavedPois:unsavedpois});
       const pois= this.state.POIs
 
-      unsavedpois.map(poi=>
-          pois.push(poi)
-      )
 
 
-    this.setState({POIs:pois});
-    this.changeOfPois();
-    this.leafletMap.leafletElement.flyTo(e.latlng, 15);
+      this.leafletMap.leafletElement.flyTo(e.latlng, 15);
+
 
     };
   addPoi=(poi)=>{
@@ -782,9 +779,7 @@ catch{
            // onClick={this.addMarker}
             zoom={this.state.Map.zoom}
             contextmenu={true}
-            onMove={e => {
-            e.target.closePopup();
-        }}
+
             contextmenuWidth={140}
             contextmenuItems={ [{
             text: 'Show coordinates',
@@ -893,7 +888,21 @@ catch{
                         displayPoi={this.displayPoi}
                     />
                 ))}
-
+                  {this.state.unsavedPOIs.map(poi => (
+                      <POIMarker
+                          addPoi={this.addPoi}
+                          poi={poi}
+                          poisList={this.state.POIs}
+                          lat={poi.lat}
+                          isSaved={poi.isSaved}
+                          lng={poi.lng}
+                          id={poi.id}
+                          categories={this.state.categories}
+                          tags={this.state.tags}
+                          user={this.props.currentUser}
+                          displayPoi={this.displayPoi}
+                      />
+                  ))}
               </LayerGroup>
             </Overlay>
                 <Control position="topleft" >

@@ -17,7 +17,7 @@ const initMarker = ref => {
 export default class POIMarker extends  React.Component{
     constructor(props) {
         super(props);
-        this.leafletMarker = React.createRef();
+        this.leafletMarker = React.createRef();     this.leafletMarker2 = React.createRef();
         this.state = {
             // Empty POIForm object for holding form input values
             newPOI: {
@@ -42,6 +42,7 @@ export default class POIMarker extends  React.Component{
 
     };
     componentDidMount(): void {
+        if(this.state.newPOI.isSaved)
         this.leafletMarker.leafletElement.on('mouseover', function (e) {
             this.openPopup();
         });
@@ -109,12 +110,10 @@ let img;
         else
             return (
                 <div >
-                    <Marker ref={m => {
-                        this.leafletMarker = m;
-                    }}   position={position} icon={myIcon}>
+                    <Marker ref={initMarker}   position={position} icon={myIcon}>
                         <Popup>
                             <div>{this.state.Creator}</div>
-                            <POIForm parentRef={this.leafletMarker} poi={this.state.newPOI} tags={this.props.tags} categories={this.props.categories} getAllO={this.props.getAllO} addPoi={addPoi} poisList={poisList} updatePOI={this.updatePOI} position={position} id={id}/>
+                            <POIForm parentRef={this.leafletMarker2} poi={this.state.newPOI} tags={this.props.tags} categories={this.props.categories} getAllO={this.props.getAllO} addPoi={addPoi} poisList={poisList} updatePOI={this.updatePOI} position={position} id={id}/>
                         </Popup>
                     </Marker>
                 </div>

@@ -37,7 +37,10 @@ componentDidMount(): void {
         {
             options.push({ name: cat.name, id: cat.id})}
     )
-//    this.props.parentRef.leafletElement.openPopup()
+//this.props.parentRef.leafletElement.openPopup()
+
+
+
 
  this.setState({multiSelect:options})
 }
