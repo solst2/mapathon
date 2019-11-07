@@ -21,8 +21,8 @@ export default class POIForm extends React.Component {
                 lat: this.props.position.lat,
                 lng: this.props.position.lng,
                 tag: "",
-                Categories:poiInfo.categories,
-                Tags:poiInfo.tags,
+                Categories:poiInfo.Categories,
+                Tags:poiInfo.Tags,
                 Creator:{group:4}
 
             },   multiSelect:poiInfo.Categories
@@ -37,7 +37,7 @@ componentDidMount(): void {
         {
             options.push({ name: cat.name, id: cat.id})}
     )
-    this.props.parentRef.leafletElement.openPopup()
+//    this.props.parentRef.leafletElement.openPopup()
 
  this.setState({multiSelect:options})
 }

@@ -427,7 +427,8 @@ async getTags()
       const pois= this.state.POIs
       pois.push(poi)
       this.setState({POIs:pois});
-      this.setState({unsavedPois:this.state.unsavedPois.filter(poi=>poi!=poi)});
+      this.changeOfPois();
+      this.setState({unsavedPois:this.state.unsavedPois.filter(poi=>poi!==poi)});
   }
   deleteMarker = e => {
       console.log("id: "+e.target.name)
@@ -454,7 +455,7 @@ async getTags()
       let newPoiList = []
       this.state.POIs.map((poi)=> {
           if (poi.Creator.id === this.props.user.id) {
-              console.log("answer: " + this.props.deletePOI(poi) + ":");
+              this.props.deleteObject(poi);
 
           } else {
               newPoiList.push(poi);
