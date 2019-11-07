@@ -59,6 +59,7 @@ import map2d from "./icons/flatt.PNG";
 import map3d from "./icons/globe.PNG";
 import currentPosition from "./icons/my_position.gif";
 import "./cardTemplate.scss"
+import {preventDefault} from "leaflet/src/dom/DomEvent";
 var myPostionIcon = L.icon({
     iconUrl: currentPosition,
     iconSize: [20, 20],
@@ -331,11 +332,11 @@ this.getTags();
 
       this.state.unsavedPois.map(poi=>
           updatedList.push(poi)
-      )
+      );
 
   this.setState({ POIs: updatedList });
       this.changeOfPois();
-    if (this.state.oldSizevalue < result.length&&this.props.user.id!==addedElement.Creator.id) {
+    if (this.state.oldSizevalue < result.length&&this.props.user.sub!==addedElement.Creator.id) {
 
         this.setState({selectedPoi:addedElement})
       let addNotif = this.state.notifications;
@@ -405,7 +406,7 @@ this.leafletMap.leafletElement.closePopup();
       description: "",
       group: 4,
       isSaved: false,
-      Creator: { id: this.props.user.id ,group:4},
+      Creator: { id: this.props.user.sub ,group:4},
       Categories: [],
       Tags: []
     };
@@ -438,7 +439,7 @@ let zoom=0;
 
     let deletedPOI = this.state.POIs.find(poi => poi.id ==e.target.name);
 
-    if (deletedPOI.Creator.id === this.props.user.id) {
+    if (deletedPOI.Creator.id === this.props.user.sub) {
       if (
         window.confirm(
           "Are you sure you wish to delete this point of interest?"
@@ -457,7 +458,7 @@ let zoom=0;
 
       let newPoiList = []
       this.state.POIs.map((poi)=> {
-          if (poi.Creator.id === this.props.user.id) {
+          if (poi.Creator.id === this.props.user.sub) {
               this.props.deleteObject(poi);
 
           } else {

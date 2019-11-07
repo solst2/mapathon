@@ -70,13 +70,13 @@ console.log(creator.email)
                   <button onClick={handleLikeClick}>
                       {liked ? "Liked 👍" : "Not liked 👎"}
                   </button>
-                 <img width={20} height={20} src={targetIcon} name={id} onClick={zoomOnMarker}></img>
-                 <img width={20} height={20} src={deleteIcon} name={id} onClick={deleteMarker}></img>
-                   <img width={20} height={20} src={shareIcon} name={id} onClick={sendEmail}></img>
+                 <img width={20} height={20} src={targetIcon} name={id} onClick={zoomOnMarker}/>
+                {creator.id != undefined && <img width={20} height={20} src={deleteIcon} name={id} onClick={deleteMarker}/>}
+                   <img width={20} height={20} src={shareIcon} name={id} onClick={sendEmail}/>
               </ul>
             </div>
           </div>
-          <div className="blur_back bright_back" style={{ background:`url(${creator.picture})`}}></div>
+          <div className="blur_back bright_back" style={{ background:`url(${creator.picture})`}}/>
         </div>
 
 
