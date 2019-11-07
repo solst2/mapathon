@@ -7,7 +7,7 @@ export default function GeoLocat(props) {
   let [laltitude, setLaltitude] = useState([]);
   let [longtitude, setLongtitude] = useState([]);
   let [available, setAvailable] = useState(false);
-  let [message, setMessage] = useState("Browser does not support geolocation.");
+  let [message, setMessage] = useState("");
 
 
 

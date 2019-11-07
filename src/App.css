@@ -3,48 +3,17 @@
   height:800px;
   width:100%;
 }
+
 body{
   background-color: #333333;
-    padding: 20px;
 }
+
 #mapxyz{
   height:600px;
   width:100%;
 }
-.ButtonBar {
-  border-radius: 8px;
-  border: 2px solid #4CAF50;
-  font-size: 12px;
-  padding: 10px 24px;
-  background-color: #F8F8FF;
-}
-.ButtonLogout {
-  border-radius: 8px;
-
-  font-size: 12px;
-  padding: 10px 24px;
-  background-color: darkred;
-  color: white;
-}
-.ButtonLogout:hover {
-  background-color: red;
-  align-contents: center;
-  color: white;
-}
-.ButtonBar:hover {
-  background-color: #4CAF50;
-  color: white;
-}
 .App-header {
   text-align: center;
-}
-.dropbtn {
-  background-color: #4CAF50;
-  color: white;
-  padding: 16px;
-  font-size: 16px;
-  border: none;
-  cursor: pointer;
 }
 
 .dropdown {
@@ -91,15 +60,10 @@ body{
     display: flex;
     flex-direction: row;
     width: 100%;
-    pading: 10px 10px 50px 50px;
     color:white;
-    background-color: #111111;
-    align-items: center;
-    alignment: center;
 }
 #c1{
     margin: 0 10px 10px 10px;
-
 }
 #c2{
     margin: 0 10px 10px 10px;

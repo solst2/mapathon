@@ -275,7 +275,7 @@ this.getTags();
     this.getCategories();
 
     this.setState({ oldSizevalue: result.length });
-    this.interval = setInterval(() => this.testtimeOut(), 4000);
+    this.interval = setInterval(() => this.testtimeOut(), 8000);
     let searchResults = [];
     searchControl.on("results", function(data) {
       results.clearLayers();
@@ -666,7 +666,6 @@ catch{
     </div>}
   <div className="w3-teal">
   <div className="w3-container">
-      <button onClick={this.deleteMyPOI }>Delete all my pois</button>
         <div id="wrapper">
 
             <div id="c1">   <AnalogClock gmtOffset="-8:00"  width={100} theme={Themes.dark} />
@@ -703,7 +702,14 @@ catch{
             </div>
         </div>
 
-
+      <button className={"ButtonBar"} onClick={this.ZoomOnMyLoca}>
+          Locate Me
+      </button>
+      <MenuOptions
+          handleFilter={this.handleFilter}
+          handleJustOwnClick={this.handleJustOwnClick}
+          justOwn={this.state.justOwn}
+      />
 
         {this.state.is2ddisplayed && (
           <Map
@@ -912,14 +918,6 @@ catch{
           </Map>
         )}
         {!this.state.is2ddisplayed &&   <Div is2ddisplayed={this.setIs2ddisplayed} geoLat={this.state.geoLat} geoLng={this.state.geoLng} Map={this.state.Map} pois={this.state.POIs} />}
-        <button className={"ButtonBar"} onClick={this.ZoomOnMyLoca}>
-          Where am I..?
-        </button>
-        <MenuOptions
-          handleFilter={this.handleFilter}
-          handleJustOwnClick={this.handleJustOwnClick}
-          justOwn={this.state.justOwn}
-        />
         <div className="POI">
         <div  className="singlePoi">
             <button onClick={(e)=>{

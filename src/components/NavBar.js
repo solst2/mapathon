@@ -16,12 +16,6 @@ const NavBar = () => {
                 <li className="liNav"> <Link className="divLink" to="/categories">Categories</Link></li>
                 <li className="liNav"><Link className="divLink" to="/tags">Tags</Link></li>
                 <li className="dropdown">
-                    <a href="javascript:void(0)" className="dropbtn">Manage</a>
-                    <div className="dropdown-content">
-                        <Link className="divLink" to="/tags">Tags</Link>
-                        <Link className="divLink" to="/tags">Tags</Link><Link className="divLink" to="/tags">Tags</Link>
-
-                    </div>
                 </li>
                 <li>
             {!isAuthenticated && (
