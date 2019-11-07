@@ -1,7 +1,42 @@
+#Navbar{
+    background-color: #222222;
+}
+.MenuList {
+    list-style-type: none;
+}
+
+.liNav {
+    float: left;
+}
+
+li .divLink:hover:not(.active) {
+    background-color: #111;
+}
+
+#DivLog{
+    display: table;
+    padding: 11px;
+    margin-left:auto;
+    margin-right:0;
+}
+
+#DivLog2{
+    display: table-cell;
+    vertical-align: middle;
+}
+
+#BtnLogOut{
+    background-color: red;
+}
+
+#BtnLogOut:hover{
+    background-color: Darkred;
+}
 
 .map{
   height:800px;
-  width:100%;
+  width:98%;
+    margin: 1%;
 }
 
 body{
@@ -12,15 +47,20 @@ body{
   height:600px;
   width:100%;
 }
-.App-header {
-  text-align: center;
+
+.PersoBtn{
+    border-radius: 5px;
+    border: none;
+    padding: 5px;
+    background-color: #27ae60;
+    color: white;
+    font-size: medium;
 }
 
-.dropdown {
-  position: relative;
-  display: inline-block;
-
+.PersoBtn:hover{
+    background-color: green;
 }
+
 .left-align {
     padding:5px;
     float: right;
@@ -61,6 +101,7 @@ body{
     flex-direction: row;
     width: 100%;
     color:white;
+    padding: 25px;
 }
 #c1{
     margin: 0 10px 10px 10px;
