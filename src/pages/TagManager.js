@@ -114,7 +114,7 @@ export default function TagManger(props) {
                                 Creator
                             </div>
                             <div className="cell">
-                                Features
+                                Edit
                             </div>
                         </div>
 
@@ -147,12 +147,11 @@ export default function TagManger(props) {
                                 <div className="cell" ><img width={50} height={50} src={t.image}/>   </div>
                                 <div className="cell" >{t.Creator.name}   </div>
                                 {t.Creator.id===user.sub&&<div className="cell" ><img width={20} height={20} src={deleteIcon} onClick={deleteCategory} name={t.id}></img> <img width={10} height={10} src="https://image.flaticon.com/icons/svg/61/61456.svg" name={t.id} onClick= { ModifyCat} /> </div>           }
-                                {t.Creator.id!==user.sub&&<div className="cell" ><img width={20} height={20} src={forbidden} ></img> </div>           }
-
+                                {t.Creator.id!==user.sub&&<div className="cell" ></div>}
                             </div>
                         })}
                     </div>
-                    <button style={{width:1000}} onClick={AddCategory}>Add category</button>
+                    <button style={{width:"100%"}} onClick={AddCategory}>Add tag</button>
 
                 </form>
             </div>
