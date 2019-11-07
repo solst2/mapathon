@@ -44,9 +44,18 @@ console.log(creator.email)
               <span className="minutes">{lat} {lng}</span>
               {Categories && Categories.length > 0 && (
               <p className="type">   {Categories.map(category => (
+                  <div>
                   <img className="category-image" src={category.image} />
-
+                  <p>{category.name}</p>
+                  </div>
               ))}</p>)}
+              {Tags && Tags.length > 0 && (
+                  <p className="type">   {Tags.map(tag => (
+                      <div>
+                        <img className="category-image" src={tag.image} />
+                        <p>{tag.name} </p>
+                      </div>
+                  ))}</p>)}
             </div>
             <div className="movie_desc">
               <p className="text">

@@ -1,3 +1,20 @@
+body{
+    background-color: #333333;
+}
+
+.PersoBtn{
+    border-radius: 5px;
+    border: none;
+    padding: 5px;
+    background-color: #27ae60;
+    color: white;
+    font-size: medium;
+}
+
+.PersoBtn:hover{
+    background-color: green;
+}
+
 #Navbar{
     background-color: #222222;
 }
@@ -33,32 +50,28 @@ li .divLink:hover:not(.active) {
     background-color: Darkred;
 }
 
+#ClocksContainer{
+    color:white;
+}
+
+.Clock{
+    display: inline-block;
+    padding: 25px;
+}
+
+.ClockCountry{
+    padding: 10px;
+}
+
 .map{
   height:800px;
   width:98%;
     margin: 1%;
 }
 
-body{
-  background-color: #333333;
-}
-
 #mapxyz{
   height:600px;
   width:100%;
-}
-
-.PersoBtn{
-    border-radius: 5px;
-    border: none;
-    padding: 5px;
-    background-color: #27ae60;
-    color: white;
-    font-size: medium;
-}
-
-.PersoBtn:hover{
-    background-color: green;
 }
 
 .left-align {
@@ -96,16 +109,7 @@ body{
 {
     color:white;
 }
-#wrapper{
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    color:white;
-    padding: 25px;
-}
-#c1{
-    margin: 0 10px 10px 10px;
-}
+
 #c2{
     margin: 0 10px 10px 10px;
 }

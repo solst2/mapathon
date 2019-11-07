@@ -11,7 +11,6 @@ const NavBar = () => {
         <div id="Navbar">
             <ul className="MenuList">
                 <li className="liNav"><Link className="divLink" to="/">Map</Link></li>
-                <li className="liNav"><Link className="divLink">Settings</Link></li>
                 <li className="liNav"> <Link className="divLink" to="/categories">Categories</Link></li>
                 <li className="liNav"><Link className="divLink" to="/tags">Tags</Link></li>
             </ul>

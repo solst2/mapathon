@@ -222,7 +222,7 @@ function AppWrapper() {
                       logout={logout}
                       userList={allUser}
                       setLike={setLike}
-                  ></App>}
+                  />}
                 </div>
 
 
@@ -710,48 +710,58 @@ catch{
         </form>
         <button onClick={e=>this.setState({displayDiv:false})}>X</button>
     </div>}
-  <div className="w3-container">
-        <div id="wrapper">
+    <div id="ContainerForClocksContainer">
+        <div id="ClocksContainer">
 
             <div className="Clock">
-            <div id="c1">   <AnalogClock gmtOffset="-8:00"  width={100} theme={Themes.dark} />
+            <div className="ClockCountry">
+                <AnalogClock gmtOffset="-8:00"  width={100} theme={Themes.dark} />
                 Los Angeles
                 <br/>
                 <img src="https://c.tadst.com/gfx/n/fl/32/us.png" />
             </div>
             </div>
+
             <div className="Clock">
-            <div id="c1">   <AnalogClock gmtOffset="-4:30"  width={100} theme={Themes.dark} />
+            <div>
+                <AnalogClock gmtOffset="-4:30"  width={100} theme={Themes.dark} />
                 New York
             <br/>
                 <img src="https://c.tadst.com/gfx/n/fl/32/us.png" />
 
             </div>
             </div>
+
             <div className="Clock">
-            <div id="c2"><AnalogClock   width={100} theme={Themes.dark} />
+            <div>
+                <AnalogClock   width={100} theme={Themes.dark} />
            Zurich
                 <br/>
                 <img src="https://c.tadst.com/gfx/n/fl/32/ch.png" />
 
             </div>
             </div>
+
             <div className="Clock">
-            <div id="c1"><AnalogClock  gmtOffset="+7:00"  width={100} theme={Themes.dark} />
+            <div>
+                <AnalogClock  gmtOffset="+7:00"  width={100} theme={Themes.dark} />
                 Bangkok
                 <br/>
                 <img width={30} height={20} src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Flag_of_Thailand.svg/1200px-Flag_of_Thailand.svg.png" />
 
             </div>
             </div>
-            <div className={"space"}></div>
-            <div id="c1"><AnalogClock  gmtOffset="+10:00"  width={100} theme={Themes.dark} />
+
+            <div className="Clock">
+            <div>
+                <AnalogClock  gmtOffset="+10:00"  width={100} theme={Themes.dark} />
                 Sydney
                 <br/>
                 <img width={30} height={20} src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Flag_of_New_Zealand.svg/1200px-Flag_of_New_Zealand.svg.png" />
-
+            </div>
             </div>
         </div>
+    </div>
 
       <button className={"PersoBtn"} onClick={this.ZoomOnMyLoca}>
           Locate Me
@@ -997,7 +1007,6 @@ catch{
 
 
         </div>
-      </div>
     );
   }
 }
