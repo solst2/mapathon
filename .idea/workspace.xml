@@ -4,7 +4,7 @@
     <list default="true" id="9d99ef1f-6be9-48ac-88ce-0e79a9308b07" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/CategroyManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/CategroyManager.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/POIForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/POIForm.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -42,7 +42,7 @@
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="JavaScriptWeakerCompletionTypeGuess" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Exercises/beeblio" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.standard" value="true" />
@@ -145,7 +145,6 @@
       <workItem from="1573032753653" duration="5519000" />
       <workItem from="1573128735691" duration="20000" />
       <workItem from="1573129197482" duration="5577000" />
-      <workItem from="1573152554810" duration="1545000" />
     </task>
     <task id="LOCAL-00001" summary="map">
       <created>1570781121132</created>
@@ -308,7 +307,14 @@
       <option name="project" value="LOCAL" />
       <updated>1573143050228</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="fix openpop">
+      <created>1573144834022</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1573144834022</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -400,12 +406,12 @@
         </line-breakpoint>
         <line-breakpoint type="javascript">
           <url>file://$PROJECT_DIR$/src/App.js</url>
-          <line>386</line>
+          <line>385</line>
           <option name="timeStamp" value="9" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/App.js</url>
-          <line>156</line>
+          <line>155</line>
           <option name="timeStamp" value="13" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
@@ -436,6 +442,7 @@
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/components/POIMarker.js</url>
           <line>39</line>
+          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="20" />
         </line-breakpoint>
       </breakpoints>

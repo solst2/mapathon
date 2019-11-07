@@ -414,14 +414,19 @@ this.leafletMap.leafletElement.closePopup();
       this.setState({unsavedPois:unsavedpois});
       const pois= this.state.POIs
 
+let zoom=0;
+        if(this.leafletMap.leafletElement>15)
+            zoom=this.leafletMap.leafletElement
 
+      else
+          zoom=15
 
-      this.leafletMap.leafletElement.flyTo(e.latlng, 15);
+      this.leafletMap.leafletElement.flyTo(e.latlng, zoom);
 
 
     };
-  addPoi=(poi)=>{
-      this.props.addPoi(poi);
+  addPoi=async (poi)=>{
+   await this.props.addPoi(poi);
       const pois= this.state.POIs
       pois.push(poi)
       this.setState({POIs:pois});
@@ -529,8 +534,6 @@ this.setState({sharepoiId:e.target.name})
   };
 displayPoi = e =>
 {
-
-
 this.setState({selectedPoi:e})
     this.sideBarLeft.show();
 
@@ -648,7 +651,7 @@ visitPois=e=>
 
     setTimeout(() => {
         this.leafletMap.leafletElement.flyTo([poi.lat,poi.lng],15)
-    }, 3000)
+    }, 10000)
     )
 
 }
