@@ -5,7 +5,7 @@ import targetIcon from "../icons/target.png"
 import shareIcon from "../icons/share.png"
 import {preventDefault} from "leaflet/src/dom/DomEvent";
 export default function POI(props) {
-  const { name, description, lat, id,lng, image, url, group, liked} = props;
+  const { name, description, lat, id,lng, image, url, group, liked, likes} = props;
   const { Categories, Tags, User, Status } = props;
 const creator={...props.Creator}
 console.log(creator.email)
@@ -51,6 +51,9 @@ console.log(creator.email)
             <div className="movie_desc">
               <p className="text">
                 {description}
+              </p>
+              <p className="text">
+                {"👍"+likes}
               </p>
             </div>
             <div className="movie_social">
