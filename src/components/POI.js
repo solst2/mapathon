@@ -6,9 +6,13 @@ import shareIcon from "../icons/share.png"
 export default function POI(props) {
   const { name, description, lat, id,lng, image, url, group} = props;
   const { Categories, Tags, User, Status } = props;
-  const {zoomOnMarker,deleteMarker,sendEmail}=props;
 const creator={...props.Creator}
 console.log(creator.email)
+  const { zoomOnMarker, deleteMarker, sendEmail, setLike } = props;
+
+  let handleLikeClick = async e => {
+    setLike(id);
+  };
 
   let statusColor;
   if (Status) {
@@ -50,6 +54,9 @@ console.log(creator.email)
             </div>
             <div className="movie_social">
               <ul>
+                  <button onClick={handleLikeClick}>
+                      {liked ? "Liked 👍" : "Not liked 👎"}
+                  </button>
                  <img width={20} height={20} src={targetIcon} name={id} onClick={zoomOnMarker}></img>
                  <img width={20} height={20} src={deleteIcon} name={id} onClick={deleteMarker}></img>
                    <img width={20} height={20} src={shareIcon} name={id} onClick={sendEmail}></img>

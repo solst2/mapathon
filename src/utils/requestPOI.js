@@ -1,21 +1,27 @@
 export class requestPOI {
   //Update some Information for a POI
-  static async updateObject(objectType,id, updateObject, getTokenSilently, loginWithRedirect) {
+  static async updateObject(
+    objectType,
+    id,
+    updateObject,
+    getTokenSilently,
+    loginWithRedirect
+  ) {
     try {
       let token = await getTokenSilently();
       console.log(JSON.stringify(updateObject));
       console.log("request pass");
       let response = await fetch(
-          `${process.env.REACT_APP_SERVER_URL}`+"/"+objectType+"/" + id,
-          {
-            method: "PATCH",
-            body: JSON.stringify(updateObject),
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`
-            }
+        `${process.env.REACT_APP_SERVER_URL}` + "/" + objectType + "/" + id,
+        {
+          method: "PATCH",
+          body: JSON.stringify(updateObject),
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
           }
+        }
       );
 
       console.log(response);
@@ -98,19 +104,27 @@ export class requestPOI {
     }
   }
   //Create a new POI in the Database
-  static async addNewObject(object,newObject, getTokenSilently, loginWithRedirect) {
+  static async addNewObject(
+    object,
+    newObject,
+    getTokenSilently,
+    loginWithRedirect
+  ) {
     try {
       let token = await getTokenSilently();
       console.log(JSON.stringify(newObject));
-      let response = await fetch(`${process.env.REACT_APP_SERVER_URL}/`+object, {
-        method: "POST",
-        body: JSON.stringify(newObject),
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`
+      let response = await fetch(
+        `${process.env.REACT_APP_SERVER_URL}/` + object,
+        {
+          method: "POST",
+          body: JSON.stringify(newObject),
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+          }
         }
-      });
+      );
       console.log("save poi method called");
       let data = await response.json();
       console.log("status" + response.status);
@@ -169,11 +183,11 @@ export class requestPOI {
     }
   }
   //Delete a POI in the Database
-  static async deleteObject(object,id, getTokenSilently, loginWithRedirect) {
+  static async deleteObject(object, id, getTokenSilently, loginWithRedirect) {
     try {
       let token = await getTokenSilently();
       let response = await fetch(
-        `${process.env.REACT_APP_SERVER_URL}/`+object+"/" + id,
+        `${process.env.REACT_APP_SERVER_URL}/` + object + "/" + id,
         {
           method: "DELETE",
           headers: {
@@ -217,6 +231,45 @@ export class requestPOI {
     } catch (e) {
       console.error(e);
       await loginWithRedirect();
+    }
+  }
+
+  static async updateLike(
+    objectType,
+    id,
+    likeTyp,
+    getTokenSilently,
+    loginWithRedirect
+  ) {
+    try {
+      let token = await getTokenSilently();
+      console.log("request pass");
+      let response = await fetch(
+        `${process.env.REACT_APP_SERVER_URL}` +
+          "/" +
+          objectType +
+          "/" +
+          id +
+          "/" +
+          likeTyp,
+        {
+          method: "PATCH",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
+
+      console.log(response);
+      let data = await response.json();
+      console.log("status" + response.status);
+      return data;
+    } catch (e) {
+      console.error(e);
+      //await loginWithRedirect();
+      return null;
     }
   }
 }

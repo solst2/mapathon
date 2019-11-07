@@ -33,7 +33,7 @@ import Routing from "./RoutingMachine";
 import aa from "./icons/delete.png";
 import popupsound from "./sounds/pop.mp3";
 import Clocks from  "./components/Clocks";
-import ReactNotifications from 'react-browser-notifications';
+
 // import plugin's css (if present)
 // note, that this is only one of possible ways to load css
 import "leaflet-contextmenu/dist/leaflet.contextmenu.css";
@@ -207,6 +207,7 @@ let [currentUser,setCurrentUSer]=useState('');
                       isAuthenticated={isAuthenticated}
                       logout={logout}
                       userList={allUser}
+                      setLike={setLike}
                   ></App>}
                 </div>
 
@@ -226,7 +227,7 @@ class App extends Component {
     this.sideBarLeft=''
     this.state = {
       POIs: [],
-        unsavedPOIs:[],
+      unsavedPOIs: [],
       filteredPois: [],
       filteredPoisToShow: [],
       Routes: [],
@@ -271,14 +272,26 @@ this.getTags();
         searchResults.push(data.results[i]);
       }
     });
-      let osmUrl='http://{s}.tile.osm.org/{z}/{x}/{y}.png';
-      let osmAttrib='Map data &copy; OpenStreetMap contributors';
-      let osm = new L.TileLayer(osmUrl, {minZoom: 5, maxZoom: 18, attribution: osmAttrib});
-      var osm2 = new L.TileLayer(osmUrl, {minZoom: 0, maxZoom: 13, attribution: osmAttrib });
-      var rect1 = {color: "#ff1100", weight: 3};
-      var rect2 = {color: "#0000AA", weight: 1, opacity:0, fillOpacity:0};
-      var miniMap = new L.Control.MiniMap(osm2, { toggleDisplay: true, aimingRectOptions : rect1, shadowRectOptions: rect2}).addTo(map);
-      map.addLayer(osm);
+    let osmUrl = "http://{s}.tile.osm.org/{z}/{x}/{y}.png";
+    let osmAttrib = "Map data &copy; OpenStreetMap contributors";
+    let osm = new L.TileLayer(osmUrl, {
+      minZoom: 5,
+      maxZoom: 18,
+      attribution: osmAttrib
+    });
+    var osm2 = new L.TileLayer(osmUrl, {
+      minZoom: 0,
+      maxZoom: 13,
+      attribution: osmAttrib
+    });
+    var rect1 = { color: "#ff1100", weight: 3 };
+    var rect2 = { color: "#0000AA", weight: 1, opacity: 0, fillOpacity: 0 };
+    var miniMap = new L.Control.MiniMap(osm2, {
+      toggleDisplay: true,
+      aimingRectOptions: rect1,
+      shadowRectOptions: rect2
+    }).addTo(map);
+    map.addLayer(osm);
 
 
    /*   this.sideBarLeft = L.control.sidebar('sidebar', {
@@ -366,9 +379,19 @@ async getTags()
       )
     }
   //add a marker when you clic on the map
-  addMarker = (e) => {
-    const pois=this.state.POIs;
-    var newPoi={lat:e.latlng.lat,lng:e.latlng.lng,name:'',description:'',"group": 4,isSaved:false,Creator:{id:this.props.user.id},Categories:[],Tags:[]}
+  addMarker = e => {
+    const pois = this.state.POIs;
+    var newPoi = {
+      lat: e.latlng.lat,
+      lng: e.latlng.lng,
+      name: "",
+      description: "",
+      group: 4,
+      isSaved: false,
+      Creator: { id: this.props.user.id },
+      Categories: [],
+      Tags: []
+    };
     this.props.addPOI(newPoi);
         pois.push(newPoi);
     this.setState({POIs:pois});
@@ -376,7 +399,8 @@ async getTags()
     this.leafletMap.leafletElement.flyTo(e.latlng, 15);
 
     };
-   deleteMarker = e => {
+  deleteMarker = e => {
+      console.log("id: "+e.target.name)
 
     let deletedPOI = this.state.POIs.find(poi => poi.id ==e.target.name);
 
@@ -400,6 +424,7 @@ async getTags()
       let newPoiList = []
       this.state.POIs.map((poi)=> {
           if (poi.Creator.id === this.props.user.id) {
+              console.log("answer: " + this.props.deletePOI(poi) + ":");
 
           } else {
               newPoiList.push(poi);
@@ -415,7 +440,7 @@ async getTags()
 
   upGeoLocalisation=(position)=>
   {
-
+      console.log("position:"+position);
     this.setState({geoLat:position.coords.latitude});
     this.setState({geoLng:position.coords.longitude});
   };
@@ -456,7 +481,9 @@ this.setState({sharepoiId:e.target.name})
 
   zoomOnMarker = e => {
     this.scrollToMyRef();
-
+    let map = this.state.Map;
+    map.zoom = 15;
+    console.log(e.target.value);
     let lat = this.state.POIs.find(poi => poi.id == e.target.name).lat;
     let lng = this.state.POIs.find(poi => poi.id == e.target.name).lng;
     this.leafletMap.leafletElement.flyTo([lat,lng], 15);
@@ -483,7 +510,7 @@ this.setState({selectedPoi:e})
 
     };
   handleFilter = async e => {
-
+    console.log(e.target.value);
     this.setState({ filterPoi: e.target.value });
     this.changeOfPois();
   };
@@ -496,51 +523,61 @@ this.setState({selectedPoi:e})
     );
   };
 
-    changeOfPois = () => {
-        let POIs4gr=this.state.POIs.filter((poi)=>poi.group==4)
-        console.log("filter Poi:" + this.state.filterPoi + ":");
-        console.log("showOwn:" + this.state.justOwn + ":");
+  changeOfPois = () => {
+    let POIs4gr = this.state.POIs.filter(poi => poi.group == 4);
+    console.log("filter Poi:" + this.state.filterPoi + ":");
+    console.log("showOwn:" + this.state.justOwn + ":");
 
-        if (this.state.justOwn) {
-            if (this.state.filterPoi !== undefined && this.state.POIs !== "") {
-                this.setState((state, props) => ({
-                    filteredPoisToShow: state.POIs.filter(poi => {
-                        if (poi.Creator === undefined) {
-                            return poi;
-                        }
-                        return poi.Creator.id === props.user.sub
-                            ? poi.name.toLowerCase().includes(state.filterPoi.toLowerCase())
-                                ? poi
-                                : poi.description
-                                    .toLowerCase()
-                                    .includes(state.filterPoi.toLowerCase())
-                            : null;
-                    })
-                }));
-            } else {
-                this.setState((state, props) => ({
-                    filteredPoisToShow: state.POIs.filter(poi => {
-                        return poi.Creator.id === props.user.sub ? poi : null;
-                    })
-                }));
+    if (this.state.justOwn) {
+      if (this.state.filterPoi !== undefined && this.state.POIs !== "") {
+        this.setState((state, props) => ({
+          filteredPoisToShow: state.POIs.filter(poi => {
+            if (poi.Creator === undefined) {
+              return poi;
             }
-        } else if (
-            this.state.filterPoi !== "" &&
-            this.state.filterPoi !== undefined
-        ) {
-            this.setState((state, props) => ({
-                filteredPoisToShow: state.POIs.filter(poi => {
-                    return poi.name.toLowerCase().includes(state.filterPoi.toLowerCase())
-                        ? poi
-                        : poi.description
-                            .toLowerCase()
-                            .includes(state.filterPoi.toLowerCase());
-                })
-            }));
-        } else {
-            this.setState((state, props) => ({ filteredPoisToShow: state.POIs }));
-        }
-    };
+            return poi.Creator.id === props.user.sub
+              ? poi.name.toLowerCase().includes(state.filterPoi.toLowerCase())
+                ? poi
+                : poi.description
+                    .toLowerCase()
+                    .includes(state.filterPoi.toLowerCase())
+              : null;
+          })
+        }));
+      } else {
+        this.setState((state, props) => ({
+          filteredPoisToShow: state.POIs.filter(poi => {
+            return poi.Creator.id === props.user.sub ? poi : null;
+          })
+        }));
+      }
+    } else if (
+      this.state.filterPoi !== "" &&
+      this.state.filterPoi !== undefined
+    ) {
+      this.setState((state, props) => ({
+        filteredPoisToShow: state.POIs.filter(poi => {
+          return poi.name.toLowerCase().includes(state.filterPoi.toLowerCase())
+            ? poi
+            : poi.description
+                .toLowerCase()
+                .includes(state.filterPoi.toLowerCase());
+        })
+      }));
+    } else {
+      this.setState((state, props) => ({ filteredPoisToShow: state.POIs }));
+    }
+  };
+
+  setLike = async poiID => {
+    let updatedPois = this.state.POIs;
+    let likepoi = updatedPois.find(poi => poi.id === poiID);
+    this.props.setLike(poiID, likepoi.liked ? "unlike" : "like");
+    //update directly
+    likepoi.liked = !likepoi.liked;
+    this.setState({ POIs: updatedPois });
+  };
+
   componentWillUnmount(): void {
     clearInterval(this.interval);
   }
@@ -810,8 +847,9 @@ catch{
                                             let map = this.state.Map;
                                             map.zoom = 15;
                                             map.center = [poi.lat, poi.lng];
-                                         let updnotif=this.state.notifications.filter((notif=>notif!==poi));
-                                            this.setState({ notifications: updnotif });
+                                            {
+                                                this.setState({ notifications: [] });
+                                            }
                                             this.setState({ Map: map });
                                         }}
                                     >
@@ -823,11 +861,9 @@ catch{
                         </div>
                     </div>
                 </Control>
-                <Overlay  name="my position " checked>
+                <Overlay key="pois" name="my position " checked>
                     <LayerGroup>
-                        <Marker position={{ lat: this.props.position.lat, lng: this.props.position.lng }} icon={myPostionIcon}>
-                            <Popup>My Position</Popup>
-                        </Marker>
+                        <GeoLocat upGeoLocalisation={this.upGeoLocalisation}/>
                     </LayerGroup>
                 </Overlay>
           </LayersControl>
@@ -885,6 +921,7 @@ catch{
                 zoomOnMarker={this.zoomOnMarker}
                 deleteMarker={this.deleteMarker}
                 sendEmail={this.sendEmail}
+                setLike={this.setLike}
             />
             </div>
 
@@ -925,7 +962,7 @@ function getIndex(value, arr, prop) {
 }
 const initMarker = ref => {
   if (ref) {
-    ref.leafletElement.openPopup()
+    ref.leafletElement.openPopup();
   }
 };
 
