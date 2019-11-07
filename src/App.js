@@ -512,7 +512,7 @@ this.setState({selectedPoi:e})
   //zoom on the my location
   ZoomOnMyLoca = e => {
     this.scrollToMyRef();
-    this.leafletMap.leafletElement.flyTo([this.state.geoLat, this.state.geoLng], 15);
+    this.leafletMap.leafletElement.flyTo([this.props.position.lat, this.props.position.lng], 15);
   };
     updatePOI = poi => {
 
@@ -595,7 +595,6 @@ this.setState({selectedPoi:e})
 
    showCoordinates= e => {
         alert(e.latlng);
-       this.sideBarLeft.show();
             }
 
 visitPois=e=>
@@ -874,7 +873,9 @@ catch{
                 </Control>
                 <Overlay key="pois" name="my position " checked>
                     <LayerGroup>
-
+                        <Marker position={{ lat: this.props.position.lat, lng:  this.props.position.lng }} icon={myPostionIcon}>
+                            <Popup>My Position</Popup>
+                        </Marker>
                     </LayerGroup>
                 </Overlay>
           </LayersControl>
