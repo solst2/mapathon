@@ -93,9 +93,9 @@ function AppWrapper() {
     user
   } = useAuth0();
   let [poisList, setPoisList] = useState([]);
-let [currentUser,setCurrentUSer]=useState('');
-    let [allUser, setAllUser] = useState([]);
-    let [position, setPosition] = useState({lat:0,lng:0});
+  let [currentUser,setCurrentUSer]=useState('');
+  let [allUser, setAllUser] = useState([]);
+  let [position, setPosition] = useState({lat:0,lng:0});
   //get the pois on load
   useEffect(() => {
     const fn = async () => {
@@ -117,9 +117,10 @@ let [currentUser,setCurrentUSer]=useState('');
   }, [isAuthenticated, loginWithRedirect, loading]);
 
 
-
+  // insert a poi
   async function insertPOi(newPOI)
   {
+      //if the poi has no id, it must be created
       if (newPOI.id === undefined) {
           console.log(newPOI.Categories)
           let answer =   await requestPOI.addNewObject("poi",
@@ -128,7 +129,7 @@ let [currentUser,setCurrentUSer]=useState('');
               loginWithRedirect
           );
           return answer;
-      } else {
+      } else {      //just update it
           let answer = await requestPOI.updateObject("poi",
               newPOI.id,
               newPOI,
@@ -138,7 +139,7 @@ let [currentUser,setCurrentUSer]=useState('');
           return answer;
       }
   }
-
+    // set a like form the like button
     async function setLike(poiID, like) {
         let answer = await requestPOI.updateLike(
             "poi",
@@ -149,7 +150,7 @@ let [currentUser,setCurrentUSer]=useState('');
         );
         return answer;
     }
-
+    // add POI and call the insertPOi and then update the category and tags
   async function addPOI(newPOI) {
       let poiadd =await  insertPOi(newPOI);
       console.log("category : ")
@@ -181,10 +182,12 @@ let [currentUser,setCurrentUSer]=useState('');
     );
   }
 
+  //when the side is loading, show the loading circle
   if (loading) {
     return <Loading />;
   }
 
+  //
   function setpostion(newPostion)
   {
       console.log("postion set")
@@ -534,12 +537,14 @@ this.setState({selectedPoi:e})
     );
   };
 
+  //The filter of the pois
   changeOfPois = () => {
     let POIs4gr = this.state.POIs.filter(poi => poi.group == 4);
     console.log("filter Poi:" + this.state.filterPoi + ":");
     console.log("showOwn:" + this.state.justOwn + ":");
-
+    // Show just own pois
     if (this.state.justOwn) {
+        // with filter
       if (this.state.filterPoi !== undefined && this.state.POIs !== "") {
         this.setState((state, props) => ({
           filteredPoisToShow: state.POIs.filter(poi => {
@@ -555,14 +560,14 @@ this.setState({selectedPoi:e})
               : null;
           })
         }));
-      } else {
+      } else {    //without filter
         this.setState((state, props) => ({
           filteredPoisToShow: state.POIs.filter(poi => {
             return poi.Creator.id === props.user.sub ? poi : null;
           })
         }));
       }
-    } else if (
+    } else if (         //show all pois -> is there a filter?
       this.state.filterPoi !== "" &&
       this.state.filterPoi !== undefined
     ) {
@@ -575,16 +580,17 @@ this.setState({selectedPoi:e})
                 .includes(state.filterPoi.toLowerCase());
         })
       }));
-    } else {
+    } else {   //no filter and show all
       this.setState((state, props) => ({ filteredPoisToShow: state.POIs }));
     }
   };
 
+  // handle the like click
   setLike = async poiID => {
     let updatedPois = this.state.POIs;
     let likepoi = updatedPois.find(poi => poi.id === poiID);
     this.props.setLike(poiID, likepoi.liked ? "unlike" : "like");
-    //update directly
+    //update directly, and it will be proved with the next load
     likepoi.liked = !likepoi.liked;
     this.setState({ POIs: updatedPois });
   };
