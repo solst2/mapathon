@@ -451,9 +451,9 @@ async getTags()
 
   upGeoLocalisation=(position)=>
   {
-      console.log("position:"+position);
-    this.setState({geoLat:position.coords.latitude});
-    this.setState({geoLng:position.coords.longitude});
+    //   console.log("position:"+position);
+    // this.setState({geoLat:position.coords.latitude});
+    // this.setState({geoLng:position.coords.longitude});
   };
     onSelect(optionsList, selectedItem) {
         selectedUsers=optionsList
