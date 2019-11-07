@@ -209,7 +209,7 @@ let [currentUser,setCurrentUSer]=useState('');
            {position!==null&&<App
                       poisList={props.poisList}
                       getAllO={getAllO}
-                      addPOI={addPOI}
+                      addPoi={addPOI}
                       deleteObject={deleteObject}
                       currentUser={currentUser}
                       position={position}
@@ -246,8 +246,7 @@ class App extends Component {
         tags:[],
         selectedUsers:[],
         users:[],
-      geoLat: "",
-      geoLng: "",
+     unsavedPois:[],
       sharepoiId: '',
       Map: { minZoom: 2, center: [0, 5], zoom: 2 },
       oldSizevalue:'',
@@ -326,7 +325,9 @@ this.getTags();
       });
       let addedElement =updatedList[updatedList.length-1];
 
-
+      this.state.unsavedPois.map(poi=>
+          updatedList.push(poi)
+      )
 
   this.setState({ POIs: updatedList });
       this.changeOfPois();
@@ -391,7 +392,7 @@ async getTags()
     }
   //add a marker when you clic on the map
   addMarker = e => {
-    const pois = this.state.POIs;
+    const unsavedpois = this.state.unsavedPois;
     var newPoi = {
       lat: e.latlng.lat,
       lng: e.latlng.lng,
@@ -399,17 +400,32 @@ async getTags()
       description: "",
       group: 4,
       isSaved: false,
-      Creator: { id: this.props.user.id },
+      Creator: { id: this.props.user.id ,group:4},
       Categories: [],
       Tags: []
     };
-    this.props.addPOI(newPoi);
-        pois.push(newPoi);
+
+      unsavedpois.push(newPoi);
+      this.setState({unsavedPois:unsavedpois});
+      const pois= this.state.POIs
+
+      unsavedpois.map(poi=>
+          pois.push(poi)
+      )
+
+
     this.setState({POIs:pois});
     this.changeOfPois();
     this.leafletMap.leafletElement.flyTo(e.latlng, 15);
 
     };
+  addPoi=(poi)=>{
+      this.props.addPoi(poi);
+      const pois= this.state.POIs
+      pois.push(poi)
+      this.setState({POIs:pois});
+      this.setState({unsavedPois:this.state.unsavedPois.filter(poi=>poi!=poi)});
+  }
   deleteMarker = e => {
       console.log("id: "+e.target.name)
 
@@ -628,7 +644,7 @@ visitPois=e=>
     courseRow(poi) {
        try{return(
                <POIMarker
-                   addPOI={this.props.addPOI}
+                   addPoi={this.addPoi}
                    isSaved={poi.isSaved}
                    lat={poi.lat}
                    lng={poi.lng}
@@ -724,6 +740,9 @@ catch{
            // onClick={this.addMarker}
             zoom={this.state.Map.zoom}
             contextmenu={true}
+            onMove={e => {
+            e.target.closePopup();
+        }}
             contextmenuWidth={140}
             contextmenuItems={ [{
             text: 'Show coordinates',
@@ -782,7 +801,7 @@ catch{
                     .map(poi => (
                       <POIMarker
                         group={poi.group}
-                        addPOI={this.props.addPOI}
+                        addPoi={this.addPoi}
                         isSaved={poi.isSaved}
                         lat={poi.lat}
                         lng={poi.lng}
@@ -819,7 +838,7 @@ catch{
               <LayerGroup>
                 {this.state.filteredPoisToShow.filter(poi=>poi.Creator.group===4 ).map(poi => (
                     <POIMarker
-                        addPOI={this.props.addPOI}
+                        addPoi={this.addPoi}
                         poi={poi}
                         poisList={this.state.POIs}
                         lat={poi.lat}
@@ -832,21 +851,7 @@ catch{
                         displayPoi={this.displayPoi}
                     />
                 ))}
-                  {this.state.filteredPoisToShow.filter(poi=>poi.isSaved==false ).map(poi => (
-                      <POIMarker
-                          addPOI={this.props.addPOI}
-                          poi={poi}
-                          poisList={this.state.POIs}
-                          lat={poi.lat}
-                          isSaved={poi.isSaved}
-                          lng={poi.lng}
-                          id={poi.id}
-                          categories={this.state.categories}
-                          tags={this.state.tags}
-                          user={this.props.currentUser}
-                          displayPoi={this.displayPoi}
-                      />
-                  ))}
+
               </LayerGroup>
             </Overlay>
                 <Control position="topleft" >

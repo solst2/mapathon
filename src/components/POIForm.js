@@ -22,7 +22,8 @@ export default class POIForm extends React.Component {
                 lng: this.props.position.lng,
                 tag: "",
                 Categories:poiInfo.categories,
-                Tags:poiInfo.tags
+                Tags:poiInfo.tags,
+                Creator:{group:4}
 
             },   multiSelect:poiInfo.Categories
         };
@@ -70,7 +71,7 @@ componentDidMount(): void {
        this.state.newPOI.Categories=selectedCategoreis;
        this.state.newPOI.Tags=selectedTags;
         this.props.updatePOI(this.state.newPOI);
-        this.props.addPOI(this.state.newPOI);
+        this.props.addPoi(this.state.newPOI);
     };
     onSelect(optionsList, selectedItem) {
         selectedCategoreis=optionsList;
@@ -141,7 +142,7 @@ componentDidMount(): void {
                         // Property name to display in the dropdown options
                     />
                     <br />
-                    <button className={"ButtonBar"} type="submit">
+                    <button className={"ButtonBar"}  type="submit">
                         Save
                     </button>
                     <br />
