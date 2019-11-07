@@ -31,9 +31,7 @@ const routing = (
         client_id={auth_config.clientId}
         redirect_uri={window.location.origin}
         audience={auth_config.audience}
-        onRedirectCallback={onRedirectCallback}
-
-    >
+        onRedirectCallback={onRedirectCallback}>
     <Router>
 
        <Route exact  path="/" component={App} />

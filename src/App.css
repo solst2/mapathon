@@ -1,57 +1,79 @@
+body{
+    background-color: #333333;
+}
+
+.PersoBtn{
+    border-radius: 5px;
+    border: none;
+    padding: 5px;
+    background-color: #27ae60;
+    color: white;
+    font-size: medium;
+}
+
+.PersoBtn:hover{
+    background-color: green;
+}
+
+#Navbar{
+    background-color: #222222;
+}
+.MenuList {
+    list-style-type: none;
+}
+
+.liNav {
+    float: left;
+}
+
+li .divLink:hover:not(.active) {
+    background-color: #111;
+}
+
+#DivLog{
+    display: table;
+    padding: 11px;
+    margin-left:auto;
+    margin-right:0;
+}
+
+#DivLog2{
+    display: table-cell;
+    vertical-align: middle;
+}
+
+#BtnLogOut{
+    background-color: red;
+}
+
+#BtnLogOut:hover{
+    background-color: Darkred;
+}
+
+#ClocksContainer{
+    color:white;
+}
+
+.Clock{
+    display: inline-block;
+    padding: 25px;
+}
+
+.ClockCountry{
+    padding: 10px;
+}
 
 .map{
   height:800px;
-  width:100%;
+  width:98%;
+    margin: 1%;
 }
-body{
-  background-color: #333333;
-    padding: 20px;
-}
+
 #mapxyz{
   height:600px;
   width:100%;
 }
-.ButtonBar {
-  border-radius: 8px;
-  border: 2px solid #4CAF50;
-  font-size: 12px;
-  padding: 10px 24px;
-  background-color: #F8F8FF;
-}
-.ButtonLogout {
-  border-radius: 8px;
 
-  font-size: 12px;
-  padding: 10px 24px;
-  background-color: darkred;
-  color: white;
-}
-.ButtonLogout:hover {
-  background-color: red;
-  align-contents: center;
-  color: white;
-}
-.ButtonBar:hover {
-  background-color: #4CAF50;
-  color: white;
-}
-.App-header {
-  text-align: center;
-}
-.dropbtn {
-  background-color: #4CAF50;
-  color: white;
-  padding: 16px;
-  font-size: 16px;
-  border: none;
-  cursor: pointer;
-}
-
-.dropdown {
-  position: relative;
-  display: inline-block;
-
-}
 .left-align {
     padding:5px;
     float: right;
@@ -87,20 +109,7 @@ body{
 {
     color:white;
 }
-#wrapper{
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    pading: 10px 10px 50px 50px;
-    color:white;
-    background-color: #111111;
-    align-items: center;
-    alignment: center;
-}
-#c1{
-    margin: 0 10px 10px 10px;
 
-}
 #c2{
     margin: 0 10px 10px 10px;
 }

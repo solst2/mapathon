@@ -3,8 +3,9 @@ import "./POI.css";
 import deleteIcon from "../icons/delete.png"
 import targetIcon from "../icons/target.png"
 import shareIcon from "../icons/share.png"
+import {preventDefault} from "leaflet/src/dom/DomEvent";
 export default function POI(props) {
-  const { name, description, lat, id,lng, image, url, group} = props;
+  const { name, description, lat, id,lng, image, url, group, liked, likes} = props;
   const { Categories, Tags, User, Status } = props;
 const creator={...props.Creator}
 console.log(creator.email)
@@ -43,13 +44,25 @@ console.log(creator.email)
               <span className="minutes">{lat} {lng}</span>
               {Categories && Categories.length > 0 && (
               <p className="type">   {Categories.map(category => (
+                  <div>
                   <img className="category-image" src={category.image} />
-
+                  <p>{category.name}</p>
+                  </div>
               ))}</p>)}
+              {Tags && Tags.length > 0 && (
+                  <p className="type">   {Tags.map(tag => (
+                      <div>
+                        <img className="category-image" src={tag.image} />
+                        <p>{tag.name} </p>
+                      </div>
+                  ))}</p>)}
             </div>
             <div className="movie_desc">
               <p className="text">
                 {description}
+              </p>
+              <p className="text">
+                {"👍"+likes}
               </p>
             </div>
             <div className="movie_social">

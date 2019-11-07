@@ -93,9 +93,9 @@ function AppWrapper() {
     user
   } = useAuth0();
   let [poisList, setPoisList] = useState([]);
-let [currentUser,setCurrentUSer]=useState('');
-    let [allUser, setAllUser] = useState([]);
-    let [position, setPosition] = useState({lat:0,lng:0});
+  let [currentUser,setCurrentUSer]=useState('');
+  let [allUser, setAllUser] = useState([]);
+  let [position, setPosition] = useState({lat:0,lng:0});
   //get the pois on load
   useEffect(() => {
     const fn = async () => {
@@ -117,9 +117,10 @@ let [currentUser,setCurrentUSer]=useState('');
   }, [isAuthenticated, loginWithRedirect, loading]);
 
 
-
+  // insert a poi
   async function insertPOi(newPOI)
   {
+      //if the poi has no id, it must be created
       if (newPOI.id === undefined) {
           console.log(newPOI.Categories)
           let answer =   await requestPOI.addNewObject("poi",
@@ -128,7 +129,7 @@ let [currentUser,setCurrentUSer]=useState('');
               loginWithRedirect
           );
           return answer;
-      } else {
+      } else {      //just update it
           let answer = await requestPOI.updateObject("poi",
               newPOI.id,
               newPOI,
@@ -138,7 +139,18 @@ let [currentUser,setCurrentUSer]=useState('');
           return answer;
       }
   }
-
+    // set a like form the like button
+    async function setLike(poiID, like) {
+        let answer = await requestPOI.updateLike(
+            "poi",
+            poiID,
+            like,
+            getTokenSilently,
+            loginWithRedirect
+        );
+        return answer;
+    }
+    // add POI and call the insertPOi and then update the category and tags
   async function addPOI(newPOI) {
       let poiadd =await  insertPOi(newPOI);
       console.log("category : ")
@@ -170,10 +182,12 @@ let [currentUser,setCurrentUSer]=useState('');
     );
   }
 
+  //when the side is loading, show the loading circle
   if (loading) {
     return <Loading />;
   }
 
+  //
   function setpostion(newPostion)
   {
       console.log("postion set")
@@ -191,14 +205,14 @@ let [currentUser,setCurrentUSer]=useState('');
        <div>
 
            <header>
-               <NavBar />
+               <NavBar/>
            </header>
            <GeoLocat  upGeoLocalisation={setpostion}/>
 
            {position!==null&&<App
                       poisList={props.poisList}
                       getAllO={getAllO}
-                      addPOI={addPOI}
+                      addPoi={addPOI}
                       deleteObject={deleteObject}
                       currentUser={currentUser}
                       position={position}
@@ -208,7 +222,7 @@ let [currentUser,setCurrentUSer]=useState('');
                       logout={logout}
                       userList={allUser}
                       setLike={setLike}
-                  ></App>}
+                  />}
                 </div>
 
 
@@ -235,8 +249,7 @@ class App extends Component {
         tags:[],
         selectedUsers:[],
         users:[],
-      geoLat: "",
-      geoLng: "",
+     unsavedPois:[],
       sharepoiId: '',
       Map: { minZoom: 2, center: [0, 5], zoom: 2 },
       oldSizevalue:'',
@@ -264,7 +277,7 @@ this.getTags();
     this.getCategories();
 
     this.setState({ oldSizevalue: result.length });
-    this.interval = setInterval(() => this.testtimeOut(), 4000);
+    this.interval = setInterval(() => this.testtimeOut(), 8000);
     let searchResults = [];
     searchControl.on("results", function(data) {
       results.clearLayers();
@@ -315,7 +328,9 @@ this.getTags();
       });
       let addedElement =updatedList[updatedList.length-1];
 
-
+      this.state.unsavedPois.map(poi=>
+          updatedList.push(poi)
+      )
 
   this.setState({ POIs: updatedList });
       this.changeOfPois();
@@ -380,7 +395,7 @@ async getTags()
     }
   //add a marker when you clic on the map
   addMarker = e => {
-    const pois = this.state.POIs;
+    const unsavedpois = this.state.unsavedPois;
     var newPoi = {
       lat: e.latlng.lat,
       lng: e.latlng.lng,
@@ -388,17 +403,33 @@ async getTags()
       description: "",
       group: 4,
       isSaved: false,
-      Creator: { id: this.props.user.id },
+      Creator: { id: this.props.user.id ,group:4},
       Categories: [],
       Tags: []
     };
-    this.props.addPOI(newPoi);
-        pois.push(newPoi);
+
+      unsavedpois.push(newPoi);
+      this.setState({unsavedPois:unsavedpois});
+      const pois= this.state.POIs
+
+      unsavedpois.map(poi=>
+          pois.push(poi)
+      )
+
+
     this.setState({POIs:pois});
     this.changeOfPois();
     this.leafletMap.leafletElement.flyTo(e.latlng, 15);
 
     };
+  addPoi=(poi)=>{
+      this.props.addPoi(poi);
+      const pois= this.state.POIs
+      pois.push(poi)
+      this.setState({POIs:pois});
+      this.changeOfPois();
+      this.setState({unsavedPois:this.state.unsavedPois.filter(poi=>poi!==poi)});
+  }
   deleteMarker = e => {
       console.log("id: "+e.target.name)
 
@@ -424,7 +455,7 @@ async getTags()
       let newPoiList = []
       this.state.POIs.map((poi)=> {
           if (poi.Creator.id === this.props.user.id) {
-              console.log("answer: " + this.props.deletePOI(poi) + ":");
+              this.props.deleteObject(poi);
 
           } else {
               newPoiList.push(poi);
@@ -440,9 +471,9 @@ async getTags()
 
   upGeoLocalisation=(position)=>
   {
-      console.log("position:"+position);
-    this.setState({geoLat:position.coords.latitude});
-    this.setState({geoLng:position.coords.longitude});
+    //   console.log("position:"+position);
+    // this.setState({geoLat:position.coords.latitude});
+    // this.setState({geoLng:position.coords.longitude});
   };
     onSelect(optionsList, selectedItem) {
         selectedUsers=optionsList
@@ -465,17 +496,25 @@ this.setState({sharepoiId:e.target.name})
         this.setState({selectedUsers:selectedUsers});
         let poi=this.state.POIs.find(poi=>poi.id==this.state.sharepoiId)
 
-        this.state.selectedUsers.map((u)=>
-
+        this.state.selectedUsers.map((u)=> {
+            console.log("sending..");
             emailjs.send(
                 'gmail', "sharepoi",
-                {message_html: "test", poi_image:poi.image,from_name: this.props.user.name,poi_name:poi.name,poi_lat:poi.lat,poi_lng:poi.lng, send_to:u.name},"user_QbNXGKWFUNVOK2RAfIVdb"
+                {
+                    message_html: "test",
+                    poi_image: poi.image,
+                    from_name: this.props.user.name,
+                    poi_name: poi.name,
+                    poi_lat: poi.lat,
+                    poi_lng: poi.lng,
+                    send_to: u.name
+                }, "user_QbNXGKWFUNVOK2RAfIVdb"
             ).then(res => {
                 console.log('Email successfully sent!')
             })
             // Handle errors here however you like, or use a React error boundary
                 .catch(err => console.error('Oh well, you failed. Here some thoughts on the error that occured:', err))
-        )
+        } )
         this.setState({displayDiv:false})
     }
 
@@ -501,7 +540,7 @@ this.setState({selectedPoi:e})
   //zoom on the my location
   ZoomOnMyLoca = e => {
     this.scrollToMyRef();
-    this.leafletMap.leafletElement.flyTo([this.state.geoLat, this.state.geoLng], 15);
+    this.leafletMap.leafletElement.flyTo([this.props.position.lat, this.props.position.lng], 15);
   };
     updatePOI = poi => {
 
@@ -523,12 +562,14 @@ this.setState({selectedPoi:e})
     );
   };
 
+  //The filter of the pois
   changeOfPois = () => {
     let POIs4gr = this.state.POIs.filter(poi => poi.group == 4);
     console.log("filter Poi:" + this.state.filterPoi + ":");
     console.log("showOwn:" + this.state.justOwn + ":");
-
+    // Show just own pois
     if (this.state.justOwn) {
+        // with filter
       if (this.state.filterPoi !== undefined && this.state.POIs !== "") {
         this.setState((state, props) => ({
           filteredPoisToShow: state.POIs.filter(poi => {
@@ -536,44 +577,60 @@ this.setState({selectedPoi:e})
               return poi;
             }
             return poi.Creator.id === props.user.sub
-              ? poi.name.toLowerCase().includes(state.filterPoi.toLowerCase())
-                ? poi
-                : poi.description
-                    .toLowerCase()
-                    .includes(state.filterPoi.toLowerCase())
+              ? this.filterThePoi(poi, state.filterPoi)
               : null;
           })
+
         }));
-      } else {
+      } else {    //without filter
         this.setState((state, props) => ({
           filteredPoisToShow: state.POIs.filter(poi => {
             return poi.Creator.id === props.user.sub ? poi : null;
           })
         }));
       }
-    } else if (
+    } else if (         //show all pois -> is there a filter?
       this.state.filterPoi !== "" &&
       this.state.filterPoi !== undefined
     ) {
       this.setState((state, props) => ({
         filteredPoisToShow: state.POIs.filter(poi => {
-          return poi.name.toLowerCase().includes(state.filterPoi.toLowerCase())
-            ? poi
-            : poi.description
-                .toLowerCase()
-                .includes(state.filterPoi.toLowerCase());
+            return this.filterThePoi(poi, state.filterPoi);
         })
       }));
-    } else {
+    } else {   //no filter and show all
       this.setState((state, props) => ({ filteredPoisToShow: state.POIs }));
     }
   };
 
+  filterThePoi = (poi, filterPoi) =>{
+      let value="";
+      poi.Tags.map((tag) => value=value+tag.name);
+      poi.Categories.map((cat) => value=value+cat.name);
+      return poi.name.toLowerCase().includes(filterPoi.toLowerCase())         //if
+          ? poi                                                                       //yes
+          : poi.description                                                           //else    if
+              .toLowerCase()
+              .includes(filterPoi.toLowerCase())
+              ? poi                                                                             // yes
+              :   poi.Creator.name                                                              //  else  if
+                  .toLowerCase()
+                  .includes(filterPoi.toLowerCase())
+                  ? poi                                                                                    //yes
+                  :  value                                                                                 //else if
+                      .toLowerCase()
+                      .includes(filterPoi.toLowerCase())
+                      ? poi                                                                                      //yes
+                      : null                                                                                     //else
+          ;
+  };
+
+  // handle the like click
   setLike = async poiID => {
     let updatedPois = this.state.POIs;
     let likepoi = updatedPois.find(poi => poi.id === poiID);
     this.props.setLike(poiID, likepoi.liked ? "unlike" : "like");
-    //update directly
+    //update directly, and it will be proved with the next load
     likepoi.liked = !likepoi.liked;
     this.setState({ POIs: updatedPois });
   };
@@ -584,7 +641,6 @@ this.setState({selectedPoi:e})
 
    showCoordinates= e => {
         alert(e.latlng);
-       this.sideBarLeft.show();
             }
 
 visitPois=e=>
@@ -609,7 +665,7 @@ visitPois=e=>
     courseRow(poi) {
        try{return(
                <POIMarker
-                   addPOI={this.props.addPOI}
+                   addPoi={this.addPoi}
                    isSaved={poi.isSaved}
                    lat={poi.lat}
                    lng={poi.lng}
@@ -654,46 +710,67 @@ catch{
         </form>
         <button onClick={e=>this.setState({displayDiv:false})}>X</button>
     </div>}
-  <div className="w3-teal">
-  <div className="w3-container">
-      <button onClick={this.deleteMyPOI }>Delete all my pois</button>
-        <div id="wrapper">
+    <div id="ContainerForClocksContainer">
+        <div id="ClocksContainer">
 
-            <div id="c1">   <AnalogClock gmtOffset="-8:00"  width={100} theme={Themes.dark} />
-                Los Angels
+            <div className="Clock">
+            <div className="ClockCountry">
+                <AnalogClock gmtOffset="-8:00"  width={100} theme={Themes.dark} />
+                Los Angeles
                 <br/>
                 <img src="https://c.tadst.com/gfx/n/fl/32/us.png" />
-
             </div>
-            <div id="c1">   <AnalogClock gmtOffset="-4:30"  width={100} theme={Themes.dark} />
+            </div>
+
+            <div className="Clock">
+            <div>
+                <AnalogClock gmtOffset="-4:30"  width={100} theme={Themes.dark} />
                 New York
             <br/>
                 <img src="https://c.tadst.com/gfx/n/fl/32/us.png" />
 
             </div>
-            <div id="c2"><AnalogClock   width={100} theme={Themes.dark} />
+            </div>
+
+            <div className="Clock">
+            <div>
+                <AnalogClock   width={100} theme={Themes.dark} />
            Zurich
                 <br/>
                 <img src="https://c.tadst.com/gfx/n/fl/32/ch.png" />
 
             </div>
+            </div>
 
-            <div id="c1"><AnalogClock  gmtOffset="+7:00"  width={100} theme={Themes.dark} />
+            <div className="Clock">
+            <div>
+                <AnalogClock  gmtOffset="+7:00"  width={100} theme={Themes.dark} />
                 Bangkok
                 <br/>
                 <img width={30} height={20} src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Flag_of_Thailand.svg/1200px-Flag_of_Thailand.svg.png" />
 
             </div>
-            <div className={"space"}></div>
-            <div id="c1"><AnalogClock  gmtOffset="+10:00"  width={100} theme={Themes.dark} />
+            </div>
+
+            <div className="Clock">
+            <div>
+                <AnalogClock  gmtOffset="+10:00"  width={100} theme={Themes.dark} />
                 Sydney
                 <br/>
                 <img width={30} height={20} src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Flag_of_New_Zealand.svg/1200px-Flag_of_New_Zealand.svg.png" />
-
+            </div>
             </div>
         </div>
+    </div>
 
-
+      <button className={"PersoBtn"} onClick={this.ZoomOnMyLoca}>
+          Locate Me
+      </button>
+      <MenuOptions
+          handleFilter={this.handleFilter}
+          handleJustOwnClick={this.handleJustOwnClick}
+          justOwn={this.state.justOwn}
+      />
 
         {this.state.is2ddisplayed && (
           <Map
@@ -705,6 +782,9 @@ catch{
            // onClick={this.addMarker}
             zoom={this.state.Map.zoom}
             contextmenu={true}
+            onMove={e => {
+            e.target.closePopup();
+        }}
             contextmenuWidth={140}
             contextmenuItems={ [{
             text: 'Show coordinates',
@@ -763,7 +843,7 @@ catch{
                     .map(poi => (
                       <POIMarker
                         group={poi.group}
-                        addPOI={this.props.addPOI}
+                        addPoi={this.addPoi}
                         isSaved={poi.isSaved}
                         lat={poi.lat}
                         lng={poi.lng}
@@ -800,7 +880,7 @@ catch{
               <LayerGroup>
                 {this.state.filteredPoisToShow.filter(poi=>poi.Creator.group===4 ).map(poi => (
                     <POIMarker
-                        addPOI={this.props.addPOI}
+                        addPoi={this.addPoi}
                         poi={poi}
                         poisList={this.state.POIs}
                         lat={poi.lat}
@@ -813,29 +893,15 @@ catch{
                         displayPoi={this.displayPoi}
                     />
                 ))}
-                  {this.state.filteredPoisToShow.filter(poi=>poi.isSaved==false ).map(poi => (
-                      <POIMarker
-                          addPOI={this.props.addPOI}
-                          poi={poi}
-                          poisList={this.state.POIs}
-                          lat={poi.lat}
-                          isSaved={poi.isSaved}
-                          lng={poi.lng}
-                          id={poi.id}
-                          categories={this.state.categories}
-                          tags={this.state.tags}
-                          user={this.props.currentUser}
-                          displayPoi={this.displayPoi}
-                      />
-                  ))}
+
               </LayerGroup>
             </Overlay>
                 <Control position="topleft" >
                     <div className="dropdown">
 
                         <audio ref={ref => this.notificationSound = ref} />
-                        <div className="dropdown">
-                            <button className="dropbtn">
+                        <div>
+                            <button className="PersoBtn">
                                 {this.state.notifications.length}
                             </button>
                             <div className="dropdown-content">
@@ -863,7 +929,9 @@ catch{
                 </Control>
                 <Overlay key="pois" name="my position " checked>
                     <LayerGroup>
-                        <GeoLocat upGeoLocalisation={this.upGeoLocalisation}/>
+                        <Marker position={{ lat: this.props.position.lat, lng:  this.props.position.lng }} icon={myPostionIcon}>
+                            <Popup>My Position</Popup>
+                        </Marker>
                     </LayerGroup>
                 </Overlay>
           </LayersControl>
@@ -900,14 +968,6 @@ catch{
           </Map>
         )}
         {!this.state.is2ddisplayed &&   <Div is2ddisplayed={this.setIs2ddisplayed} geoLat={this.state.geoLat} geoLng={this.state.geoLng} Map={this.state.Map} pois={this.state.POIs} />}
-        <button className={"ButtonBar"} onClick={this.ZoomOnMyLoca}>
-          Where am I..?
-        </button>
-        <MenuOptions
-          handleFilter={this.handleFilter}
-          handleJustOwnClick={this.handleJustOwnClick}
-          justOwn={this.state.justOwn}
-        />
         <div className="POI">
         <div  className="singlePoi">
             <button onClick={(e)=>{
@@ -920,7 +980,7 @@ catch{
                 {...currentPoi}
                 zoomOnMarker={this.zoomOnMarker}
                 deleteMarker={this.deleteMarker}
-                sendEmail={this.sendEmail}
+                sendEmail={this.dispalyDiv}
                 setLike={this.setLike}
             />
             </div>
@@ -947,8 +1007,6 @@ catch{
 
 
         </div>
-      </div>
-  </div>
     );
   }
 }

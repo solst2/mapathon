@@ -114,7 +114,7 @@ export default function CategoryManager(props) {
                             Creator
                         </div>
                         <div className="cell">
-                            Features
+                            Edit
                         </div>
                     </div>
 
@@ -147,13 +147,12 @@ export default function CategoryManager(props) {
                             <div className="cell" ><img width={50} height={50} src={cat.image}/>   </div>
                             <div className="cell" >{cat.Creator.name}   </div>
                             {cat.Creator.id===user.sub&&<div className="cell" ><img width={20} height={20} src={deleteIcon} onClick={deleteCategory} name={cat.id}></img> <img width={10} height={10} src="https://image.flaticon.com/icons/svg/61/61456.svg" name={cat.id} onClick= { ModifyCat} /> </div>           }
-                            {cat.Creator.id!==user.sub&&<div className="cell" ><img width={20} height={20} src={forbidden} ></img> </div>           }
+                            {cat.Creator.id!==user.sub&&<div className="cell" ></div>}
 
                         </div>
                     })}
                 </div>
-                <button style={{width:1000}} onClick={AddCategory}>Add category</button>
-
+                <button style={{width:"75%"}} onClick={AddCategory}>Add category</button>
             </form>
         </div>
 </div>

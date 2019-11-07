@@ -5,13 +5,9 @@ let selectedCategoreis=[]
 let selectedTags=[]
 export default class POIForm extends React.Component {
 
-
-
     constructor(props) {
         super(props);
         let poiInfo = props.poisList.find(poi => poi.id == props.id);
-
-
 
         this.state = {
             newPOI: {
@@ -25,8 +21,9 @@ export default class POIForm extends React.Component {
                 lat: this.props.position.lat,
                 lng: this.props.position.lng,
                 tag: "",
-                Categories:[],
-                Tags:[]
+                Categories:poiInfo.Categories,
+                Tags:poiInfo.Tags,
+                Creator:{group:4}
 
             },   multiSelect:poiInfo.Categories
         };
@@ -40,7 +37,7 @@ componentDidMount(): void {
         {
             options.push({ name: cat.name, id: cat.id})}
     )
-    this.props.parentRef.leafletElement.openPopup()
+//    this.props.parentRef.leafletElement.openPopup()
 
  this.setState({multiSelect:options})
 }
@@ -74,7 +71,7 @@ componentDidMount(): void {
        this.state.newPOI.Categories=selectedCategoreis;
        this.state.newPOI.Tags=selectedTags;
         this.props.updatePOI(this.state.newPOI);
-        this.props.addPOI(this.state.newPOI);
+        this.props.addPoi(this.state.newPOI);
     };
     onSelect(optionsList, selectedItem) {
         selectedCategoreis=optionsList;
@@ -145,7 +142,7 @@ componentDidMount(): void {
                         // Property name to display in the dropdown options
                     />
                     <br />
-                    <button className={"ButtonBar"} type="submit">
+                    <button className={"ButtonBar"}  type="submit">
                         Save
                     </button>
                     <br />

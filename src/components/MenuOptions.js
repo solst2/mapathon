@@ -12,7 +12,7 @@ export default function MenuOptions(props) {
 
   return (
     <div>
-      <button onClick={handleFilterClick} className="ButtonBar">
+      <button onClick={handleFilterClick} className="PersoBtn">
         {filter}
       </button>
       <br />

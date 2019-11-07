@@ -8,36 +8,28 @@ const NavBar = () => {
     const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
 
     return (
-
-        <div >
-            <ul className={"cast"} id="ulNav" >
+        <div id="Navbar">
+            <ul className="MenuList">
                 <li className="liNav"><Link className="divLink" to="/">Map</Link></li>
-                <li className="liNav"><Link className="divLink">Settings</Link></li>
                 <li className="liNav"> <Link className="divLink" to="/categories">Categories</Link></li>
                 <li className="liNav"><Link className="divLink" to="/tags">Tags</Link></li>
-                <li className="dropdown">
-                    <a href="javascript:void(0)" className="dropbtn">Manage</a>
-                    <div className="dropdown-content">
-                        <Link className="divLink" to="/tags">Tags</Link>
-                        <Link className="divLink" to="/tags">Tags</Link><Link className="divLink" to="/tags">Tags</Link>
-
-                    </div>
-                </li>
-                <li>
-            {!isAuthenticated && (
-                <button
-                    onClick={() =>
-                        loginWithRedirect({})
-                    }
-                >
-                    Log in
-                </button>
-            )}
-
-            {isAuthenticated && <button onClick={() => logout()} className="ButtonLogout">Log out</button>}
-                </li>
             </ul>
+            <div id="DivLog">
+                <div id="DivLog2">
+                {!isAuthenticated && (
+                    <button className="PersoBtn"
+                            onClick={() =>
+                                loginWithRedirect({})
+                            }>
+                        Log in
+                    </button>
+                )}
+
+                {isAuthenticated && <button onClick={() => logout()} className="PersoBtn" id="BtnLogOut">Log out</button>}
+                </div>
+            </div>
         </div>
+
     );
 };
 
