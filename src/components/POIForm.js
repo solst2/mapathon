@@ -135,6 +135,7 @@ componentDidMount(): void {
                                  value={this.state.newPOI.Categories}
                                  placeholder="Categories"
                                  onSelect={this.onSelect}
+                                 groupBy={"group"}
                         // Function will trigger on select event
                         //onRemove={this.onRemove} // Function will trigger on remove event
                         // Property name to display in the dropdown options
