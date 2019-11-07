@@ -38,7 +38,8 @@ componentDidMount(): void {
             options.push({ name: cat.name, id: cat.id})}
     )
 //this.props.parentRef.leafletElement.openPopup()
-
+    console.log("list containers");
+    console.log(this.state.newPOI.Categories);
 
 
 
@@ -94,7 +95,7 @@ componentDidMount(): void {
         return (
 
             <div>
-                <form onSubmit={this.handlePOIAdd}>
+                <form onSubmit={this.handlePOIAdd} onLoad={this.onSelect}>
                     <p>
                         Save a point at {this.props.position.lat.toFixed(2)}{" "}
                         {this.props.position.lng.toFixed(2)}{" "}
@@ -131,15 +132,18 @@ componentDidMount(): void {
                     <Multiselect options={ this.props.categories}
                                  displayValue="name"
                                  selectedvalues={this.state.newPOI.Categories}
-                                 placeholder="Categories"// Preselected value to persist in dropdown
-                                 onSelect={this.onSelect} // Function will trigger on select event
+                                 value={this.state.newPOI.Categories}
+                                 placeholder="Categories"
+                                 onSelect={this.onSelect}
+                        // Function will trigger on select event
                         //onRemove={this.onRemove} // Function will trigger on remove event
                         // Property name to display in the dropdown options
                     />
                     <Multiselect options={ this.props.tags}
                                  displayValue="name"
                                  selectedvalues={this.state.newPOI.Tags}
-                                 placeholder="Tags"// Preselected value to persist in dropdown
+                                 placeholder="Tags"
+                                 value={this.state.newPOI.Tags}
                                  onSelect={this.onSelectTag} // Function will trigger on select event
                         //onRemove={this.onRemove} // Function will trigger on remove event
                         // Property name to display in the dropdown options
