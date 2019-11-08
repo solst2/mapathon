@@ -960,7 +960,7 @@ catch{
                 onClick={this.ZoomOnMyLoca}
                 width={20}
                 height={20}
-              ></img>
+              />
             </Control>
 
             <Control position="bottomright">
@@ -969,7 +969,7 @@ catch{
                 onClick={this.addRoute}
                 width={20}
                 height={20}
-              ></img>
+              />
             </Control>
               <Control position="bottomright">
                   <button onClick={this.visitPois}>visit</button>
@@ -999,12 +999,6 @@ catch{
             </div>
             </div>
             <div className="rightDetails">
-            <button className="PersoBtn" onClick={(e)=>{
-                if(this.state.indexPoiPage>0)
-                    this.setState({indexPoiPage:this.state.indexPoiPage-1})
-                else
-                    this.setState({indexPoiPage:this.state.filteredPoisToShow.filter((poi)=>poi.Creator.group===4).length-1})
-            }}>{'<'}</button>
             <POI
                 {...currentPoi}
                 zoomOnMarker={this.zoomOnMarker}
@@ -1013,16 +1007,6 @@ catch{
                 setLike={this.setLike}
             />
             </div>
-             <button className="PersoBtn" onClick={(e)=>{
-            if(this.state.indexPoiPage<this.state.filteredPoisToShow.filter((poi)=>poi.Creator.group===4).length-1)
-                this.setState({indexPoiPage:this.state.indexPoiPage+1})
-            else
-                this.setState({indexPoiPage:0})
-            console.log(this.state.indexPoiPage)
-            {
-                console.log(currentPoi)
-            }
-        }}>{'>'}</button>
         </div>
 
 
