@@ -909,6 +909,7 @@ class App extends Component {
 
         <div className="DetailsPoi">
           <div className="leftDetails">
+            {this.state.justOwnGroup&&
             <div className="ListPoi">
               <ul className="GroupPoi">
                   <b>My Group Poi :</b>
@@ -933,11 +934,11 @@ class App extends Component {
               </ul>
             </div>}
               {!this.state.justOwnGroup&&<div className="ListPoi">
-                  <ul>
-                      All Pois :
+                  <ul className="GroupPoi">
+                    <b>All Pois :</b>
                       {this.state.filteredPoisToShow
                           .map(poi => (
-                              <li
+                              <li id="singleGroupPoi"
                                   value={getIndex(
                                       poi.name,
                                       this.state.filteredPoisToShow,
