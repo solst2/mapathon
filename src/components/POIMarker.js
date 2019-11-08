@@ -74,10 +74,10 @@ let img;
             if(this.state.newPOI.Categories[0].image.length>0)////&&this.state.newPOI.Categories[0].creatorId==="github|3367593"
         img= this.state.newPOI.Categories[0].image
         else
-            img=getIcon({ group: this.state.newPOI.group })
-        }
-        else
-            img=getIcon({ group: this.state.newPOI.group })
+          img=getIcon({ group: this.state.newPOI.group })
+     }
+       else
+           img=getIcon({ group: this.state.newPOI.group })
         var myIcon = L.icon({
             iconUrl: img ,
             iconSize: [20, 30],

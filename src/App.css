@@ -117,6 +117,11 @@ display: flex;
     flex-grow: 1;
 }
 
+.PoiTitle{
+    color: white;
+    text-decoration: none;
+}
+
 
 
 

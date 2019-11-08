@@ -32,104 +32,53 @@ console.log(creator.email)
 
   return (
 
-      <div className="movie_card" >
+      <div className="PoiCard" >
           <div className="info_section">
             <div className="movie_header">
-              <img className="locandina"
-                   src={image}/>
-              <h1><a href={url} target="_blank" className="App-link">
+              <img className="picture" src={image}/>
+              <div className="detailsPoi">
+              <h1>
+                <a href={url} target="_blank" className="PoiTitle">
                 {name}
-              </a></h1>
-              <h4>{creator.name}</h4>
-              <span className="minutes">{lat} {lng}</span>
-              {Categories && Categories.length > 0 && (
-              <p className="type">   {Categories.map(category => (
-                  <div>
-                  <img className="category-image" src={category.image} />
-                  <p>{category.name}</p>
-                  </div>
-              ))}</p>)}
-              {Tags && Tags.length > 0 && (
-                  <p className="type">   {Tags.map(tag => (
-                      <div>
-                        <img className="category-image" src={tag.image} />
-                        <p>{tag.name} </p>
+              </a>
+              </h1>
+                {Categories && Categories.length > 0 && (
+                  <p className="type">   {Categories.map(category => (
+                      <div className="type">
+                        <img className="category-image" src={category.image} />
                       </div>
                   ))}</p>)}
+              {Tags && Tags.length > 0 && (
+                  <p className="type">   {Tags.map(tag => (
+                      <div className="type">
+                        <img className="category-image" src={tag.image} />
+                      </div>
+                  ))}</p>)}
+                <h4>Created by  {creator.name} </h4>
+                <div>
+                <p className="text">
+                  <b>Description</b> <br/>
+                  {description}
+                </p>
+              </div>
+                <div className="coordinate">
+                  <b>Latitude :</b> {lat} <br/>
+                  <b>Longitude :</b> {lng}
+                </div>
+              </div>
             </div>
-            <div className="movie_desc">
-              <p className="text">
-                {description}
-              </p>
-              <p className="text">
-                {"👍"+likes}
-              </p>
-            </div>
-            <div className="movie_social">
               <ul>
                   <button onClick={handleLikeClick}>
-                      {liked ? "Liked 👍" : "Not liked 👎"}
+                      {liked ? "Liked 👍" : "Unliked 👎"}
                   </button>
-                 <img width={20} height={20} src={targetIcon} name={id} onClick={zoomOnMarker}></img>
-                 <img width={20} height={20} src={deleteIcon} name={id} onClick={deleteMarker}></img>
-                   <img width={20} height={20} src={shareIcon} name={id} onClick={sendEmail}></img>
+                <p className="text">
+                  {"👍"+likes}
+                </p>
+                 <img width={20} height={20} src={targetIcon} name={id} onClick={zoomOnMarker}/>
+                 <img width={20} height={20} src={deleteIcon} name={id} onClick={deleteMarker}/>
+                 <img width={20} height={20} src={shareIcon} name={id} onClick={sendEmail}/>
               </ul>
             </div>
           </div>
-          <div className="blur_back bright_back" style={{ background:`url(${creator.picture})`}}></div>
-        </div>
-
-
-
-
-
-
-    // <div className="poi" style={{ borderColor: statusColor }}>
-    //   {Status && (
-    //     <span className="status" style={{ color: statusColor }}>
-    //       <small>{Status.name }  </small>
-    //     </span>
-    //   )}
-    //   {Categories && Categories.length > 0 && (
-    //     <div className="categories">
-    //
-    //     </div>
-    //   )}
-    //   <h2>
-    //     {url ? (
-    //       <a href={url} target="_blank" className="App-link">
-    //         {name}
-    //       </a>
-    //     ) : (
-    //       <span>{name}</span>
-    //     )}
-    //   </h2>
-    //   {image && <img className="poi-image" alt={name} src={image} />}
-    //   <section>{description}</section>
-    //   {Tags && Tags.length > 0 && (
-    //     <>
-    //       <hr />
-    //       <div className="categories">
-    //         {Tags.map(tag => (
-    //           <span
-    //             className="category tag"
-    //             style={{ backgroundColor: tag.color }}
-    //             key={tag.id}
-    //           >
-    //             {tag.image && (
-    //               <img className="category-image" src={tag.image} />
-    //             )}
-    //             <small> {tag.name}</small>
-    //           </span>
-    //         ))}
-    //       </div>
-    //
-    //     </>
-    //   )}
-    //
-    //   <img width={20} height={20} src={targetIcon} name={id} onClick={zoomOnMarker}></img>
-    //   <img width={20} height={20} src={deleteIcon} name={id} onClick={deleteMarker}></img>
-    //     <img width={20} height={20} src={shareIcon} name={id} onClick={sendEmail}></img>
-    // </div>
   );
 }
