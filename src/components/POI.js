@@ -45,13 +45,13 @@ console.log(creator.email)
                 {Categories && Categories.length > 0 && (
                   <p className="type">   {Categories.map(category => (
                       <div className="type">
-                        <img className="category-image" src={category.image} />
+                        <img width={25} height={30} src={category.image}/> <a>{category.name}</a>
                       </div>
                   ))}</p>)}
               {Tags && Tags.length > 0 && (
                   <p className="type">   {Tags.map(tag => (
                       <div className="type">
-                        <img className="category-image" src={tag.image} />
+                        <img width={25} height={30} src={tag.image}/> <a>{tag.name}</a>
                       </div>
                   ))}</p>)}
                 <h4>Created by  {creator.name} </h4>
