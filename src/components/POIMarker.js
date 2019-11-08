@@ -38,6 +38,7 @@ export default class POIMarker extends React.Component {
   }
 
   updatePOI = poi => {
+
     this.setState({ newPOI: poi });
   };
   componentDidMount(): void {
@@ -60,7 +61,7 @@ export default class POIMarker extends React.Component {
     let position = { lat: this.props.poi.lat, lng: this.props.poi.lng };
     let img;
 
-    if (
+    if (this.state.newPOI.Categories &&
       this.state.newPOI.Categories[0] != null &&
       this.state.newPOI.Categories[0].image != null
     ) {
@@ -113,7 +114,7 @@ export default class POIMarker extends React.Component {
                   <br />
                 </span>
               )}
-              {this.state.newPOI.Categories.map(cat => (
+              {this.state.newPOI.Categories&&this.state.newPOI.Categories.map(cat => (
                 <div>
                   <img width={25} height={30} src={cat.image} />{" "}
                   <a>{cat.name}</a>

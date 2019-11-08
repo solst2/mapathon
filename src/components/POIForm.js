@@ -10,7 +10,7 @@ export default class POIForm extends React.Component {
         super(props);
 
         let poiInfo = props.poisList.find(poi => poi.id == props.id);
-        this.MultiselectCat = React.createRef();
+
         this.state = {
             newPOI: {
                 id: poiInfo.id,
@@ -44,11 +44,13 @@ export default class POIForm extends React.Component {
     handlePOIAdd = event => {
         // Avoid reloading the page on form submission
         event.preventDefault();
-        this.state.newPOI.isSaved = true;
-       this.state.newPOI.Categories=selectedCategoreis;
-       this.state.newPOI.Tags=selectedTags;
-        this.props.updatePOI(this.state.newPOI);
-        this.props.addPoi(this.state.newPOI);
+        let updatePoi= this.state.newPOI
+        updatePoi.isSaved = true;
+        updatePoi.Categories=selectedCategoreis;
+        updatePoi.Tags=selectedTags;
+       // this.setState({newPOI:updatePoi})
+        this.props.updatePOI(updatePoi);
+        this.props.addPoi(updatePoi);
     };
     onSelect(optionsList, selectedItem) {
         selectedCategoreis=optionsList;
@@ -61,7 +63,6 @@ export default class POIForm extends React.Component {
     }
 
     render() {
-        selectedCategoreis=this.state.newPOI.categories;
         return (
 
             <div>
@@ -100,9 +101,6 @@ export default class POIForm extends React.Component {
                     />
 
                     <Multiselect
-                        ref={m => {
-                            this.MultiselectCat = m;
-                        }}
                         options={ this.props.categories}
                                  displayValue="name"
                                  selectedValues={this.state.newPOI.Categories}

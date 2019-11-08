@@ -464,6 +464,7 @@ class App extends Component {
   };
 
   zoomOnMarker = e => {
+    e.preventDefault();
     this.scrollToMyRef();
     this.leafletMap.leafletElement.closePopup();
     let lat = this.state.POIs.find(poi => poi.id == e.target.name).lat;
@@ -602,13 +603,13 @@ class App extends Component {
   render() {
     let currentPoi;
 
-      if(this.state.justOwnGroup)
-     currentPoi = this.state.filteredPoisToShow.filter(
-      poi => poi.Creator.group === 4
-    )[this.state.indexPoiPage];
-
-      else
-           currentPoi = this.state.filteredPoisToShow[this.state.indexPoiPage];
+      if(this.state.justOwnGroup){
+        currentPoi = this.state.filteredPoisToShow.filter(
+            poi => poi.Creator.group === 4
+        )[this.state.indexPoiPage];
+      }else{
+        currentPoi = this.state.filteredPoisToShow[this.state.indexPoiPage];
+      }
 
     return (
       <div>
@@ -803,6 +804,8 @@ class App extends Component {
 
               <Overlay name="show pois" checked>
                 <LayerGroup>
+                  {console.log(this.state.filteredPoisToShow)}
+                  {console.log(this.state.justOwnGroup)}
                     {this.state.justOwnGroup&&this.state.filteredPoisToShow
                             .filter(poi => poi.Creator.group === 4)
                             .map(poi => (
@@ -945,7 +948,7 @@ class App extends Component {
                                       "name"
                                   )}
                                   onClick={e =>
-                                  {console.log(this.state.indexPoiPage)
+                                  {
                                       this.setState({ indexPoiPage: e.target.value })}
                                   }
                               >
