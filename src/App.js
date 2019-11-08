@@ -345,7 +345,9 @@ this.getTags();
           return o;
       });
       let addedElement =updatedList[updatedList.length-1];
-
+this.state.unsavedPOIs.map(u=>
+    updatedList.push(u)
+)
 
   this.setState({ POIs: updatedList });
       this.changeOfPois();
