@@ -2,7 +2,7 @@
 
 # Build and compile app
 FROM node:10 as build
-MAINTAINER Roger Schaer <roger.schaer@hevs.ch>
+MAINTAINER group 4
 
 # Create app directory
 WORKDIR /usr/src/app
