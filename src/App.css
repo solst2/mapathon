@@ -59,6 +59,7 @@ li .divLink:hover:not(.active) {
 
 #ClocksContainer{
     color:white;
+    padding-left: 25%;
 }
 
 .Clock{

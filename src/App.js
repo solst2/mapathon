@@ -887,9 +887,6 @@ class App extends Component {
                 height={20}
               />
             </Control>
-            <Control position="bottomright">
-              <button onClick={this.visitPois}>visit</button>
-            </Control>
 
             {this.state.Routes.map(route => (
               <Routing map={this.leafletMap} route={route} />
