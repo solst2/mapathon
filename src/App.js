@@ -516,7 +516,6 @@ class App extends Component {
   //The filter of the pois
   changeOfPois = () => {
     // Show just own pois
-      console.log(this.leafletMap.leafletElement);
     if (this.state.justOwn) {
       // with filter
       if (this.state.filterPoi !== undefined && this.state.POIs !== "") {
@@ -901,9 +900,6 @@ class App extends Component {
                 height={20}
               />
             </Control>
-            <Control position="bottomright">
-              <button onClick={this.visitPois}>visit</button>
-            </Control>
 
             {this.state.Routes.map(route => (
               <Routing map={this.leafletMap} route={route} />
@@ -913,13 +909,13 @@ class App extends Component {
 
         <div className="DetailsPoi">
           <div className="leftDetails">
-              {this.state.justOwnGroup&&   <div className="ListPoi">
-              <ul>
-                My Group Poi :
-                {this.state.filteredPoisToShow
+            <div className="ListPoi">
+              <ul className="GroupPoi">
+                  <b>My Group Poi :</b>
+                  {this.state.filteredPoisToShow
                   .filter(poi => poi.Creator.group === 4)
                   .map(poi => (
-                    <li
+                    <li id="singleGroupPoi"
                       value={getIndex(
                         poi.name,
                         this.state.filteredPoisToShow.filter(
