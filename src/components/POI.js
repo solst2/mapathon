@@ -55,28 +55,35 @@ console.log(creator.email)
                       </div>
                   ))}</p>)}
                 <h4>Created by  {creator.name} </h4>
+                <br/>
                 <div>
                 <p className="text">
                   <b>Description</b> <br/>
                   {description}
                 </p>
               </div>
+                <br/>
                 <div className="coordinate">
                   <b>Latitude :</b> {lat} <br/>
                   <b>Longitude :</b> {lng}
                 </div>
+                <br/>
+                <p className="text"><b>Url</b></p>
+                <div className="text"> {url}</div>
+                <br/>
+                <br/>
+                <p className="text">
+                  {"👍"+likes}
+                </p>
+                <button onClick={handleLikeClick}>
+                  {liked ? "Dislike 👎" : "Like 👍" }
+                </button>
               </div>
             </div>
               <ul>
-                  <p className="text">
-                      {"👍"+likes}
-                  </p>
-                  <button onClick={handleLikeClick}>
-                      {liked ? "Liked 👍" : "Not liked 👎"}
-                  </button>
-                 <img width={20} height={20} src={targetIcon} name={id} onClick={zoomOnMarker}/>
-                {creator.id != undefined && <img width={20} height={20} src={deleteIcon} name={id} onClick={deleteMarker}/>}
-                   <img width={20} height={20} src={shareIcon} name={id} onClick={sendEmail}/>
+                  <img width={20} height={20} src={targetIcon} name={id} onClick={zoomOnMarker}/>
+                  {creator.id != undefined && <img width={20} height={20} src={deleteIcon} name={id} onClick={deleteMarker}/>}
+                  <img width={20} height={20} src={shareIcon} name={id} onClick={sendEmail}/>
               </ul>
             </div>
           </div>

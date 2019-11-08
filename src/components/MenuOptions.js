@@ -11,12 +11,13 @@ export default function MenuOptions(props) {
   };
 
   return (
-    <div>
-      <button onClick={handleFilterClick} className="PersoBtn">
+    <div id="btnMapContainer">
+      <button onClick={handleFilterClick} className="PersoBtn" id="btnForMap">
         {filter}
       </button>
-      <br />
-      {showFilterInput ? <input onChange={props.handleFilter} /> : null}
+        <br/>
+        <br/>
+        {showFilterInput ? <input onChange={props.handleFilter} /> : null}
       {showFilterInput ? (
         <div>
           <input
@@ -24,7 +25,7 @@ export default function MenuOptions(props) {
             checked={props.justOwn}
             onChange={props.handleJustOwnClick}
           />
-          <small>Show own POI</small>
+          <small id="smallText">Show my POI</small>
         </div>
       ) : null}
     </div>

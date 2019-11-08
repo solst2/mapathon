@@ -10,7 +10,6 @@ body{
 
 .PersoBtn{
     border-radius: 8px;
-    border: 2px solid #4CAF50;
     font-size: 12px;
     padding: 10px 24px;
     background-color: #F8F8FF;
@@ -50,6 +49,8 @@ li .divLink:hover:not(.active) {
 
 #BtnLogOut{
     background-color: red;
+    color: white;
+    border: none;
 }
 
 #BtnLogOut:hover{
@@ -75,6 +76,24 @@ li .divLink:hover:not(.active) {
     margin:auto;
 }
 
+#btnMapContainer{
+    padding-left: 15px;
+    display: inline-block;
+}
+
+#btnForMap{
+background-color: white;
+}
+
+#btnForMap:hover{
+    border-color: #4CAF50;
+    color: #111111;
+}
+
+#smallText{
+    color: white;
+}
+
 .map{
   height:800px;
   width:98%;
@@ -98,7 +117,6 @@ li .divLink:hover:not(.active) {
     background:gold;
     padding:90px;
     display:inline-block;
-
 }
 .DetailsPoi{
 display: flex;
@@ -121,10 +139,6 @@ display: flex;
     color: white;
     text-decoration: none;
 }
-
-
-
-
 
 .dropdown-content {
   display: none;

@@ -230,8 +230,8 @@ function AppWrapper() {
                            userList={allUser}
                            setLike={setLike}
                        />}</Route>
-                   <Route path="/categories" component={CategoryManager} ></Route>
-                   <Route path="/tags" component={TagManager} ></Route>
+                   <Route path="/categories" component={CategoryManager} />
+                   <Route path="/tags" component={TagManager} />
 
                </Router>
 
@@ -770,9 +770,11 @@ catch{
                 <img className="CountryFlag" width={30} height={20} src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Flag_of_New_Zealand.svg/1200px-Flag_of_New_Zealand.svg.png" />
             </div>
         </div>
-      <button className={"PersoBtn"} onClick={this.ZoomOnMyLoca}>
+    <div id="btnMapContainer">
+      <button className={"PersoBtn"} id="btnForMap" onClick={this.ZoomOnMyLoca}>
           Locate Me
       </button>
+    </div>
         <br/>
     <br/>
       <MenuOptions
