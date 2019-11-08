@@ -59,6 +59,7 @@ import map2d from "./icons/flatt.PNG";
 import map3d from "./icons/globe.PNG";
 import currentPosition from "./icons/my_position.gif";
 import "./cardTemplate.scss"
+import {preventDefault} from "leaflet/src/dom/DomEvent";
 var myPostionIcon = L.icon({
     iconUrl: currentPosition,
     iconSize: [20, 20],
@@ -148,6 +149,7 @@ function AppWrapper() {
             getTokenSilently,
             loginWithRedirect
         );
+
         return answer;
     }
     // add POI and call the insertPOi and then update the category and tags
@@ -217,7 +219,7 @@ function AppWrapper() {
                       currentUser={currentUser}
                       position={position}
                       key="app"
-                      user={currentUser}
+                      user={user}
                       isAuthenticated={isAuthenticated}
                       logout={logout}
                       userList={allUser}
@@ -330,11 +332,11 @@ this.getTags();
 
       this.state.unsavedPois.map(poi=>
           updatedList.push(poi)
-      )
+      );
 
   this.setState({ POIs: updatedList });
       this.changeOfPois();
-    if (this.state.oldSizevalue < result.length&&this.props.user.id!==addedElement.Creator.id) {
+    if (this.state.oldSizevalue < result.length&&this.props.user.sub!==addedElement.Creator.id) {
 
         this.setState({selectedPoi:addedElement})
       let addNotif = this.state.notifications;
@@ -404,7 +406,7 @@ this.leafletMap.leafletElement.closePopup();
       description: "",
       group: 4,
       isSaved: false,
-      Creator: { id: this.props.user.id ,group:4},
+      Creator: { id: this.props.user.sub ,group:4},
       Categories: [],
       Tags: []
     };
@@ -413,14 +415,19 @@ this.leafletMap.leafletElement.closePopup();
       this.setState({unsavedPois:unsavedpois});
       const pois= this.state.POIs
 
+let zoom=0;
+        if(this.leafletMap.leafletElement>15)
+            zoom=this.leafletMap.leafletElement
 
+      else
+          zoom=15
 
-      this.leafletMap.leafletElement.flyTo(e.latlng, 15);
+      this.leafletMap.leafletElement.flyTo(e.latlng, zoom);
 
 
     };
-  addPoi=(poi)=>{
-      this.props.addPoi(poi);
+  addPoi=async (poi)=>{
+   await this.props.addPoi(poi);
       const pois= this.state.POIs
       pois.push(poi)
       this.setState({POIs:pois});
@@ -432,7 +439,7 @@ this.leafletMap.leafletElement.closePopup();
 
     let deletedPOI = this.state.POIs.find(poi => poi.id ==e.target.name);
 
-    if (deletedPOI.Creator.id === this.props.user.id) {
+    if (deletedPOI.Creator.id === this.props.user.sub) {
       if (
         window.confirm(
           "Are you sure you wish to delete this point of interest?"
@@ -451,7 +458,7 @@ this.leafletMap.leafletElement.closePopup();
 
       let newPoiList = []
       this.state.POIs.map((poi)=> {
-          if (poi.Creator.id === this.props.user.id) {
+          if (poi.Creator.id === this.props.user.sub) {
               this.props.deleteObject(poi);
 
           } else {
@@ -528,8 +535,6 @@ this.setState({sharepoiId:e.target.name})
   };
 displayPoi = e =>
 {
-
-
 this.setState({selectedPoi:e})
     this.sideBarLeft.show();
 
@@ -564,6 +569,7 @@ this.setState({selectedPoi:e})
     let POIs4gr = this.state.POIs.filter(poi => poi.group == 4);
     console.log("filter Poi:" + this.state.filterPoi + ":");
     console.log("showOwn:" + this.state.justOwn + ":");
+      console.log("user:" + this.props.user.sub + ":");
     // Show just own pois
     if (this.state.justOwn) {
         // with filter
@@ -628,6 +634,7 @@ this.setState({selectedPoi:e})
     let likepoi = updatedPois.find(poi => poi.id === poiID);
     this.props.setLike(poiID, likepoi.liked ? "unlike" : "like");
     //update directly, and it will be proved with the next load
+    likepoi.liked ? likepoi.likes-- : likepoi.likes++;
     likepoi.liked = !likepoi.liked;
     this.setState({ POIs: updatedPois });
   };
@@ -646,7 +653,7 @@ visitPois=e=>
 
     setTimeout(() => {
         this.leafletMap.leafletElement.flyTo([poi.lat,poi.lng],15)
-    }, 3000)
+    }, 10000)
     )
 
 }

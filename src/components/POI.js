@@ -69,14 +69,11 @@ console.log(creator.email)
             </div>
               <ul>
                   <button onClick={handleLikeClick}>
-                      {liked ? "Liked 👍" : "Unliked 👎"}
+                      {liked ? "Liked 👍" : "Not liked 👎"}
                   </button>
-                <p className="text">
-                  {"👍"+likes}
-                </p>
                  <img width={20} height={20} src={targetIcon} name={id} onClick={zoomOnMarker}/>
-                 <img width={20} height={20} src={deleteIcon} name={id} onClick={deleteMarker}/>
-                 <img width={20} height={20} src={shareIcon} name={id} onClick={sendEmail}/>
+                {creator.id != undefined && <img width={20} height={20} src={deleteIcon} name={id} onClick={deleteMarker}/>}
+                   <img width={20} height={20} src={shareIcon} name={id} onClick={sendEmail}/>
               </ul>
             </div>
           </div>

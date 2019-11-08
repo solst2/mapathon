@@ -55,19 +55,13 @@ export default function TagManger(props) {
         event.preventDefault();
         setAlltags (await getAllO('tag'));
 
-    }  async function  AddCategory  (event) {
-
-        event.preventDefault();
-
-        setTag(tags.push({name:'',group:'',image:'',iscreated:true}));
-
     }
     async  function  deleteCategory  (event) {
         await requestPOI.deleteObject("tag",event.target.name, getTokenSilently, loginWithRedirect);
         setAlltags (await getAllO('tag'));
     }
 
-    function  AddCategory  (event) {
+    function  AddTag  (event) {
 
         setTag(tags.push({name:'',group:'',image:'',iscreated:true}));
 
@@ -91,6 +85,7 @@ export default function TagManger(props) {
         <Redirect to="/" />)
     }
 
+    let catcreat=false;
     return (
 
 
@@ -151,8 +146,9 @@ export default function TagManger(props) {
                             </div>
                         })}
                     </div>
-                    <br/>
-                    <button className="PersoBtn" style={{width:"100%"}} onClick={AddCategory}>Add tag</button>
+                    <br/>{tags.map((tag)=> tag.iscreated? catcreat=true : null)}
+                    { !catcreat &&
+                    <button className="PersoBtn" style={{width:"100%"}} onClick={AddTag}>Add tag</button>}
 
                 </form>
             </div>
