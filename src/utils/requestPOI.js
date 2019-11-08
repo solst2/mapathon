@@ -125,9 +125,9 @@ export class requestPOI {
           }
         }
       );
-      console.log("save poi method called");
+      console.log("save poi method called, response : ");
       let data = await response.json();
-      console.log("status" + response.status);
+      console.log(response);
       return data;
     } catch (e) {
       console.error(e);

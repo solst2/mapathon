@@ -7,6 +7,7 @@ export default class POIForm extends React.Component {
 
     constructor(props) {
         super(props);
+
         let poiInfo = props.poisList.find(poi => poi.id == props.id);
 
         this.state = {

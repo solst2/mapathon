@@ -1,14 +1,16 @@
-// src/components/NavBar.js
 
 import React from "react";
 import { useAuth0 } from "../react-auth0-spa";
-import {BrowserRouter as Router, Link} from "react-router-dom";
+import {Map} from "react-leaflet";
+import { Route, Link, BrowserRouter as Router } from 'react-router-dom'
 import "../w3template.css"
+
 const NavBar = () => {
     const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
 
     return (
         <div id="Navbar">
+
             <ul className="MenuList">
                 <li className="liNav"><Link className="divLink" to="/">Map</Link></li>
                 <li className="liNav"> <Link className="divLink" to="/categories">Categories</Link></li>

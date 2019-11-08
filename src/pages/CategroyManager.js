@@ -13,6 +13,7 @@ import NavBar from "../components/NavBar";
 export default function CategoryManager(props) {
     let [categories, setAllcategories] = useState([]);
     let [category,setCategory]=useState({name:'',group:'',image:''});
+    let [isDisable,setDisable]=useState(false)
     const {
         isAuthenticated,
         loginWithRedirect,
@@ -54,7 +55,7 @@ export default function CategoryManager(props) {
 
           event.preventDefault();
           setAllcategories (await getAllO('category'));
-
+          setDisable(false);
         }
         async function  AddCategory  (event) {
 
@@ -69,12 +70,12 @@ export default function CategoryManager(props) {
     }
 
     function  AddCategory  (event) {
-
+        setDisable(true);
         setCategory(categories.push({name:'',group:'',image:'',iscreated:true}));
 
     }
     function  ModifyCat  (event) {
-
+        setDisable(true);
         let updatecatList=categories
 
         let findCat= updatecatList.find(c=>c.id==event.target.name)
@@ -86,6 +87,7 @@ export default function CategoryManager(props) {
 
         setAllcategories(updatecatList)
         setCategory(findCat)
+
     }
     if(!isAuthenticated)
     {return (
@@ -96,9 +98,6 @@ export default function CategoryManager(props) {
 
 
 <div>
-    <header>
-        <NavBar />
-    </header>
           <div class="wrapper">
 
             <form onSubmit={handlecatAdd}>
@@ -154,10 +153,11 @@ export default function CategoryManager(props) {
                     })}
                 </div>
                 <br/>{categories.map((category)=> category.iscreated? catcreat=true : null)}
-                { !catcreat &&
-                <button className="PersoBtn" style={{width:"75%"}} onClick={AddCategory}>Add category</button>}
+                {!isDisable&&<button className="PersoBtn" style={{width:"75%"}} onClick={AddCategory}>Add category</button>}
+
             </form>
-        </div>
+              {isDisable&&<button className="PersoBtn" style={{width:"75%"}}  >Add category</button>}
+          </div>
 </div>
 );
 

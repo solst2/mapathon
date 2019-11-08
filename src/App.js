@@ -30,10 +30,14 @@ import searchResultImg from "./icons/pin/searchResult.png";
 import * as ELG from "esri-leaflet-geocoder";
 import routeIconImg from "./icons/rout.png";
 import Routing from "./RoutingMachine";
+import Clock from 'react-clock'
 import aa from "./icons/delete.png";
 import popupsound from "./sounds/pop.mp3";
 import Clocks from  "./components/Clocks";
 import ReactNotifications from 'react-browser-notifications';
+import TagManager from "./pages/TagManager";
+import CategoryManager from './pages/CategroyManager'
+import { Route, Link, BrowserRouter as Router } from 'react-router-dom'
 // import plugin's css (if present)
 // note, that this is only one of possible ways to load css
 import "leaflet-contextmenu/dist/leaflet.contextmenu.css";
@@ -60,6 +64,7 @@ import map3d from "./icons/globe.PNG";
 import currentPosition from "./icons/my_position.gif";
 import "./cardTemplate.scss"
 import {preventDefault} from "leaflet/src/dom/DomEvent";
+
 var myPostionIcon = L.icon({
     iconUrl: currentPosition,
     iconSize: [20, 20],
@@ -207,24 +212,31 @@ function AppWrapper() {
        <div>
 
            <header>
-               <NavBar/>
-           </header>
-           <GeoLocat  upGeoLocalisation={setpostion}/>
+               <Router>
+                   <NavBar/>
+                   <Route exact path="/">  <
+                       GeoLocat  upGeoLocalisation={setpostion}/>
+                       {position!==null&&<App
+                           poisList={props.poisList}
+                           getAllO={getAllO}
+                           addPoi={addPOI}
+                           deleteObject={deleteObject}
+                           currentUser={currentUser}
+                           position={position}
+                           key="app"
+                           user={user}
+                           isAuthenticated={isAuthenticated}
+                           logout={logout}
+                           userList={allUser}
+                           setLike={setLike}
+                       />}</Route>
+                   <Route path="/categories" component={CategoryManager} ></Route>
+                   <Route path="/tags" component={TagManager} ></Route>
 
-           {position!==null&&<App
-                      poisList={props.poisList}
-                      getAllO={getAllO}
-                      addPoi={addPOI}
-                      deleteObject={deleteObject}
-                      currentUser={currentUser}
-                      position={position}
-                      key="app"
-                      user={user}
-                      isAuthenticated={isAuthenticated}
-                      logout={logout}
-                      userList={allUser}
-                      setLike={setLike}
-                  />}
+               </Router>
+
+           </header>
+
                 </div>
 
 
@@ -989,6 +1001,12 @@ catch{
             </div>
             </div>
             <div className="rightDetails">
+            <button className="PersoBtn" onClick={(e)=>{
+                if(this.state.indexPoiPage>0)
+                    this.setState({indexPoiPage:this.state.indexPoiPage-1})
+                else
+                    this.setState({indexPoiPage:this.state.filteredPoisToShow.filter((poi)=>poi.Creator.group===4).length-1})
+            }}>{'<'}</button>
             <POI
                 {...currentPoi}
                 zoomOnMarker={this.zoomOnMarker}
@@ -997,6 +1015,16 @@ catch{
                 setLike={this.setLike}
             />
             </div>
+             <button className="PersoBtn" onClick={(e)=>{
+            if(this.state.indexPoiPage<this.state.filteredPoisToShow.filter((poi)=>poi.Creator.group===4).length-1)
+                this.setState({indexPoiPage:this.state.indexPoiPage+1})
+            else
+                this.setState({indexPoiPage:0})
+            console.log(this.state.indexPoiPage)
+            {
+                console.log(currentPoi)
+            }
+        }}>{'>'}</button>
         </div>
 
 
