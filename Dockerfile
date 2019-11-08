@@ -2,7 +2,7 @@
 
 # Build and compile app
 FROM node:10 as build
-MAINTAINER Group 4
+MAINTAINER Roger Schaer <roger.schaer@hevs.ch>
 
 # Create app directory
 WORKDIR /usr/src/app
@@ -25,6 +25,8 @@ RUN yarn run build
 FROM nginx:alpine
 
 COPY --from=build /usr/src/app/build /usr/share/nginx/html
+
+COPY ./react.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
 
