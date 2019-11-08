@@ -26,25 +26,16 @@ export default class POIForm extends React.Component {
                 Tags:poiInfo.Tags,
                 Creator:{group:4}
 
-            },   multiSelect:poiInfo.Categories
+            }
         };
     }
 
 componentDidMount(): void {
-
-    let options=[]
-
+    let options=[];
     this.props.categories.map((cat)=>
         {
             options.push({ name: cat.name, id: cat.id})}
-    )
-//this.props.parentRef.leafletElement.openPopup()
-    console.log("list containers");
-    console.log(this.state.newPOI.Categories);
-
-
-
- this.setState({multiSelect:options})
+    );
 }
 
     handleInputChange = event => {
@@ -52,26 +43,14 @@ componentDidMount(): void {
         const value = target.value;
         const name = target.name;
 
-
         this.setState(prevState => ({
             newPOI: { ...prevState.newPOI, [name]: value }
         }));
     };
-    handleChange=event=> {
-        var options = event.target.value;
-        var value = [];
-        for (var i = 0, l = options.length; i < l; i++) {
-            if (options[i].selected) {
-                value.push(options[i].value);
-            }
-        }
 
-        console.log(options);
-    }
     handlePOIAdd = event => {
         // Avoid reloading the page on form submission
         event.preventDefault();
-        console.log("added" + this.state.newPOI.id);
         this.state.newPOI.isSaved = true;
        this.state.newPOI.Categories=selectedCategoreis;
        this.state.newPOI.Tags=selectedTags;
@@ -89,10 +68,6 @@ componentDidMount(): void {
     }
 
     render() {
-
-        console.log("categories")
-
-
         return (
 
             <div>

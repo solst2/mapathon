@@ -23,35 +23,34 @@ import * as ELG from "esri-leaflet-geocoder";
 import routeIconImg from "./icons/rout.png";
 import Routing from "./RoutingMachine";
 import popupsound from "./sounds/pop.mp3";
-import ReactNotifications from 'react-browser-notifications';
+import ReactNotifications from "react-browser-notifications";
 import TagManager from "./pages/TagManager";
-import CategoryManager from './pages/CategroyManager'
-import { Route, Link, BrowserRouter as Router } from 'react-router-dom'
+import CategoryManager from "./pages/CategroyManager";
+import { Route, Link, BrowserRouter as Router } from "react-router-dom";
 // import plugin's css (if present)
 // note, that this is only one of possible ways to load css
 import "leaflet-contextmenu/dist/leaflet.contextmenu.css";
 import "leaflet-contextmenu/dist/leaflet.contextmenu";
-import * as emailjs from "emailjs-com"
-import MiniMap from 'leaflet-minimap';
-import "leaflet-sidebar/src/L.Control.Sidebar.css"
-import AnalogClock, { Themes } from 'react-analog-clock';
-import "leaflet-sidebar/src/L.Control.Sidebar"
+import * as emailjs from "emailjs-com";
+import MiniMap from "leaflet-minimap";
+import "leaflet-sidebar/src/L.Control.Sidebar.css";
+import AnalogClock, { Themes } from "react-analog-clock";
+import "leaflet-sidebar/src/L.Control.Sidebar";
 import NavBar from "./components/NavBar";
-import { Multiselect } from 'multiselect-react-dropdown';
-import Div from "./Div";
-import 'leaflet.sync/L.Map.Sync'
+import { Multiselect } from "multiselect-react-dropdown";
+import "leaflet.sync/L.Map.Sync";
 import currentPosition from "./icons/my_position.gif";
-import "./cardTemplate.scss"
+import "./cardTemplate.scss";
 
 var myPostionIcon = L.icon({
-    iconUrl: currentPosition,
-    iconSize: [20, 20],
-    iconAnchor: [10, 10],
-    popupAnchor: [0, -20]
+  iconUrl: currentPosition,
+  iconSize: [20, 20],
+  iconAnchor: [10, 10],
+  popupAnchor: [0, -20]
 });
 
 const { BaseLayer, Overlay } = LayersControl;
-const users=[]
+const users = [];
 var routeIcon = L.icon({
   iconUrl: routeIconImg,
   iconSize: [20, 30],
@@ -76,83 +75,96 @@ function AppWrapper() {
   } = useAuth0();
   let [poisList, setPoisList] = useState([]);
   let [allUser, setAllUser] = useState([]);
-  let [position, setPosition] = useState({lat:0,lng:0});
+  let [position, setPosition] = useState({ lat: 0, lng: 0 });
   //get the pois on load
   useEffect(() => {
     const fn = async () => {
-
       if (loading === false) {
-        let poisList =await getAllO('poi');
+        let poisList = await getAllO("poi");
         if (poisList.length > 0) {
-          console.log("Load");
-          console.log(poisList);
           setPoisList(poisList);
-            setAllUser(await request.getAllObject(getTokenSilently,loginWithRedirect,'user'));
+          setAllUser(
+            await request.getAllObject(
+              getTokenSilently,
+              loginWithRedirect,
+              "user"
+            )
+          );
         }
-
       }
     };
     fn();
   }, [isAuthenticated, loginWithRedirect, loading]);
 
-
   // insert a poi
-  async function insertPOi(newPOI)
-  {
-      //if the poi has no id, it must be created
-      if (newPOI.id === undefined) {
-          console.log(newPOI.Categories)
-          let answer =   await request.addNewObject("poi",
-              newPOI,
-              getTokenSilently,
-              loginWithRedirect
-          );
-          return answer;
-      } else {      //just update it
-          let answer = await request.updateObject("poi",
-              newPOI.id,
-              newPOI,
-              getTokenSilently,
-              loginWithRedirect
-          );
-          return answer;
-      }
-  }
-    // set a like form the like button
-    async function setLike(poiID, like) {
-        let answer = await request.updateLike(
-            "poi",
-            poiID,
-            like,
-            getTokenSilently,
-            loginWithRedirect
-        );
-
-        return answer;
+  async function insertPOi(newPOI) {
+    //if the poi has no id, it must be created
+    if (newPOI.id === undefined) {
+      let answer = await request.addNewObject(
+        "poi",
+        newPOI,
+        getTokenSilently,
+        loginWithRedirect
+      );
+      return answer;
+    } else {
+      //just update it
+      let answer = await request.updateObject(
+        "poi",
+        newPOI.id,
+        newPOI,
+        getTokenSilently,
+        loginWithRedirect
+      );
+      return answer;
     }
-    // add POI and call the insertPOi and then update the category and tags
+  }
+  // set a like form the like button
+  async function setLike(poiID, like) {
+    let answer = await request.updateLike(
+      "poi",
+      poiID,
+      like,
+      getTokenSilently,
+      loginWithRedirect
+    );
+
+    return answer;
+  }
+  // add POI and call the insertPOi and then update the category and tags
   async function addPOI(newPOI) {
-      let poiadd =await  insertPOi(newPOI);
-      let idCateArray=[];
-      let idTags=[];
-      newPOI.Categories.map((cat)=>
-      idCateArray.push(cat.id)
-      );
-      newPOI.Tags.map((tag)=>
-          idTags.push(tag.id)
-      );
-              await request.updatePoiType("category",idCateArray,poiadd.id,getTokenSilently,
-          loginWithRedirect);
-      await request.updatePoiType("tag",idTags,poiadd.id,getTokenSilently,
-          loginWithRedirect);
+    let poiadd = await insertPOi(newPOI);
+    let idCateArray = [];
+    let idTags = [];
+    newPOI.Categories.map(cat => idCateArray.push(cat.id));
+    newPOI.Tags.map(tag => idTags.push(tag.id));
+    await request.updatePoiType(
+      "category",
+      idCateArray,
+      poiadd.id,
+      getTokenSilently,
+      loginWithRedirect
+    );
+    await request.updatePoiType(
+      "tag",
+      idTags,
+      poiadd.id,
+      getTokenSilently,
+      loginWithRedirect
+    );
   }
 
   async function getAllO(object) {
-    return await request.getAllObject(getTokenSilently, loginWithRedirect,object);
+    return await request.getAllObject(
+      getTokenSilently,
+      loginWithRedirect,
+      object
+    );
   }
 
   async function deleteObject(poi) {
-    return await request.deleteObject("poi",
+    return await request.deleteObject(
+      "poi",
       poi.id,
       getTokenSilently,
       loginWithRedirect
@@ -165,73 +177,68 @@ function AppWrapper() {
   }
 
   //for the geologalisation for show in the map
-  function setpostion(newPostion)
-  {
-      setPosition(newPostion);
+  function setpostion(newPostion) {
+    setPosition(newPostion);
   }
 
   //called once to button start is pressed
   function AfterLoad(props) {
     return (
-       <div>
-
-           <header>
-               <Router>
-                   <NavBar/>
-                   <Route exact path="/">
-                       <GeoLocat  upGeoLocalisation={setpostion}/>
-                       {position!==null&&<App
-                           poisList={props.poisList}
-                           getAllO={getAllO}
-                           addPoi={addPOI}
-                           deleteObject={deleteObject}
-                           position={position}
-                           key="app"
-                           user={user}
-                           isAuthenticated={isAuthenticated}
-                           userList={allUser}
-                           setLike={setLike}
-                       />}</Route>
-                   <Route path="/categories" component={CategoryManager} />
-                   <Route path="/tags" component={TagManager} />
-
-               </Router>
-
-           </header>
-
-                </div>
-
-
+      <div>
+        <header>
+          <Router>
+            <NavBar />
+            <Route exact path="/">
+              <GeoLocat upGeoLocalisation={setpostion} />
+              {position !== null && (
+                <App
+                  poisList={props.poisList}
+                  getAllO={getAllO}
+                  addPoi={addPOI}
+                  deleteObject={deleteObject}
+                  position={position}
+                  key="app"
+                  user={user}
+                  isAuthenticated={isAuthenticated}
+                  userList={allUser}
+                  setLike={setLike}
+                />
+              )}
+            </Route>
+            <Route path="/categories" component={CategoryManager} />
+            <Route path="/tags" component={TagManager} />
+          </Router>
+        </header>
+      </div>
     );
   }
 
   return <AfterLoad poisList={poisList} />;
 }
-let selectedUsers=[]
+let selectedUsers = [];
 //App class at the second level of the tree
 class App extends Component {
-
   constructor(props) {
-    super(props)
-      this.showNotifications = this.showNotifications.bind(this);
+    super(props);
+    this.showNotifications = this.showNotifications.bind(this);
     this.leafletMap = React.createRef();
-    this.sideBarLeft=''
+    this.sideBarLeft = "";
     this.state = {
       POIs: [],
-        filteredPoisToShow : [],
+      filteredPoisToShow: [],
       unsavedPOIs: [],
       Routes: [],
-        categories:[],
-        tags:[],
-     unsavedPois:[],
-      sharepoiId: '',
-      oldSizevalue:'',
-      notifications:[],
-      searchResults:[],
-        displayDiv:false,
-      is2ddisplayed:true,
-        selectedPoi:'',
-        indexPoiPage:0
+      categories: [],
+      tags: [],
+      unsavedPois: [],
+      sharepoiId: "",
+      oldSizevalue: "",
+      notifications: [],
+      searchResults: [],
+      displayDiv: false,
+      is2ddisplayed: true,
+      selectedPoi: "",
+      indexPoiPage: 0
     };
   }
 
@@ -239,13 +246,13 @@ class App extends Component {
     const map = this.leafletMap.leafletElement;
     const searchControl = new ELG.Geosearch().addTo(map);
     const results = new L.LayerGroup().addTo(map);
-//take poi and change the state isSaved to true, so it will show the poi and not the edit mode
+    //take poi and change the state isSaved to true, so it will show the poi and not the edit mode
     var result = this.props.poisList.map(el => {
       var o = Object.assign({}, el);
       o.isSaved = true;
       return o;
     });
-    this.setState({ POIs: result })
+    this.setState({ POIs: result });
 
     this.getTagAndCats();
     // for the notification
@@ -282,59 +289,56 @@ class App extends Component {
     map.addLayer(osm);
 
     this.setState({ searchResults: searchResults });
-   this.changeOfPois();
+    this.changeOfPois();
   }
 
   //realtime
   async testtimeOut() {
-    let result = await this.props.getAllO('poi');
-      var updatedList = result.map(el => {
-          var o = Object.assign({}, el);
-          o.isSaved = true;
-          return o;
-      });
-      let addedElement =updatedList[updatedList.length-1];
+    let result = await this.props.getAllO("poi");
+    var updatedList = result.map(el => {
+      var o = Object.assign({}, el);
+      o.isSaved = true;
+      return o;
+    });
+    let addedElement = updatedList[updatedList.length - 1];
 
-      this.state.unsavedPois.map(poi=>
-          updatedList.push(poi)
-      );
+    this.state.unsavedPois.map(poi => updatedList.push(poi));
 
-  this.setState({ POIs: updatedList });
-      this.changeOfPois();
-      //for the notification
-    if (this.state.oldSizevalue < result.length&&this.props.user.sub!==addedElement.Creator.id) {
-
-        this.setState({selectedPoi:addedElement})
+    this.setState({ POIs: updatedList });
+    this.changeOfPois();
+    //for the notification
+    if (
+      this.state.oldSizevalue < result.length &&
+      this.props.user.sub !== addedElement.Creator.id
+    ) {
+      this.setState({ selectedPoi: addedElement });
       let addNotif = this.state.notifications;
 
       addNotif.push(addedElement);
       this.setState({ notifications: addNotif });
       this.notificationSound.src = popupsound;
       this.notificationSound.play();
-        this.setState({ oldSizevalue: updatedList.length });
-        this.showNotifications();
+      this.setState({ oldSizevalue: updatedList.length });
+      this.showNotifications();
     }
-
-
   }
 
   //scroll on the map when you click on a marker
   scrollToMyRef = () => window.scrollTo(0, this.leafletMap);
 
-async getTagAndCats()
-    {
-        let categories= await this.props.getAllO('category');
-        this.setState({categories:categories})
-            let tags= await this.props.getAllO('tag');
-         this.setState({tags:tags})
+  async getTagAndCats() {
+    let categories = await this.props.getAllO("category");
+    this.setState({ categories: categories });
+    let tags = await this.props.getAllO("tag");
+    this.setState({ tags: tags });
 
-        let users= await this.props.getAllO('user');
-        this.setState({users:users})
-    }
+    let users = await this.props.getAllO("user");
+    this.setState({ users: users });
+  }
 
   //add a marker when you clic on the map
   addMarker = e => {
-this.leafletMap.leafletElement.closePopup();
+    this.leafletMap.leafletElement.closePopup();
     const unsavedpois = this.state.unsavedPois;
     var newPoi = {
       lat: e.latlng.lat,
@@ -343,34 +347,35 @@ this.leafletMap.leafletElement.closePopup();
       description: "",
       group: 4,
       isSaved: false,
-      Creator: { id: this.props.user.sub ,group:4},
+      Creator: { id: this.props.user.sub, group: 4 },
       Categories: [],
       Tags: []
     };
 
-      unsavedpois.push(newPoi);
-      this.setState({unsavedPois:unsavedpois});
+    unsavedpois.push(newPoi);
+    this.setState({ unsavedPois: unsavedpois });
 
-let zoom=0;
-        if(this.leafletMap.leafletElement.zoom>15)
-            zoom=this.leafletMap.leafletElement.zoom;
-      else
-          zoom=15;
+    let zoom = 0;
+    if (this.leafletMap.leafletElement.zoom > 15)
+      zoom = this.leafletMap.leafletElement.zoom;
+    else zoom = 15;
 
-      this.leafletMap.leafletElement.flyTo(e.latlng, zoom);
-    };
+    this.leafletMap.leafletElement.flyTo(e.latlng, zoom);
+  };
 
-  addPoi=async (poi)=>{
-   await this.props.addPoi(poi);
-      const pois= this.state.POIs;
-      pois.push(poi);
-      this.setState({POIs:pois});
-      this.changeOfPois();
-      this.setState({unsavedPois:this.state.unsavedPois.filter(poi=>poi!==poi)});
+  addPoi = async poi => {
+    await this.props.addPoi(poi);
+    const pois = this.state.POIs;
+    pois.push(poi);
+    this.setState({ POIs: pois });
+    this.changeOfPois();
+    this.setState({
+      unsavedPois: this.state.unsavedPois.filter(poi => poi !== poi)
+    });
   };
 
   deleteMarker = e => {
-    let deletedPOI = this.state.POIs.find(poi => poi.id ==e.target.name);
+    let deletedPOI = this.state.POIs.find(poi => poi.id == e.target.name);
 
     //just allowed to delete when it is your poi
     if (deletedPOI.Creator.id === this.props.user.sub) {
@@ -379,7 +384,7 @@ let zoom=0;
           "Are you sure you wish to delete this point of interest?"
         )
       ) {
-          this.props.deleteObject(deletedPOI);
+        this.props.deleteObject(deletedPOI);
         const POIs = this.state.POIs.filter(item => item !== deletedPOI);
         this.setState({ POIs: POIs });
         this.changeOfPois();
@@ -403,75 +408,83 @@ let zoom=0;
   //     this.changeOfPois();
   // };
 
-    onSelect(optionsList, selectedItem) {
-        selectedUsers=optionsList
-
-    }
+  onSelect(optionsList, selectedItem) {
+    selectedUsers = optionsList;
+  }
 
   addRoute = e => {
-    const routes =[];
+    const routes = [];
     routes.push({});
-    this.setState({ Routes: routes});
+    this.setState({ Routes: routes });
   };
 
-    dispalyDiv=e=>{
-        this.setState({displayDiv:true});
-        this.scrollToMyRef();
-this.setState({sharepoiId:e.target.name})
-    };
+  dispalyDiv = e => {
+    this.setState({ displayDiv: true });
+    this.scrollToMyRef();
+    this.setState({ sharepoiId: e.target.name });
+  };
 
-    sendEmail=e=>{
-
-        e.preventDefault();
-        let poi=this.state.POIs.find(poi=>poi.id==this.state.sharepoiId);
-       selectedUsers.map((u)=> {
-
-            emailjs.send(
-                'gmail', "sharepoi",
-                {
-                    message_html: "test",
-                    poi_image: poi.image,
-                    from_name: this.props.user.name,
-                    poi_name: poi.name,
-                    poi_lat: poi.lat,
-                    poi_lng: poi.lng,
-                    send_to: u.name
-                }, "user_QbNXGKWFUNVOK2RAfIVdb"
-            ).then(res => {
-                console.log('Email successfully sent!')
-            })
-            // Handle errors here however you like, or use a React error boundary
-                .catch(err => console.error('Oh well, you failed. Here some thoughts on the error that occured:', err))
-        } );
-        this.setState({displayDiv:false})
-    };
+  sendEmail = e => {
+    e.preventDefault();
+    let poi = this.state.POIs.find(poi => poi.id == this.state.sharepoiId);
+    selectedUsers.map(u => {
+      emailjs
+        .send(
+          "gmail",
+          "sharepoi",
+          {
+            message_html: "test",
+            poi_image: poi.image,
+            from_name: this.props.user.name,
+            poi_name: poi.name,
+            poi_lat: poi.lat,
+            poi_lng: poi.lng,
+            send_to: u.name
+          },
+          "user_QbNXGKWFUNVOK2RAfIVdb"
+        )
+        .then(res => {
+          console.log("Email successfully sent!");
+        })
+        // Handle errors here however you like, or use a React error boundary
+        .catch(err =>
+          console.error(
+            "Oh well, you failed. Here some thoughts on the error that occured:",
+            err
+          )
+        );
+    });
+    this.setState({ displayDiv: false });
+  };
 
   zoomOnMarker = e => {
     this.scrollToMyRef();
-      this.leafletMap.leafletElement.closePopup();
+    this.leafletMap.leafletElement.closePopup();
     let lat = this.state.POIs.find(poi => poi.id == e.target.name).lat;
     let lng = this.state.POIs.find(poi => poi.id == e.target.name).lng;
-    this.leafletMap.leafletElement.flyTo([lat,lng], 15);
-
+    this.leafletMap.leafletElement.flyTo([lat, lng], 15);
   };
-displayPoi = e =>
-{
-this.setState({selectedPoi:e})
+  displayPoi = e => {
+    this.setState({ selectedPoi: e });
     this.sideBarLeft.show();
-
-};
+  };
 
   //zoom on the my location
   ZoomOnMyLoca = e => {
-      this.leafletMap.leafletElement.closePopup();
+    this.leafletMap.leafletElement.closePopup();
     this.scrollToMyRef();
-    this.leafletMap.leafletElement.flyTo([this.props.position.lat, this.props.position.lng], 15);
+    this.leafletMap.leafletElement.flyTo(
+      [this.props.position.lat, this.props.position.lng],
+      15
+    );
   };
 
-    updatePOI = poi => {
-   let ldPOivalue= this.state.POIs.find((poiOld)=>poiOld.lat==poi.lat&&poiOld.lng==poi.lng);
-        ldPOivalue={...poi}
-    };
+  updatePOI = poi => {
+    let ldPOivalue = this.state.POIs.find(
+      poiOld => poiOld.lat == poi.lat && poiOld.lng == poi.lng
+    );
+    ldPOivalue = { ...poi };
+  };
 
   handleFilter = async e => {
     this.setState({ filterPoi: e.target.value });
@@ -489,7 +502,7 @@ this.setState({selectedPoi:e})
   changeOfPois = () => {
     // Show just own pois
     if (this.state.justOwn) {
-        // with filter
+      // with filter
       if (this.state.filterPoi !== undefined && this.state.POIs !== "") {
         this.setState((state, props) => ({
           filteredPoisToShow: state.POIs.filter(poi => {
@@ -500,49 +513,50 @@ this.setState({selectedPoi:e})
               ? this.filterThePoi(poi, state.filterPoi)
               : null;
           })
-
         }));
-      } else {    //without filter
+      } else {
+        //without filter
         this.setState((state, props) => ({
           filteredPoisToShow: state.POIs.filter(poi => {
             return poi.Creator.id === props.user.sub ? poi : null;
           })
         }));
       }
-    } else if (         //show all pois -> is there a filter?
+    } else if (
+      //show all pois -> is there a filter?
       this.state.filterPoi !== "" &&
       this.state.filterPoi !== undefined
     ) {
       this.setState((state, props) => ({
         filteredPoisToShow: state.POIs.filter(poi => {
-            return this.filterThePoi(poi, state.filterPoi);
+          return this.filterThePoi(poi, state.filterPoi);
         })
       }));
-    } else {   //no filter and show all
+    } else {
+      //no filter and show all
       this.setState((state, props) => ({ filteredPoisToShow: state.POIs }));
     }
   };
 
-  filterThePoi = (poi, filterPoi) =>{
-      let value="";
-      poi.Tags.map((tag) => value=value+tag.name);
-      poi.Categories.map((cat) => value=value+cat.name);
-      return poi.name.toLowerCase().includes(filterPoi.toLowerCase())         //if
-          ? poi                                                                       //yes
-          : poi.description                                                           //else    if
-              .toLowerCase()
-              .includes(filterPoi.toLowerCase())
-              ? poi                                                                             // yes
-              :   poi.Creator.name                                                              //  else  if
-                  .toLowerCase()
-                  .includes(filterPoi.toLowerCase())
-                  ? poi                                                                                    //yes
-                  :  value                                                                                 //else if
-                      .toLowerCase()
-                      .includes(filterPoi.toLowerCase())
-                      ? poi                                                                                      //yes
-                      : null                                                                                     //else
-          ;
+  filterThePoi = (poi, filterPoi) => {
+    let value = "";
+    poi.Tags.map(tag => (value = value + tag.name));
+    poi.Categories.map(cat => (value = value + cat.name));
+    return poi.name.toLowerCase().includes(filterPoi.toLowerCase()) //if
+      ? poi //yes
+      : poi.description //else    if
+          .toLowerCase()
+          .includes(filterPoi.toLowerCase())
+      ? poi // yes
+      : poi.Creator.name //  else  if
+          .toLowerCase()
+          .includes(filterPoi.toLowerCase())
+      ? poi //yes
+      : value //else if
+          .toLowerCase()
+          .includes(filterPoi.toLowerCase())
+      ? poi //yes
+      : null; //else
   };
 
   // handle the like click
@@ -560,152 +574,136 @@ this.setState({selectedPoi:e})
     clearInterval(this.interval);
   }
 
-   showCoordinates= e => {
-        alert(e.latlng);
-            };
+  showCoordinates = e => {
+    alert(e.latlng);
+  };
 
-visitPois=e=>
-{   let POIs4gr=this.state.POIs
-    POIs4gr.map(poi=>
+  showNotifications() {
+    // If the Notifications API is supported by the browser
+    // then show the notification
+    if (this.n.supported()) this.n.show();
+  }
 
-    setTimeout(() => {
-        this.leafletMap.leafletElement.flyTo([poi.lat,poi.lng],15)
-    }, 10000)
-    )
-
-}
-    setIs2ddisplayed()
-    {
-        this.setState({is2ddisplayed:!this.state.is2ddisplayed})
-    }
-    showNotifications() {
-        // If the Notifications API is supported by the browser
-        // then show the notification
-        if(this.n.supported()) this.n.show();
-    }
-    courseRow(poi) {
-       try{return(
-               <POIMarker
-                   addPoi={this.addPoi}
-                   isSaved={poi.isSaved}
-                   lat={poi.lat}
-                   lng={poi.lng}
-                   poi={poi}
-                   poisList={this.state.POIs}
-                   id={poi.id}
-                   categories={this.state.categories}
-                   tags={this.state.tags}
-                   user={this.props.user}
-                   displayPoi={this.displayPoi}
-               />
-       )}
-catch{
-        return null;
-}
-
-    }
   render() {
-      let currentPoi=this.state.filteredPoisToShow.filter((poi)=>poi.Creator.group===4)[this.state.indexPoiPage]
+    let currentPoi = this.state.filteredPoisToShow.filter(
+      poi => poi.Creator.group === 4
+    )[this.state.indexPoiPage];
 
     return (
-<div>
-    <ReactNotifications
-        onRef={ref => (this.n = ref)} // Required
-        title="new poi add " // Required
-        body={this.state.selectedPoi.name}
-        icon="rete"
-        tag="abcdef"
-        timeout="2000"
-        onClick={event => this.handleClick(event)}
-    />
-    {this.state.displayDiv&&<div id="shareDiv">
-        <form onSubmit={this.sendEmail}>
-            <Multiselect options={this.props.userList}
-                         displayValue="name"
-                         placeholder="Users"// Preselected value to persist in dropdown
-                         selectedvalues={this.state.selectedUsers}
-                         onSelect={this.onSelect}
+      <div>
+        <ReactNotifications
+          onRef={ref => (this.n = ref)} // Required
+          title="new poi add " // Required
+          body={this.state.selectedPoi.name}
+          icon="rete"
+          tag="abcdef"
+          timeout="2000"
+          onClick={event => this.handleClick(event)}
+        />
+        {this.state.displayDiv && (
+          <div id="shareDiv">
+            <form onSubmit={this.sendEmail}>
+              <Multiselect
+                options={this.props.userList}
+                displayValue="name"
+                placeholder="Users" // Preselected value to persist in dropdown
+                selectedvalues={this.state.selectedUsers}
+                onSelect={this.onSelect}
                 //onRemove={this.onRemove} // Function will trigger on remove event
                 // Property name to display in the dropdown options
-            />
-            <button type="submit">Send</button>
-        </form>
-        <button onClick={e=>this.setState({displayDiv:false})}>X</button>
-    </div>}
+              />
+              <button type="submit">Send</button>
+            </form>
+            <button onClick={e => this.setState({ displayDiv: false })}>
+              X
+            </button>
+          </div>
+        )}
         <div id="ClocksContainer">
+          <div className="Clock">
+            <AnalogClock gmtOffset="-8:00" width={100} theme={Themes.dark} />
+            <div className="ClockCountry">Los Angeles</div>
+            <img
+              className="CountryFlag"
+              src="https://c.tadst.com/gfx/n/fl/32/us.png"
+            />
+          </div>
 
-            <div className="Clock">
-                <AnalogClock gmtOffset="-8:00"  width={100} theme={Themes.dark} />
-                <div className="ClockCountry">
-                Los Angeles
-                </div>
-                <img className="CountryFlag" src="https://c.tadst.com/gfx/n/fl/32/us.png" />
-            </div>
+          <div className="Clock">
+            <AnalogClock gmtOffset="-4:30" width={100} theme={Themes.dark} />
+            <div className="ClockCountry">New York</div>
+            <img
+              className="CountryFlag"
+              src="https://c.tadst.com/gfx/n/fl/32/us.png"
+            />
+          </div>
 
-            <div className="Clock">
-                <AnalogClock gmtOffset="-4:30"  width={100} theme={Themes.dark} />
-                <div className="ClockCountry">
-                New York
-                </div>
-                <img className="CountryFlag" src="https://c.tadst.com/gfx/n/fl/32/us.png" />
+          <div className="Clock">
+            <AnalogClock width={100} theme={Themes.dark} />
+            <div className="ClockCountry">Zurich</div>
+            <img
+              className="CountryFlag"
+              src="https://c.tadst.com/gfx/n/fl/32/ch.png"
+            />
+          </div>
 
-            </div>
+          <div className="Clock">
+            <AnalogClock gmtOffset="+7:00" width={100} theme={Themes.dark} />
+            <div className="ClockCountry">Bangkok</div>
+            <img
+              className="CountryFlag"
+              width={30}
+              height={20}
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Flag_of_Thailand.svg/1200px-Flag_of_Thailand.svg.png"
+            />
+          </div>
 
-            <div className="Clock">
-                <AnalogClock   width={100} theme={Themes.dark} />
-                <div className="ClockCountry">
-                Zurich
-                </div>
-                <img  className="CountryFlag" src="https://c.tadst.com/gfx/n/fl/32/ch.png" />
-
-            </div>
-
-            <div className="Clock">
-                <AnalogClock  gmtOffset="+7:00"  width={100} theme={Themes.dark} />
-                <div className="ClockCountry">
-                Bangkok
-                </div>
-                <img className="CountryFlag" width={30} height={20} src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Flag_of_Thailand.svg/1200px-Flag_of_Thailand.svg.png" />
-            </div>
-
-            <div className="Clock">
-                <AnalogClock  gmtOffset="+10:00"  width={100} theme={Themes.dark} />
-                <div className="ClockCountry">
-                Sydney
-                </div>
-                <img className="CountryFlag" width={30} height={20} src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Flag_of_New_Zealand.svg/1200px-Flag_of_New_Zealand.svg.png" />
-            </div>
+          <div className="Clock">
+            <AnalogClock gmtOffset="+10:00" width={100} theme={Themes.dark} />
+            <div className="ClockCountry">Sydney</div>
+            <img
+              className="CountryFlag"
+              width={30}
+              height={20}
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Flag_of_New_Zealand.svg/1200px-Flag_of_New_Zealand.svg.png"
+            />
+          </div>
         </div>
-    <div id="btnMapContainer">
-      <button className={"PersoBtn"} id="btnForMap" onClick={this.ZoomOnMyLoca}>
-          Locate Me
-      </button>
-    </div>
-        <br/>
-    <br/>
-      <MenuOptions
+        <div id="btnMapContainer">
+          <button
+            className={"PersoBtn"}
+            id="btnForMap"
+            onClick={this.ZoomOnMyLoca}
+          >
+            Locate Me
+          </button>
+        </div>
+        <br />
+        <br />
+        <MenuOptions
           handleFilter={this.handleFilter}
           handleJustOwnClick={this.handleJustOwnClick}
           justOwn={this.state.justOwn}
-      />
+        />
 
         {this.state.is2ddisplayed && (
           <Map
             className="map"
             id="map"
             minZoom={2}
-            center={[0,5]}
+            center={[0, 5]}
             zoom={2}
             contextmenu={true}
             contextmenuWidth={140}
-            contextmenuItems={ [{
-            text: 'Show coordinates',
-            callback: this.showCoordinates
-            },{
-                text: 'add Marker',
+            contextmenuItems={[
+              {
+                text: "Show coordinates",
+                callback: this.showCoordinates
+              },
+              {
+                text: "add Marker",
                 callback: this.addMarker
-            }
-
+              }
             ]}
             ref={m => {
               this.leafletMap = m;
@@ -754,14 +752,9 @@ catch{
                     .filter(poi => poi.Creator.id == this.props.user.sub)
                     .map(poi => (
                       <POIMarker
-                        group={poi.group}
                         addPoi={this.addPoi}
-                        isSaved={poi.isSaved}
-                        lat={poi.lat}
-                        lng={poi.lng}
                         poi={poi}
                         poisList={this.state.filteredPoisToShow}
-                        id={poi.id}
                         categories={this.state.categories}
                         tags={this.state.tags}
                         user={this.props.user}
@@ -784,83 +777,99 @@ catch{
               </Overlay>
               <Overlay name="all pois">
                 <LayerGroup>
-                     {this.state.POIs.filter((poi)=>poi.Creator.group!=4).map(poi => (
-                             this.courseRow(poi)))}
-                </LayerGroup>
-              </Overlay>
-            <Overlay  name="my group pois" checked>
-              <LayerGroup>
-                {this.state.filteredPoisToShow.filter(poi=>poi.Creator.group===4 ).map(poi => (
-                    <POIMarker
+                  {this.state.POIs.filter(poi => poi.Creator.group != 4).map(
+                    poi => (
+                      <POIMarker
                         addPoi={this.addPoi}
                         poi={poi}
-                        poisList={this.state.POIs}
-                        lat={poi.lat}
-                        isSaved={poi.isSaved}
-                        lng={poi.lng}
-                        id={poi.id}
+                        poisList={this.state.filteredPoisToShow}
                         categories={this.state.categories}
                         tags={this.state.tags}
                         user={this.props.user}
                         displayPoi={this.displayPoi}
-                    />
-                ))}
-                  {this.state.unsavedPOIs.map(poi => (
-                      <POIMarker
-                          addPoi={this.addPoi}
-                          poi={poi}
-                          poisList={this.state.POIs}
-                          lat={poi.lat}
-                          isSaved={poi.isSaved}
-                          lng={poi.lng}
-                          id={poi.id}
-                          categories={this.state.categories}
-                          tags={this.state.tags}
-                          user={this.props.user}
-                          displayPoi={this.displayPoi}
                       />
+                    )
+                  )}
+                </LayerGroup>
+              </Overlay>
+              <Overlay name="my group pois" checked>
+                <LayerGroup>
+                  {this.state.filteredPoisToShow
+                    .filter(poi => poi.Creator.group === 4)
+                    .map(poi => (
+                      <POIMarker
+                        addPoi={this.addPoi}
+                        poi={poi}
+                        poisList={this.state.filteredPoisToShow}
+                        categories={this.state.categories}
+                        tags={this.state.tags}
+                        user={this.props.user}
+                        displayPoi={this.displayPoi}
+                      />
+                    ))}
+                  {this.state.unsavedPOIs.map(poi => (
+                    <POIMarker
+                      addPoi={this.addPoi}
+                      poi={poi}
+                      poisList={this.state.filteredPoisToShow}
+                      categories={this.state.categories}
+                      tags={this.state.tags}
+                      user={this.props.user}
+                      displayPoi={this.displayPoi}
+                    />
                   ))}
-              </LayerGroup>
-            </Overlay>
-                <Control position="topleft" >
-                    <div className="dropdown">
-
-                        <audio ref={ref => this.notificationSound = ref} />
-                        <div>
-                            <button className="PersoBtn">
-                                {this.state.notifications.length}
-                            </button>
-                            <div className="dropdown-content">
-                                {this.state.notifications.map(poi => (
-                                    <a
-                                        onClick={() => {
-                                            this.scrollToMyRef();
-
-                                            let map = this.state.Map;
-                                            map.zoom = 15;
-                                            map.center = [poi.lat, poi.lng];
-                                            {
-                                                this.setState({ notifications: [] });
-                                            }
-                                            this.setState({ Map: map });
-                                        }}
-                                    >
-                                        <img width={50} height={50} src={poi.Creator.picture} />{" "}
-                                        {poi.Creator.name} added : {poi.name}
-                                    </a>
-                                ))}
-                            </div>
-                        </div>
+                </LayerGroup>
+              </Overlay>
+              <Control position="topleft">
+                <div className="dropdown">
+                  <audio ref={ref => (this.notificationSound = ref)} />
+                  <div>
+                    <button className="PersoBtn">
+                      {this.state.notifications.length}
+                    </button>
+                    <div className="dropdown-content">
+                      {this.state.notifications.map(poi => (
+                        <a
+                          onClick={() => {
+                            this.scrollToMyRef();
+                            this.leafletMap.leafletElement.closePopup();
+                            this.leafletMap.leafletElement.flyTo(
+                              { lat: poi.lat, lng: poi.lng },
+                              15
+                            );
+                            this.setState({
+                              notifications: this.state.notifications.filter(
+                                n => n !== poi
+                              )
+                            });
+                          }}
+                        >
+                          <img
+                            width={50}
+                            height={50}
+                            src={poi.Creator.picture}
+                          />{" "}
+                          {poi.Creator.name} added : {poi.name}
+                        </a>
+                      ))}
                     </div>
-                </Control>
-                <Overlay key="pois" name="my position " checked>
-                    <LayerGroup>
-                        <Marker position={{ lat: this.props.position.lat, lng:  this.props.position.lng }} icon={myPostionIcon}>
-                            <Popup>My Position</Popup>
-                        </Marker>
-                    </LayerGroup>
-                </Overlay>
-          </LayersControl>
+                  </div>
+                </div>
+              </Control>
+              <Overlay key="pois" name="my position " checked>
+                <LayerGroup>
+                  <Marker
+                    position={{
+                      lat: this.props.position.lat,
+                      lng: this.props.position.lng
+                    }}
+                    icon={myPostionIcon}
+                  >
+                    <Popup>My Position</Popup>
+                  </Marker>
+                </LayerGroup>
+              </Overlay>
+            </LayersControl>
             <Control position="topleft">
               <img
                 src={targetIcon}
@@ -878,61 +887,64 @@ catch{
                 height={20}
               />
             </Control>
-              <Control position="bottomright">
-                  <button onClick={this.visitPois}>visit</button>
-              </Control>
+            <Control position="bottomright">
+              <button onClick={this.visitPois}>visit</button>
+            </Control>
 
             {this.state.Routes.map(route => (
               <Routing map={this.leafletMap} route={route} />
             ))}
-            {/*<div className="pointer"></div>*/}
-            {/*<Control position="bottomright">*/}
-            {/*  <img width={70} height={70} src={!this.state.is2ddisplayed ? map2d : map3d} onClick={()=>{let updateDisplayed = !this.state.is2ddisplayed*/}
-            {/*    this.setState({is2ddisplayed:updateDisplayed})*/}
-            {/*  } }/>*/}
-            {/*</Control>*/}
           </Map>
         )}
-        {!this.state.is2ddisplayed &&   <Div is2ddisplayed={this.setIs2ddisplayed} geoLat={this.state.geoLat} geoLng={this.state.geoLng} Map={this.state.Map} pois={this.state.POIs} />}
+
         <div className="DetailsPoi">
-            <div className="leftDetails">
-            <div  className="ListPoi">
-                <ul>My Group Poi :
-                    {this.state.filteredPoisToShow.filter((poi)=>poi.Creator.group===4).map(poi=>
-                        <li value={getIndex(poi.name,this.state.filteredPoisToShow.filter((poi)=>poi.Creator.group===4),"name")} onClick={(e)=>this.setState({indexPoiPage:e.target.value})}>{poi.name}</li>
-                    )
-                    }
-                </ul>
+          <div className="leftDetails">
+            <div className="ListPoi">
+              <ul>
+                My Group Poi :
+                {this.state.filteredPoisToShow
+                  .filter(poi => poi.Creator.group === 4)
+                  .map(poi => (
+                    <li
+                      value={getIndex(
+                        poi.name,
+                        this.state.filteredPoisToShow.filter(
+                          poi => poi.Creator.group === 4
+                        ),
+                        "name"
+                      )}
+                      onClick={e =>
+                        this.setState({ indexPoiPage: e.target.value })
+                      }
+                    >
+                      {poi.name}
+                    </li>
+                  ))}
+              </ul>
             </div>
-            </div>
-            <div className="rightDetails">
+          </div>
+          <div className="rightDetails">
             <POI
-                {...currentPoi}
-                zoomOnMarker={this.zoomOnMarker}
-                deleteMarker={this.deleteMarker}
-                sendEmail={this.dispalyDiv}
-                setLike={this.setLike}
+              {...currentPoi}
+              zoomOnMarker={this.zoomOnMarker}
+              deleteMarker={this.deleteMarker}
+              sendEmail={this.dispalyDiv}
+              setLike={this.setLike}
             />
-            </div>
+          </div>
         </div>
-
-
-        </div>
+      </div>
     );
   }
 }
+
 function getIndex(value, arr, prop) {
-    for(var i = 0; i < arr.length; i++) {
-        if(arr[i][prop] === value) {
-            return i;
-        }
+  for (var i = 0; i < arr.length; i++) {
+    if (arr[i][prop] === value) {
+      return i;
     }
-    return -1; //to handle the case where the value doesn't exist
-}
-const initMarker = ref => {
-  if (ref) {
-    ref.leafletElement.openPopup();
   }
-};
+  return -1; //to handle the case where the value doesn't exist
+}
 
 export default AppWrapper;
