@@ -27,7 +27,7 @@ const NavBar = () => {
                     </button>
                 )}
 
-                    {isAuthenticated && <a href="/"><button onClick={() => logout()} className="PersoBtn" id="BtnLogOut">Log out</button></a>}
+                    {isAuthenticated && <a href="/"><button onClick={() => {logout({returnTo: window.location.origin})}} className="PersoBtn" id="BtnLogOut">Log out</button></a>}
                 </div>
             </div>
         </div>
