@@ -74,10 +74,10 @@ let img;
             if(this.state.newPOI.Categories[0].image.length>0)////&&this.state.newPOI.Categories[0].creatorId==="github|3367593"
         img= this.state.newPOI.Categories[0].image
         else
-            img=getIcon({ group: this.state.newPOI.group })
-        }
-        else
-            img=getIcon({ group: this.state.newPOI.group })
+          img=getIcon({ group: this.state.newPOI.group })
+     }
+       else
+           img=getIcon({ group: this.state.newPOI.group })
         var myIcon = L.icon({
             iconUrl: img ,
             iconSize: [20, 30],
@@ -97,10 +97,12 @@ let img;
 
                             {this.state.newPOI.image!=null&&<img width={100} height={100} src={this.state.newPOI.image} ></img>}
                             <p>{this.state.newPOI.description}</p>
-                            <p>{this.state.newPOI.group}</p>
                             {this.props.poi.Creator.id===this.props.user.id &&<span><img width={10} height={10} src="https://image.flaticon.com/icons/svg/61/61456.svg" onClick= { (e) => {this.state.newPOI.isSaved=false; this.updatePOI(this.state.newPOI)}} /><br/></span>}
                             {this.state.newPOI.Categories.map((cat)=>
-                                <img width={25} height={30} src={cat.image}></img>
+                                <div><img width={25} height={30} src={cat.image}/> <a>{cat.name}</a></div>
+                            )}
+                            {this.state.newPOI.Tags.map((tag)=>
+                                <div><img width={25} height={30} src={tag.image}/> <a>{tag.name}</a></div>
                             )}
                         </Popup>
                     </Marker>
