@@ -3,7 +3,7 @@ import {FormInput} from "../components/FormInput";
 import {Multiselect} from "multiselect-react-dropdown";
 
 import {useAuth0} from "../react-auth0-spa";
-import requestPOI from "../utils/requestPOI";
+import request from "../utils/request";
 import {Redirect} from "react-router-dom";
 import deleteIcon from "../icons/delete.png"
 import targetIcon from "../icons/target.png"
@@ -32,7 +32,7 @@ export default function TagManger(props) {
         fn();
     }, [isAuthenticated, loginWithRedirect, loading]);
     async function getAllO(object) {
-        return await requestPOI.getAllObject(getTokenSilently, loginWithRedirect, object);
+        return await request.getAllObject(getTokenSilently, loginWithRedirect, object);
     }
 
     function handleInputChange (event) {
@@ -49,16 +49,16 @@ export default function TagManger(props) {
         event.preventDefault();
 
         if(tag.id==null)
-        {await requestPOI.addNewObject("tag",tag, getTokenSilently, loginWithRedirect);}
+        {await request.addNewObject("tag",tag, getTokenSilently, loginWithRedirect);}
         else
-        {     let answer = await requestPOI.updateObject("tag",tag.id, tag, getTokenSilently, loginWithRedirect);}
+        {     let answer = await request.updateObject("tag",tag.id, tag, getTokenSilently, loginWithRedirect);}
 
         event.preventDefault();
         setAlltags (await getAllO('tag'));
         setDisable(false);
     }
     async  function  deleteCategory  (event) {
-        await requestPOI.deleteObject("tag",event.target.name, getTokenSilently, loginWithRedirect);
+        await request.deleteObject("tag",event.target.name, getTokenSilently, loginWithRedirect);
         setAlltags (await getAllO('tag'));
     }
 
@@ -146,9 +146,8 @@ export default function TagManger(props) {
                     </div>
                     <br/>{tags.map((tag)=> tag.iscreated? catcreat=true : null)}
 
-                    {!isDisable&& <button className="PersoBtn" style={{width:"100%"}} onClick={AddTag}>Add tag</button>}}
+                    {!isDisable&& !catcreat && <button className="PersoBtn" style={{width:"100%"}} onClick={AddTag}>Add tag</button>}}
                 </form>
-                {isDisable&&<button className="PersoBtn" style={{width:"75%"}}  >Add Tag</button>}
             </div>
         </div>
     );

@@ -2,16 +2,12 @@ import React, { useState, Component, useEffect, useRef } from "react";
 import "./App.css";
 import L from "leaflet";
 import {
-  Circle,
-  FeatureGroup,
   LayerGroup,
   LayersControl,
   Map,
   Marker,
   Popup,
-  Rectangle,
-  TileLayer,
-  MapControl
+  TileLayer
 } from "react-leaflet";
 import { useAuth0 } from "./react-auth0-spa";
 import Loading from "./components/Loading";
@@ -19,21 +15,14 @@ import POIMarker from "./components/POIMarker";
 import MenuOptions from "./components/MenuOptions";
 import GeoLocat from "./components/GeoLocat";
 import POI from "./components/POI";
-import requestPOI from "./utils/requestPOI";
+import request from "./utils/request";
 import Control from "react-leaflet-control";
 import targetIcon from "./icons/target.png";
-import grp4IconImg from "./icons/pin/green_pin.png";
-import grp3IconImg from "./icons/pin/blue_pin.png";
-import grp2IconImg from "./icons/pin/orange_pin.png";
-import grp1IconImg from "./icons/pin/red_pin.png";
 import searchResultImg from "./icons/pin/searchResult.png";
 import * as ELG from "esri-leaflet-geocoder";
 import routeIconImg from "./icons/rout.png";
 import Routing from "./RoutingMachine";
-import Clock from 'react-clock'
-import aa from "./icons/delete.png";
 import popupsound from "./sounds/pop.mp3";
-import Clocks from  "./components/Clocks";
 import ReactNotifications from 'react-browser-notifications';
 import TagManager from "./pages/TagManager";
 import CategoryManager from './pages/CategroyManager'
@@ -47,23 +36,12 @@ import MiniMap from 'leaflet-minimap';
 import "leaflet-sidebar/src/L.Control.Sidebar.css"
 import AnalogClock, { Themes } from 'react-analog-clock';
 import "leaflet-sidebar/src/L.Control.Sidebar"
-import SideBarPoi from "./components/SideBarPoi";
-import SideBarUsers from "./components/SideBarUsers";
 import NavBar from "./components/NavBar";
 import { Multiselect } from 'multiselect-react-dropdown';
-// unused imports:
-import request from "./utils/request";
-import endpoints from "./endpoints";
-import { latLng, marker } from "leaflet/dist/leaflet-src.esm";
-import { closestPointOnSegment } from "leaflet/src/geometry/LineUtil";
 import Div from "./Div";
-import Map3d from './3dMa'
 import 'leaflet.sync/L.Map.Sync'
-import map2d from "./icons/flatt.PNG";
-import map3d from "./icons/globe.PNG";
 import currentPosition from "./icons/my_position.gif";
 import "./cardTemplate.scss"
-import {preventDefault} from "leaflet/src/dom/DomEvent";
 
 var myPostionIcon = L.icon({
     iconUrl: currentPosition,
@@ -73,8 +51,6 @@ var myPostionIcon = L.icon({
 });
 
 const { BaseLayer, Overlay } = LayersControl;
-const center = [51.505, -0.09];
-const rectangle = [[51.49, -0.08], [51.5, -0.06]];
 const users=[]
 var routeIcon = L.icon({
   iconUrl: routeIconImg,
@@ -99,7 +75,6 @@ function AppWrapper() {
     user
   } = useAuth0();
   let [poisList, setPoisList] = useState([]);
-  let [currentUser,setCurrentUSer]=useState('');
   let [allUser, setAllUser] = useState([]);
   let [position, setPosition] = useState({lat:0,lng:0});
   //get the pois on load
@@ -112,9 +87,7 @@ function AppWrapper() {
           console.log("Load");
           console.log(poisList);
           setPoisList(poisList);
-            setCurrentUSer(await requestPOI.getObjectWithId(user.sub,'user', getTokenSilently,
-                loginWithRedirect));
-            setAllUser(await requestPOI.getAllObject(getTokenSilently,loginWithRedirect,'user'));
+            setAllUser(await request.getAllObject(getTokenSilently,loginWithRedirect,'user'));
         }
 
       }
@@ -129,14 +102,14 @@ function AppWrapper() {
       //if the poi has no id, it must be created
       if (newPOI.id === undefined) {
           console.log(newPOI.Categories)
-          let answer =   await requestPOI.addNewObject("poi",
+          let answer =   await request.addNewObject("poi",
               newPOI,
               getTokenSilently,
               loginWithRedirect
           );
           return answer;
       } else {      //just update it
-          let answer = await requestPOI.updateObject("poi",
+          let answer = await request.updateObject("poi",
               newPOI.id,
               newPOI,
               getTokenSilently,
@@ -147,7 +120,7 @@ function AppWrapper() {
   }
     // set a like form the like button
     async function setLike(poiID, like) {
-        let answer = await requestPOI.updateLike(
+        let answer = await request.updateLike(
             "poi",
             poiID,
             like,
@@ -160,29 +133,26 @@ function AppWrapper() {
     // add POI and call the insertPOi and then update the category and tags
   async function addPOI(newPOI) {
       let poiadd =await  insertPOi(newPOI);
-      console.log("category : ")
-      console.log(newPOI.Categories)
-      let idCateArray=[]
-      let idTags=[]
+      let idCateArray=[];
+      let idTags=[];
       newPOI.Categories.map((cat)=>
       idCateArray.push(cat.id)
-      )
+      );
       newPOI.Tags.map((tag)=>
           idTags.push(tag.id)
-      )
-              await requestPOI.updatePoiType("category",idCateArray,poiadd.id,getTokenSilently,
+      );
+              await request.updatePoiType("category",idCateArray,poiadd.id,getTokenSilently,
           loginWithRedirect);
-      await requestPOI.updatePoiType("tag",idTags,poiadd.id,getTokenSilently,
+      await request.updatePoiType("tag",idTags,poiadd.id,getTokenSilently,
           loginWithRedirect);
   }
 
   async function getAllO(object) {
-    return await requestPOI.getAllObject(getTokenSilently, loginWithRedirect,object);
+    return await request.getAllObject(getTokenSilently, loginWithRedirect,object);
   }
 
   async function deleteObject(poi) {
-    console.log("poi delete");
-    return await requestPOI.deleteObject("poi",
+    return await request.deleteObject("poi",
       poi.id,
       getTokenSilently,
       loginWithRedirect
@@ -194,16 +164,10 @@ function AppWrapper() {
     return <Loading />;
   }
 
-  //
+  //for the geologalisation for show in the map
   function setpostion(newPostion)
   {
-      console.log("postion set")
-      console.log(newPostion)
       setPosition(newPostion);
-  }
-
-  function userlogout() {
-    if (isAuthenticated) logout();
   }
 
   //called once to button start is pressed
@@ -214,19 +178,17 @@ function AppWrapper() {
            <header>
                <Router>
                    <NavBar/>
-                   <Route exact path="/">  <
-                       GeoLocat  upGeoLocalisation={setpostion}/>
+                   <Route exact path="/">
+                       <GeoLocat  upGeoLocalisation={setpostion}/>
                        {position!==null&&<App
                            poisList={props.poisList}
                            getAllO={getAllO}
                            addPoi={addPOI}
                            deleteObject={deleteObject}
-                           currentUser={currentUser}
                            position={position}
                            key="app"
                            user={user}
                            isAuthenticated={isAuthenticated}
-                           logout={logout}
                            userList={allUser}
                            setLike={setLike}
                        />}</Route>
@@ -248,6 +210,7 @@ function AppWrapper() {
 let selectedUsers=[]
 //App class at the second level of the tree
 class App extends Component {
+
   constructor(props) {
     super(props)
       this.showNotifications = this.showNotifications.bind(this);
@@ -255,17 +218,13 @@ class App extends Component {
     this.sideBarLeft=''
     this.state = {
       POIs: [],
+        filteredPoisToShow : [],
       unsavedPOIs: [],
-      filteredPois: [],
-      filteredPoisToShow: [],
       Routes: [],
         categories:[],
         tags:[],
-        selectedUsers:[],
-        users:[],
      unsavedPois:[],
       sharepoiId: '',
-      Map: { minZoom: 2, center: [0, 5], zoom: 2 },
       oldSizevalue:'',
       notifications:[],
       searchResults:[],
@@ -280,17 +239,18 @@ class App extends Component {
     const map = this.leafletMap.leafletElement;
     const searchControl = new ELG.Geosearch().addTo(map);
     const results = new L.LayerGroup().addTo(map);
-
+//take poi and change the state isSaved to true, so it will show the poi and not the edit mode
     var result = this.props.poisList.map(el => {
       var o = Object.assign({}, el);
       o.isSaved = true;
       return o;
     });
     this.setState({ POIs: result })
-this.getTags();
-    this.getCategories();
 
+    this.getTagAndCats();
+    // for the notification
     this.setState({ oldSizevalue: result.length });
+    //realtime informations
     this.interval = setInterval(() => this.testtimeOut(), 8000);
     let searchResults = [];
     searchControl.on("results", function(data) {
@@ -299,6 +259,7 @@ this.getTags();
         searchResults.push(data.results[i]);
       }
     });
+    //minimap
     let osmUrl = "http://{s}.tile.osm.org/{z}/{x}/{y}.png";
     let osmAttrib = "Map data &copy; OpenStreetMap contributors";
     let osm = new L.TileLayer(osmUrl, {
@@ -320,19 +281,11 @@ this.getTags();
     }).addTo(map);
     map.addLayer(osm);
 
-
-   /*   this.sideBarLeft = L.control.sidebar('sidebar', {
-          position: 'left',
-          closeButton:true
-      });*/
-      // this.leafletMap.leafletElement.addControl( this.sideBarLeft);
-
     this.setState({ searchResults: searchResults });
-    this.setGroupUsrs(this.props.poisList);
    this.changeOfPois();
-
   }
 
+  //realtime
   async testtimeOut() {
     let result = await this.props.getAllO('poi');
       var updatedList = result.map(el => {
@@ -348,6 +301,7 @@ this.getTags();
 
   this.setState({ POIs: updatedList });
       this.changeOfPois();
+      //for the notification
     if (this.state.oldSizevalue < result.length&&this.props.user.sub!==addedElement.Creator.id) {
 
         this.setState({selectedPoi:addedElement})
@@ -363,50 +317,21 @@ this.getTags();
 
 
   }
+
   //scroll on the map when you click on a marker
   scrollToMyRef = () => window.scrollTo(0, this.leafletMap);
 
-  updateCities = cities => {
-    this.setState({ citiesData: cities });
-  };
-  componentDidUpdate(
-    prevProps: Readonly<P>,
-    prevState: Readonly<S>,
-    snapshot: SS
-  ): void {     }
-async getCategories()
+async getTagAndCats()
     {
         let categories= await this.props.getAllO('category');
         this.setState({categories:categories})
-let tags= await this.props.getAllO('tag');
-    this.setState({tags:tags})
+            let tags= await this.props.getAllO('tag');
+         this.setState({tags:tags})
 
         let users= await this.props.getAllO('user');
         this.setState({users:users})
     }
 
-async getTags()
-{
-    //let tags= await this.props.getAllO('tags');
-    //this.setState({tags:tags})
-
-}
-    setGroupUsrs(results){
-        results.filter(poi=>poi.group===4).map((poi)=>
-          {
-              if(users.length>0)
-              {
-                  if(!users.some(item => poi.Creator.name === item.name))
-                      users.push(poi.Creator)
-              }
-
-                else
-                  users.push(poi.Creator)
-
-
-          }
-      )
-    }
   //add a marker when you clic on the map
   addMarker = e => {
 this.leafletMap.leafletElement.closePopup();
@@ -425,32 +350,29 @@ this.leafletMap.leafletElement.closePopup();
 
       unsavedpois.push(newPoi);
       this.setState({unsavedPois:unsavedpois});
-      const pois= this.state.POIs
 
 let zoom=0;
-        if(this.leafletMap.leafletElement>15)
-            zoom=this.leafletMap.leafletElement
-
+        if(this.leafletMap.leafletElement.zoom>15)
+            zoom=this.leafletMap.leafletElement.zoom;
       else
-          zoom=15
+          zoom=15;
 
       this.leafletMap.leafletElement.flyTo(e.latlng, zoom);
-
-
     };
+
   addPoi=async (poi)=>{
    await this.props.addPoi(poi);
-      const pois= this.state.POIs
-      pois.push(poi)
+      const pois= this.state.POIs;
+      pois.push(poi);
       this.setState({POIs:pois});
       this.changeOfPois();
       this.setState({unsavedPois:this.state.unsavedPois.filter(poi=>poi!==poi)});
-  }
-  deleteMarker = e => {
-      console.log("id: "+e.target.name)
+  };
 
+  deleteMarker = e => {
     let deletedPOI = this.state.POIs.find(poi => poi.id ==e.target.name);
 
+    //just allowed to delete when it is your poi
     if (deletedPOI.Creator.id === this.props.user.sub) {
       if (
         window.confirm(
@@ -466,54 +388,44 @@ let zoom=0;
       window.alert("You are not allowed to delete this.");
     }
   };
-  deleteMyPOI= (e) =>  {
 
-      let newPoiList = []
-      this.state.POIs.map((poi)=> {
-          if (poi.Creator.id === this.props.user.sub) {
-              this.props.deleteObject(poi);
+  // deleteMyPOI= (e) =>  {
+  //     let newPoiList = [];
+  //     this.state.POIs.map((poi)=> {
+  //         if (poi.Creator.id === this.props.user.sub) {
+  //             this.props.deleteObject(poi);
+  //         } else {
+  //             newPoiList.push(poi);
+  //         }
+  //         this.setState({POIs: newPoiList});
+  //     }
+  //   );
+  //     this.changeOfPois();
+  // };
 
-          } else {
-              newPoiList.push(poi);
-
-          }
-          this.setState({POIs: newPoiList});
-      }
-    )
-
-
-      this.changeOfPois();
-  };
-
-  upGeoLocalisation=(position)=>
-  {
-    //   console.log("position:"+position);
-    // this.setState({geoLat:position.coords.latitude});
-    // this.setState({geoLng:position.coords.longitude});
-  };
     onSelect(optionsList, selectedItem) {
         selectedUsers=optionsList
 
     }
+
   addRoute = e => {
-    const routes = this.state.Routes;
+    const routes =[];
     routes.push({});
-    this.setState({ Routes: routes });
+    this.setState({ Routes: routes});
   };
 
     dispalyDiv=e=>{
-        this.setState({displayDiv:true})
+        this.setState({displayDiv:true});
         this.scrollToMyRef();
 this.setState({sharepoiId:e.target.name})
-    }
+    };
+
     sendEmail=e=>{
 
         e.preventDefault();
-        this.setState({selectedUsers:selectedUsers});
-        let poi=this.state.POIs.find(poi=>poi.id==this.state.sharepoiId)
+        let poi=this.state.POIs.find(poi=>poi.id==this.state.sharepoiId);
+       selectedUsers.map((u)=> {
 
-        this.state.selectedUsers.map((u)=> {
-            console.log("sending..");
             emailjs.send(
                 'gmail', "sharepoi",
                 {
@@ -530,46 +442,43 @@ this.setState({sharepoiId:e.target.name})
             })
             // Handle errors here however you like, or use a React error boundary
                 .catch(err => console.error('Oh well, you failed. Here some thoughts on the error that occured:', err))
-        } )
+        } );
         this.setState({displayDiv:false})
-    }
+    };
 
   zoomOnMarker = e => {
     this.scrollToMyRef();
-    let map = this.state.Map;
-    map.zoom = 15;
-    console.log(e.target.value);
+      this.leafletMap.leafletElement.closePopup();
     let lat = this.state.POIs.find(poi => poi.id == e.target.name).lat;
     let lng = this.state.POIs.find(poi => poi.id == e.target.name).lng;
     this.leafletMap.leafletElement.flyTo([lat,lng], 15);
 
-   // this.setState({ Map: map });
   };
 displayPoi = e =>
 {
 this.setState({selectedPoi:e})
     this.sideBarLeft.show();
 
-}
+};
+
   //zoom on the my location
   ZoomOnMyLoca = e => {
+      this.leafletMap.leafletElement.closePopup();
     this.scrollToMyRef();
     this.leafletMap.leafletElement.flyTo([this.props.position.lat, this.props.position.lng], 15);
   };
+
     updatePOI = poi => {
-
-   let ldPOivalue= this.state.POIs.find((poiOld)=>poiOld.lat==poi.lat&&poiOld.lng==poi.lng)
+   let ldPOivalue= this.state.POIs.find((poiOld)=>poiOld.lat==poi.lat&&poiOld.lng==poi.lng);
         ldPOivalue={...poi}
-
     };
+
   handleFilter = async e => {
-    console.log(e.target.value);
     this.setState({ filterPoi: e.target.value });
     this.changeOfPois();
   };
 
   handleJustOwnClick = e => {
-    console.log("Change just show own to:" + !this.state.justOwn);
     this.setState(
       (state, props) => ({ justOwn: !state.justOwn }),
       this.changeOfPois
@@ -578,10 +487,6 @@ this.setState({selectedPoi:e})
 
   //The filter of the pois
   changeOfPois = () => {
-    let POIs4gr = this.state.POIs.filter(poi => poi.group == 4);
-    console.log("filter Poi:" + this.state.filterPoi + ":");
-    console.log("showOwn:" + this.state.justOwn + ":");
-      console.log("user:" + this.props.user.sub + ":");
     // Show just own pois
     if (this.state.justOwn) {
         // with filter
@@ -657,7 +562,7 @@ this.setState({selectedPoi:e})
 
    showCoordinates= e => {
         alert(e.latlng);
-            }
+            };
 
 visitPois=e=>
 {   let POIs4gr=this.state.POIs
@@ -690,7 +595,7 @@ visitPois=e=>
                    id={poi.id}
                    categories={this.state.categories}
                    tags={this.state.tags}
-                   user={this.props.currentUser}
+                   user={this.props.user}
                    displayPoi={this.displayPoi}
                />
        )}
@@ -701,6 +606,7 @@ catch{
     }
   render() {
       let currentPoi=this.state.filteredPoisToShow.filter((poi)=>poi.Creator.group===4)[this.state.indexPoiPage]
+
     return (
 <div>
     <ReactNotifications
@@ -787,13 +693,10 @@ catch{
           <Map
             className="map"
             id="map"
-            minZoom={this.state.Map.minZoom}
-            center={this.state.Map.center}
-            view={this.state.Map.view}
-           // onClick={this.addMarker}
-            zoom={this.state.Map.zoom}
+            minZoom={2}
+            center={[0,5]}
+            zoom={2}
             contextmenu={true}
-
             contextmenuWidth={140}
             contextmenuItems={ [{
             text: 'Show coordinates',
@@ -848,7 +751,7 @@ catch{
               <Overlay name="my pois">
                 <LayerGroup>
                   {this.state.filteredPoisToShow
-                    .filter(poi => poi.Creator.id == this.props.currentUser.sub)
+                    .filter(poi => poi.Creator.id == this.props.user.sub)
                     .map(poi => (
                       <POIMarker
                         group={poi.group}
@@ -861,7 +764,7 @@ catch{
                         id={poi.id}
                         categories={this.state.categories}
                         tags={this.state.tags}
-                        user={this.props.currentUser}
+                        user={this.props.user}
                         displayPoi={this.displayPoi}
                       />
                     ))}
@@ -898,7 +801,7 @@ catch{
                         id={poi.id}
                         categories={this.state.categories}
                         tags={this.state.tags}
-                        user={this.props.currentUser}
+                        user={this.props.user}
                         displayPoi={this.displayPoi}
                     />
                 ))}
@@ -913,7 +816,7 @@ catch{
                           id={poi.id}
                           categories={this.state.categories}
                           tags={this.state.tags}
-                          user={this.props.currentUser}
+                          user={this.props.user}
                           displayPoi={this.displayPoi}
                       />
                   ))}

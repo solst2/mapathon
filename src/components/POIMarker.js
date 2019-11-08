@@ -97,7 +97,7 @@ let img;
 
                             {this.state.newPOI.image!=null&&<img width={100} height={100} src={this.state.newPOI.image} ></img>}
                             <p>{this.state.newPOI.description}</p>
-                            {this.props.poi.Creator.id===this.props.user.id &&<span><img width={10} height={10} src="https://image.flaticon.com/icons/svg/61/61456.svg" onClick= { (e) => {this.state.newPOI.isSaved=false; this.updatePOI(this.state.newPOI)}} /><br/></span>}
+                            {this.props.poi.Creator.id===this.props.user.sub &&<span><img width={10} height={10} src="https://image.flaticon.com/icons/svg/61/61456.svg" onClick= { (e) => {this.state.newPOI.isSaved=false; this.updatePOI(this.state.newPOI)}} /><br/></span>}
                             {this.state.newPOI.Categories.map((cat)=>
                                 <div><img width={25} height={30} src={cat.image}/> <a>{cat.name}</a></div>
                             )}

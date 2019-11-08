@@ -82,7 +82,7 @@ console.log(creator.email)
             </div>
               <ul>
                   <img width={20} height={20} src={targetIcon} name={id} onClick={zoomOnMarker}/>
-                  {creator.id != undefined && <img width={20} height={20} src={deleteIcon} name={id} onClick={deleteMarker}/>}
+                  {id != undefined && <img width={20} height={20} src={deleteIcon} name={id} onClick={deleteMarker}/>}
                   <img width={20} height={20} src={shareIcon} name={id} onClick={sendEmail}/>
               </ul>
             </div>
