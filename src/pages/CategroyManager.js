@@ -3,7 +3,7 @@ import {FormInput} from "../components/FormInput";
 import {Multiselect} from "multiselect-react-dropdown";
 
 import {useAuth0} from "../react-auth0-spa";
-import requestPOI from "../utils/requestPOI";
+import request from "../utils/request";
 import {Redirect} from "react-router-dom";
 import deleteIcon from "../icons/delete.png"
 import targetIcon from "../icons/target.png"
@@ -32,7 +32,7 @@ export default function CategoryManager(props) {
         fn();
     }, [isAuthenticated, loginWithRedirect, loading]);
     async function getAllO(object) {
-        return await requestPOI.getAllObject(getTokenSilently, loginWithRedirect, object);
+        return await request.getAllObject(getTokenSilently, loginWithRedirect, object);
     }
 
         function handleInputChange (event) {
@@ -49,9 +49,9 @@ export default function CategoryManager(props) {
             event.preventDefault();
 
             if(category.id==null)
-            {await requestPOI.addNewObject("category",category, getTokenSilently, loginWithRedirect);}
+            {await request.addNewObject("category",category, getTokenSilently, loginWithRedirect);}
             else
-            {     let answer = await requestPOI.updateObject("category",category.id, category, getTokenSilently, loginWithRedirect);}
+            {     let answer = await request.updateObject("category",category.id, category, getTokenSilently, loginWithRedirect);}
 
           event.preventDefault();
           setAllcategories (await getAllO('category'));
@@ -65,7 +65,7 @@ export default function CategoryManager(props) {
 
         }
     async  function  deleteCategory  (event) {
-        await requestPOI.deleteObject("category",event.target.name, getTokenSilently, loginWithRedirect);
+        await request.deleteObject("category",event.target.name, getTokenSilently, loginWithRedirect);
         setAllcategories (await getAllO('category'));
     }
 
@@ -153,10 +153,9 @@ export default function CategoryManager(props) {
                     })}
                 </div>
                 <br/>{categories.map((category)=> category.iscreated? catcreat=true : null)}
-                {!isDisable&&<button className="PersoBtn" style={{width:"75%"}} onClick={AddCategory}>Add category</button>}
+                {!isDisable && !catcreat && <button className="PersoBtn" style={{width:"75%"}} onClick={AddCategory}>Add category</button>}
 
             </form>
-              {isDisable&&<button className="PersoBtn" style={{width:"75%"}}  >Add category</button>}
           </div>
 </div>
 );

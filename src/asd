@@ -10,7 +10,7 @@ import request from "./utils/request";
 import endpoints from "./endpoints";
 import Loading from "./components/Loading";
 import POI from "./components/POI";
-import requestPOI from './requestPOI';
+import request from './request';
 import Control from 'react-leaflet-control';
 import * as ReactDOM from "react-dom";
 import targetIcon from './icons/target.png';
@@ -42,7 +42,7 @@ function AppWrapper() {
   useEffect(() => {
     const fn = async () => {
       if (loading === false ) {
-          let poisList = requestPOI.getAllPOI(getTokenSilently,loginWithRedirect);
+          let poisList = request.getAllPOI(getTokenSilently,loginWithRedirect);
         console.log('Load');
         if (poisList.length > 0) {
           console.log(poisList);
@@ -57,23 +57,23 @@ function AppWrapper() {
   {
     console.log('new POIIII added'+{...newPOI});
     if (newPOI.id === undefined){
-      return await requestPOI.addNewPOI(newPOI,getTokenSilently,loginWithRedirect)
+      return await request.addNewPOI(newPOI,getTokenSilently,loginWithRedirect)
     } else {
-      return await requestPOI.updatePOI(newPOI.id,newPOI,getTokenSilently,loginWithRedirect)
+      return await request.updatePOI(newPOI.id,newPOI,getTokenSilently,loginWithRedirect)
     }
   }
 
   async function getAll()
   {
 
-      return await requestPOI.getAllPOI(getTokenSilently,loginWithRedirect);
+      return await request.getAllPOI(getTokenSilently,loginWithRedirect);
 
 
   }
   async function deletePOI(poi)
   {
     console.log('poi delete');
-    return await requestPOI.deletePOI(poi.id,getTokenSilently,loginWithRedirect);
+    return await request.deletePOI(poi.id,getTokenSilently,loginWithRedirect);
   }
 
   if (loading) {

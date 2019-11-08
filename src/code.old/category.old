@@ -5,7 +5,7 @@ import targetIcon from "../icons/target.png";
 import deleteIcon from "../icons/delete.png";
 import shareIcon from "../icons/share.png";
 import {useAuth0} from "../react-auth0-spa";
-import requestPOI from "../utils/requestPOI";
+import request from "../utils/request";
 import {Redirect} from "react-router-dom";
 
 export default function CategoryManager(props) {
@@ -29,7 +29,7 @@ export default function CategoryManager(props) {
         fn();
     }, [isAuthenticated, loginWithRedirect, loading]);
     async function getAllO(object) {
-        return await requestPOI.getAllObject(getTokenSilently, loginWithRedirect, object);
+        return await request.getAllObject(getTokenSilently, loginWithRedirect, object);
     }
 
         function handleInputChange (event) {
@@ -45,7 +45,7 @@ export default function CategoryManager(props) {
       async  function  handlecatAdd  (event) {
             // Avoid reloading the page on form submission
             event.preventDefault();
-            await requestPOI.addNewObject("category",category, getTokenSilently, loginWithRedirect);
+            await request.addNewObject("category",category, getTokenSilently, loginWithRedirect);
           setCategory(await getAllO('category'));
         }   function  AddCategory  (event) {
 
