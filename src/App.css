@@ -9,16 +9,16 @@ body{
 }
 
 .PersoBtn{
-    border-radius: 5px;
-    border: none;
-    padding: 5px;
-    background-color: #27ae60;
-    color: white;
-    font-size: medium;
+    border-radius: 8px;
+    border: 2px solid #4CAF50;
+    font-size: 12px;
+    padding: 10px 24px;
+    background-color: #F8F8FF;
 }
 
 .PersoBtn:hover{
-    background-color: green;
+    background-color: #4CAF50;
+    color: white;
 }
 
 #Navbar{

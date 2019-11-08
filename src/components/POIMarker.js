@@ -69,7 +69,7 @@ showSideBar=e=>
 let img;
 
 
-        if(this.state.newPOI.Categories[0]!=null)
+        if(this.state.newPOI.Categories[0]!=null && this.state.newPOI.Categories[0].image!=null)
         {
             if(this.state.newPOI.Categories[0].image.length>0)////&&this.state.newPOI.Categories[0].creatorId==="github|3367593"
         img= this.state.newPOI.Categories[0].image

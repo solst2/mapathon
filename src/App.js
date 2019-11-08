@@ -761,6 +761,8 @@ catch{
       <button className={"PersoBtn"} onClick={this.ZoomOnMyLoca}>
           Locate Me
       </button>
+        <br/>
+    <br/>
       <MenuOptions
           handleFilter={this.handleFilter}
           handleJustOwnClick={this.handleJustOwnClick}
