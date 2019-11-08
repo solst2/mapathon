@@ -30,10 +30,14 @@ import searchResultImg from "./icons/pin/searchResult.png";
 import * as ELG from "esri-leaflet-geocoder";
 import routeIconImg from "./icons/rout.png";
 import Routing from "./RoutingMachine";
+import Clock from 'react-clock'
 import aa from "./icons/delete.png";
 import popupsound from "./sounds/pop.mp3";
 import Clocks from  "./components/Clocks";
 import ReactNotifications from 'react-browser-notifications';
+import TagManager from "./pages/TagManager";
+import CategoryManager from './pages/CategroyManager'
+import { Route, Link, BrowserRouter as Router } from 'react-router-dom'
 // import plugin's css (if present)
 // note, that this is only one of possible ways to load css
 import "leaflet-contextmenu/dist/leaflet.contextmenu.css";
@@ -60,6 +64,7 @@ import map3d from "./icons/globe.PNG";
 import currentPosition from "./icons/my_position.gif";
 import "./cardTemplate.scss"
 import {preventDefault} from "leaflet/src/dom/DomEvent";
+
 var myPostionIcon = L.icon({
     iconUrl: currentPosition,
     iconSize: [20, 20],
@@ -207,24 +212,31 @@ function AppWrapper() {
        <div>
 
            <header>
-               <NavBar/>
-           </header>
-           <GeoLocat  upGeoLocalisation={setpostion}/>
+               <Router>
+                   <NavBar/>
+                   <Route exact path="/">  <
+                       GeoLocat  upGeoLocalisation={setpostion}/>
+                       {position!==null&&<App
+                           poisList={props.poisList}
+                           getAllO={getAllO}
+                           addPoi={addPOI}
+                           deleteObject={deleteObject}
+                           currentUser={currentUser}
+                           position={position}
+                           key="app"
+                           user={user}
+                           isAuthenticated={isAuthenticated}
+                           logout={logout}
+                           userList={allUser}
+                           setLike={setLike}
+                       />}</Route>
+                   <Route path="/categories" component={CategoryManager} ></Route>
+                   <Route path="/tags" component={TagManager} ></Route>
 
-           {position!==null&&<App
-                      poisList={props.poisList}
-                      getAllO={getAllO}
-                      addPoi={addPOI}
-                      deleteObject={deleteObject}
-                      currentUser={currentUser}
-                      position={position}
-                      key="app"
-                      user={user}
-                      isAuthenticated={isAuthenticated}
-                      logout={logout}
-                      userList={allUser}
-                      setLike={setLike}
-                  />}
+               </Router>
+
+           </header>
+
                 </div>
 
 
@@ -260,7 +272,11 @@ class App extends Component {
         displayDiv:false,
       is2ddisplayed:true,
         selectedPoi:'',
-        indexPoiPage:0
+        indexPoiPage:0,
+        dates:{
+          fuseau:new Date(),
+            fuseau1:new Date()
+        }
     };
   }
 
@@ -330,9 +346,6 @@ this.getTags();
       });
       let addedElement =updatedList[updatedList.length-1];
 
-      this.state.unsavedPois.map(poi=>
-          updatedList.push(poi)
-      );
 
   this.setState({ POIs: updatedList });
       this.changeOfPois();
@@ -399,9 +412,25 @@ async getTags()
   addMarker = e => {
 this.leafletMap.leafletElement.closePopup();
     const unsavedpois = this.state.unsavedPois;
+    let lat;
+    let lng;
+let latlng;
+    if(e.latlng==null)
+    {
+        latlng=e.target.value
+        console.log(e.target.value);
+        lat=latlng.lat
+        lng =latlng.lng
+    }
+    else
+    {
+        latlng=e.latlng
+        lat=e.latlng.lat
+        lng =   e.latlng.lng
+    }
     var newPoi = {
-      lat: e.latlng.lat,
-      lng: e.latlng.lng,
+      lat: lat,
+      lng:lng,
       name: "",
       description: "",
       group: 4,
@@ -410,22 +439,45 @@ this.leafletMap.leafletElement.closePopup();
       Categories: [],
       Tags: []
     };
-
       unsavedpois.push(newPoi);
       this.setState({unsavedPois:unsavedpois});
       const pois= this.state.POIs
-
 let zoom=0;
         if(this.leafletMap.leafletElement>15)
             zoom=this.leafletMap.leafletElement
-
       else
           zoom=15
-
+      if(e.latlng!=null)
       this.leafletMap.leafletElement.flyTo(e.latlng, zoom);
 
+    };
+    saveSearch = e => {
+        const unsavedpois = this.state.unsavedPois;
+        let lat;
+        let lng;
+        let latln=e.target.value;
+
+            lat=latln.lat
+            lng =latln.lng
+
+        var newPoi = {
+            lat: lat,
+            lng:lng,
+            name: "",
+            description: "",
+            group: 4,
+            isSaved: false,
+            Creator: { id: this.props.user.sub ,group:4},
+            Categories: [],
+            Tags: []
+        };
+        unsavedpois.push(newPoi);
+        this.setState({unsavedPois:unsavedpois});
 
     };
+
+
+
   addPoi=async (poi)=>{
    await this.props.addPoi(poi);
       const pois= this.state.POIs
@@ -539,6 +591,9 @@ this.setState({selectedPoi:e})
     this.sideBarLeft.show();
 
 }
+
+
+
   //zoom on the my location
   ZoomOnMyLoca = e => {
     this.scrollToMyRef();
@@ -717,7 +772,7 @@ catch{
         <div id="ClocksContainer">
 
             <div className="Clock">
-                <AnalogClock gmtOffset="-8:00"  width={100} theme={Themes.dark} />
+            <Clock value={new Date()}/>
                 <div className="ClockCountry">
                 Los Angeles
                 </div>
@@ -857,8 +912,13 @@ catch{
                     <Marker
                       position={searchpoint.latlng}
                       icon={searchResultIcon}
-                    >
-                      <Popup>{searchpoint.text}</Popup>
+
+                    >{console.log(searchpoint)}
+                        {console.log(searchpoint.latlng.lat)}
+                        {console.log(searchpoint.LatLng)}
+                      <Popup>{searchpoint.text}
+                      <button value={{lat:searchpoint.latlng.lat,lng:searchpoint.latlng.lng}} onClick={this.saveSearch}>Save as Poi</button>
+                      </Popup>
                     </Marker>
                   ))}
                 </LayerGroup>
@@ -886,7 +946,7 @@ catch{
                         displayPoi={this.displayPoi}
                     />
                 ))}
-                  {this.state.unsavedPOIs.map(poi => (
+                  {this.state.unsavedPois.map(poi => (
                       <POIMarker
                           addPoi={this.addPoi}
                           poi={poi}

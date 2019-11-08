@@ -13,6 +13,7 @@ import NavBar from "../components/NavBar";
 export default function TagManger(props) {
     let [tags, setAlltags] = useState([]);
     let [tag,setTag]=useState({name:'',group:'',image:''});
+    let [isDisable,setDisable]=useState(false)
     const {
         isAuthenticated,
         loginWithRedirect,
@@ -54,7 +55,7 @@ export default function TagManger(props) {
 
         event.preventDefault();
         setAlltags (await getAllO('tag'));
-
+        setDisable(false);
     }
     async  function  deleteCategory  (event) {
         await requestPOI.deleteObject("tag",event.target.name, getTokenSilently, loginWithRedirect);
@@ -62,12 +63,12 @@ export default function TagManger(props) {
     }
 
     function  AddTag  (event) {
-
+        setDisable(true);
         setTag(tags.push({name:'',group:'',image:'',iscreated:true}));
 
     }
     function  ModifyCat  (event) {
-
+        setDisable(true);
         let updatetagList=tags
 
         let findTag= updatetagList.find(c=>c.id==event.target.name)
@@ -90,9 +91,6 @@ export default function TagManger(props) {
 
 
         <div>
-            <header>
-                <NavBar />
-            </header>
             <div class="wrapper">
 
                 <form onSubmit={handlecatAdd}>
@@ -147,10 +145,10 @@ export default function TagManger(props) {
                         })}
                     </div>
                     <br/>{tags.map((tag)=> tag.iscreated? catcreat=true : null)}
-                    { !catcreat &&
-                    <button className="PersoBtn" style={{width:"100%"}} onClick={AddTag}>Add tag</button>}
 
+                    {!isDisable&& <button className="PersoBtn" style={{width:"100%"}} onClick={AddTag}>Add tag</button>}}
                 </form>
+                {isDisable&&<button className="PersoBtn" style={{width:"75%"}}  >Add Tag</button>}
             </div>
         </div>
     );

@@ -117,10 +117,6 @@ display: flex;
     flex-grow: 1;
 }
 
-
-
-
-
 .dropdown-content {
   display: none;
   position: absolute;
