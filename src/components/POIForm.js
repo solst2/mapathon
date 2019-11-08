@@ -1,6 +1,7 @@
 import React from "react";
 import {FormInput} from "./FormInput";
 import { Multiselect } from 'multiselect-react-dropdown';
+import {Marker} from "react-leaflet";
 let selectedCategoreis=[]
 let selectedTags=[]
 export default class POIForm extends React.Component {
@@ -9,7 +10,7 @@ export default class POIForm extends React.Component {
         super(props);
 
         let poiInfo = props.poisList.find(poi => poi.id == props.id);
-
+        this.MultiselectCat = React.createRef();
         this.state = {
             newPOI: {
                 id: poiInfo.id,
@@ -29,14 +30,6 @@ export default class POIForm extends React.Component {
             }
         };
     }
-
-componentDidMount(): void {
-    let options=[];
-    this.props.categories.map((cat)=>
-        {
-            options.push({ name: cat.name, id: cat.id})}
-    );
-}
 
     handleInputChange = event => {
         const target = event.target;
@@ -68,6 +61,7 @@ componentDidMount(): void {
     }
 
     render() {
+        selectedCategoreis=this.state.newPOI.categories;
         return (
 
             <div>
@@ -105,9 +99,13 @@ componentDidMount(): void {
                         onChange={this.handleInputChange}
                     />
 
-                    <Multiselect options={ this.props.categories}
+                    <Multiselect
+                        ref={m => {
+                            this.MultiselectCat = m;
+                        }}
+                        options={ this.props.categories}
                                  displayValue="name"
-                                 selectedvalues={this.state.newPOI.Categories}
+                                 selectedValues={this.state.newPOI.Categories}
                                  value={this.state.newPOI.Categories}
                                  placeholder="Categories"
                                  onSelect={this.onSelect}
@@ -118,7 +116,7 @@ componentDidMount(): void {
                     />
                     <Multiselect options={ this.props.tags}
                                  displayValue="name"
-                                 selectedvalues={this.state.newPOI.Tags}
+                                 selectedValues={this.state.newPOI.Tags}
                                  placeholder="Tags"
                                  value={this.state.newPOI.Tags}
                                  onSelect={this.onSelectTag} // Function will trigger on select event

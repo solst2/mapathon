@@ -26,6 +26,13 @@ export default function MenuOptions(props) {
             onChange={props.handleJustOwnClick}
           />
           <small id="smallText">Show my POI</small>
+          <br/>
+            <input
+                type="checkbox"
+                checked={props.justOwnGroup}
+                onChange={props.handleJustOwnGroupClick}
+            />
+            <small id="smallText">Show my group</small>
         </div>
       ) : null}
     </div>
