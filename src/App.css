@@ -124,6 +124,7 @@ display: flex;
 
 .leftDetails{
     flex-basis: 20%;
+    min-width: 20%;
 }
 
 .ListPoi
@@ -140,6 +141,17 @@ display: flex;
     text-decoration: none;
 }
 
+.utilitiesBtn{
+margin-left: 25px;
+padding-bottom: 5px;
+
+}
+
+.utilitie{
+    display: inline-block;
+    margin-left: 15px;
+}
+
 .dropdown-content {
   display: none;
   position: absolute;
@@ -148,6 +160,30 @@ display: flex;
   min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
+}
+
+.GroupPoi{
+    list-style: none;
+}
+
+#singleGroupPoi{
+    text-align: center;
+    padding: 7px;
+    background-color: #222222;
+    border-radius: 20px;
+    margin: 10px;
+}
+
+#singleGroupPoi:hover{
+    text-align: center;
+    background-color: #111111;
+    padding: 7px;
+    margin: 10px;
+    cursor: pointer;
+}
+
+#singleGroupPoi::selection {
+    background-color: #111111;
 }
 
 .dropdown-content a {

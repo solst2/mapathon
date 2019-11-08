@@ -2,33 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9d99ef1f-6be9-48ac-88ce-0e79a9308b07" name="Default Changelist" comment="cleaning">
+      <change afterPath="$PROJECT_DIR$/src/icons/targetWhite.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/3dMa.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Cities.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Div.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GPXtest.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Settings.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/asd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/code.old/category.old" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/code.old/filterMethod.old" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Clocks.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Legend.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/NavBar.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/NavBar.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cardTemplate.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/cardTemplate.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/POI.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/POI.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/POIForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/POIForm.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/POIMarker.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/POIMarker.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/SideBarPoi.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/SideBarUsers.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/geo" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gpx/sample.gpx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/CategroyManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/CategroyManager.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/StartPage.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Stats.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/TagManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/TagManager.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/serviceWorker.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/timout.js" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />

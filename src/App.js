@@ -900,12 +900,12 @@ class App extends Component {
         <div className="DetailsPoi">
           <div className="leftDetails">
             <div className="ListPoi">
-              <ul>
-                My Group Poi :
-                {this.state.filteredPoisToShow
+              <ul className="GroupPoi">
+                  <b>My Group Poi :</b>
+                  {this.state.filteredPoisToShow
                   .filter(poi => poi.Creator.group === 4)
                   .map(poi => (
-                    <li
+                    <li id="singleGroupPoi"
                       value={getIndex(
                         poi.name,
                         this.state.filteredPoisToShow.filter(
