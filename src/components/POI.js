@@ -68,6 +68,9 @@ console.log(creator.email)
               </div>
             </div>
               <ul>
+                  <p className="text">
+                      {"👍"+likes}
+                  </p>
                   <button onClick={handleLikeClick}>
                       {liked ? "Liked 👍" : "Not liked 👎"}
                   </button>
