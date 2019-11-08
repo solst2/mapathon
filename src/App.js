@@ -272,11 +272,7 @@ class App extends Component {
         displayDiv:false,
       is2ddisplayed:true,
         selectedPoi:'',
-        indexPoiPage:0,
-        dates:{
-          fuseau:new Date(),
-            fuseau1:new Date()
-        }
+        indexPoiPage:0
     };
   }
 
@@ -345,9 +341,10 @@ this.getTags();
           return o;
       });
       let addedElement =updatedList[updatedList.length-1];
-this.state.unsavedPOIs.map(u=>
-    updatedList.push(u)
-)
+
+      this.state.unsavedPois.map(poi=>
+          updatedList.push(poi)
+      );
 
   this.setState({ POIs: updatedList });
       this.changeOfPois();
@@ -414,25 +411,9 @@ async getTags()
   addMarker = e => {
 this.leafletMap.leafletElement.closePopup();
     const unsavedpois = this.state.unsavedPois;
-    let lat;
-    let lng;
-let latlng;
-    if(e.latlng==null)
-    {
-        latlng=e.target.value
-        console.log(e.target.value);
-        lat=latlng.lat
-        lng =latlng.lng
-    }
-    else
-    {
-        latlng=e.latlng
-        lat=e.latlng.lat
-        lng =   e.latlng.lng
-    }
     var newPoi = {
-      lat: lat,
-      lng:lng,
+      lat: e.latlng.lat,
+      lng: e.latlng.lng,
       name: "",
       description: "",
       group: 4,
@@ -441,45 +422,22 @@ let latlng;
       Categories: [],
       Tags: []
     };
+
       unsavedpois.push(newPoi);
       this.setState({unsavedPois:unsavedpois});
       const pois= this.state.POIs
+
 let zoom=0;
         if(this.leafletMap.leafletElement>15)
             zoom=this.leafletMap.leafletElement
+
       else
           zoom=15
-      if(e.latlng!=null)
+
       this.leafletMap.leafletElement.flyTo(e.latlng, zoom);
 
-    };
-    saveSearch = e => {
-        const unsavedpois = this.state.unsavedPois;
-        let lat;
-        let lng;
-        let latln=e.target.value;
-
-            lat=latln.lat
-            lng =latln.lng
-
-        var newPoi = {
-            lat: lat,
-            lng:lng,
-            name: "",
-            description: "",
-            group: 4,
-            isSaved: false,
-            Creator: { id: this.props.user.sub ,group:4},
-            Categories: [],
-            Tags: []
-        };
-        unsavedpois.push(newPoi);
-        this.setState({unsavedPois:unsavedpois});
 
     };
-
-
-
   addPoi=async (poi)=>{
    await this.props.addPoi(poi);
       const pois= this.state.POIs
@@ -593,9 +551,6 @@ this.setState({selectedPoi:e})
     this.sideBarLeft.show();
 
 }
-
-
-
   //zoom on the my location
   ZoomOnMyLoca = e => {
     this.scrollToMyRef();
@@ -774,7 +729,7 @@ catch{
         <div id="ClocksContainer">
 
             <div className="Clock">
-            <Clock value={new Date()}/>
+                <AnalogClock gmtOffset="-8:00"  width={100} theme={Themes.dark} />
                 <div className="ClockCountry">
                 Los Angeles
                 </div>
@@ -914,13 +869,8 @@ catch{
                     <Marker
                       position={searchpoint.latlng}
                       icon={searchResultIcon}
-
-                    >{console.log(searchpoint)}
-                        {console.log(searchpoint.latlng.lat)}
-                        {console.log(searchpoint.LatLng)}
-                      <Popup>{searchpoint.text}
-                      <button value={{lat:searchpoint.latlng.lat,lng:searchpoint.latlng.lng}} onClick={this.saveSearch}>Save as Poi</button>
-                      </Popup>
+                    >
+                      <Popup>{searchpoint.text}</Popup>
                     </Marker>
                   ))}
                 </LayerGroup>
@@ -948,7 +898,7 @@ catch{
                         displayPoi={this.displayPoi}
                     />
                 ))}
-                  {this.state.unsavedPois.map(poi => (
+                  {this.state.unsavedPOIs.map(poi => (
                       <POIMarker
                           addPoi={this.addPoi}
                           poi={poi}
@@ -1049,6 +999,12 @@ catch{
             </div>
             </div>
             <div className="rightDetails">
+            <button className="PersoBtn" onClick={(e)=>{
+                if(this.state.indexPoiPage>0)
+                    this.setState({indexPoiPage:this.state.indexPoiPage-1})
+                else
+                    this.setState({indexPoiPage:this.state.filteredPoisToShow.filter((poi)=>poi.Creator.group===4).length-1})
+            }}>{'<'}</button>
             <POI
                 {...currentPoi}
                 zoomOnMarker={this.zoomOnMarker}
@@ -1057,6 +1013,16 @@ catch{
                 setLike={this.setLike}
             />
             </div>
+             <button className="PersoBtn" onClick={(e)=>{
+            if(this.state.indexPoiPage<this.state.filteredPoisToShow.filter((poi)=>poi.Creator.group===4).length-1)
+                this.setState({indexPoiPage:this.state.indexPoiPage+1})
+            else
+                this.setState({indexPoiPage:0})
+            console.log(this.state.indexPoiPage)
+            {
+                console.log(currentPoi)
+            }
+        }}>{'>'}</button>
         </div>
 
 
