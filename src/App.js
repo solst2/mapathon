@@ -241,7 +241,6 @@ class App extends Component {
       is2ddisplayed: true,
       selectedPoi: "",
       indexPoiPage: 0,
-        ismyPoiCheck:false,
         justOwn:false,
         justOwnGroup:false
     };
@@ -500,7 +499,7 @@ class App extends Component {
 
   handleJustOwnClick = e => {
     this.setState(
-      (state, props) => ({ justOwn: !state.justOwn, ismyPoiCheck:!this.state.ismyPoiCheck }),
+      (state, props) => ({ justOwn: !state.justOwn}),
       this.changeOfPois
     );
 
@@ -516,7 +515,7 @@ class App extends Component {
 
   //The filter of the pois
   changeOfPois = () => {
-    // Show just own pois
+    // Show just own pois -> no need of group filter, it is automatically just own group
     if (this.state.justOwn) {
       // with filter
       if (this.state.filterPoi !== undefined && this.state.POIs !== "") {
@@ -525,9 +524,9 @@ class App extends Component {
             if (poi.Creator === undefined) {
               return poi;
             }
-            return poi.Creator.id === props.user.sub
-              ? this.filterThePoi(poi, state.filterPoi)
-              : null;
+            return poi.Creator.id === props.user.sub     //if
+              ? this.filterThePoi(poi, state.filterPoi) // yes
+              : null;                                   //else
           })
         }));
       } else {
@@ -539,18 +538,38 @@ class App extends Component {
         }));
       }
     } else if (
-      //show all pois -> is there a filter?
+      //show all pois -> is there a filter? just own group?
       this.state.filterPoi !== "" &&
       this.state.filterPoi !== undefined
-    ) {
-      this.setState((state, props) => ({
-        filteredPoisToShow: state.POIs.filter(poi => {
-          return this.filterThePoi(poi, state.filterPoi);
-        })
-      }));
+    ) { //all with filter
+      //own group?
+      if (this.state.justOwnGroup){ //filter with group
+        this.setState((state, props) => ({
+          filteredPoisToShow: state.POIs.filter(poi => {
+            return poi.Creator.group === 4 ?
+             this.filterThePoi(poi, state.filterPoi)
+                : null;
+          })
+        }));
+      } else{  //all
+        this.setState((state, props) => ({
+          filteredPoisToShow: state.POIs.filter(poi => {
+            return this.filterThePoi(poi, state.filterPoi);
+          })
+        }));
+      }
+
     } else {
-      //no filter and show all
-      this.setState((state, props) => ({ filteredPoisToShow: state.POIs }));
+      if (this.state.justOwnGroup){ //filter with group
+        this.setState((state, props) => ({ filteredPoisToShow: state.POIs.filter(poi => {
+            return poi.Creator.group === 4 ?
+                poi
+                : null;
+          })
+        }));
+      }else{ //all with no filter
+        this.setState((state, props) => ({ filteredPoisToShow: state.POIs }));
+      }
     }
   };
 
@@ -601,15 +620,7 @@ class App extends Component {
   }
 
   render() {
-    let currentPoi;
-
-      if(this.state.justOwnGroup){
-        currentPoi = this.state.filteredPoisToShow.filter(
-            poi => poi.Creator.group === 4
-        )[this.state.indexPoiPage];
-      }else{
-        currentPoi = this.state.filteredPoisToShow[this.state.indexPoiPage];
-      }
+    let currentPoi = this.state.filteredPoisToShow[this.state.indexPoiPage];
 
     return (
       <div>
@@ -806,8 +817,7 @@ class App extends Component {
                 <LayerGroup>
                   {console.log(this.state.filteredPoisToShow)}
                   {console.log(this.state.justOwnGroup)}
-                    {this.state.justOwnGroup&&this.state.filteredPoisToShow
-                            .filter(poi => poi.Creator.group === 4)
+                    {this.state.filteredPoisToShow
                             .map(poi => (
                                 <POIMarker
                                     addPoi={this.addPoi}
@@ -820,20 +830,6 @@ class App extends Component {
                                 />
                             ))
                     }
-                    {!this.state.justOwnGroup&&this.state.filteredPoisToShow
-                        .map(poi => (
-                            <POIMarker
-                                addPoi={this.addPoi}
-                                poi={poi}
-                                poisList={this.state.filteredPoisToShow}
-                                categories={this.state.categories}
-                                tags={this.state.tags}
-                                user={this.props.user}
-                                displayPoi={this.displayPoi}
-                            />
-                        ))
-                    }
-
                 </LayerGroup>
               </Overlay>
               <Control position="topleft">
@@ -912,33 +908,34 @@ class App extends Component {
 
         <div className="DetailsPoi">
           <div className="leftDetails">
-            {this.state.justOwnGroup&&
-            <div className="ListPoi">
-              <ul className="GroupPoi">
-                  <b>My Group Poi :</b>
-                  {this.state.filteredPoisToShow
-                  .filter(poi => poi.Creator.group === 4)
-                  .map(poi => (
-                    <li id="singleGroupPoi"
-                      value={getIndex(
-                        poi.name,
-                        this.state.filteredPoisToShow.filter(
-                          poi => poi.Creator.group === 4
-                        ),
-                        "name"
-                      )}
-                      onClick={e =>
-                        this.setState({ indexPoiPage: e.target.value })
-                      }
-                    >
-                      {poi.name}
-                    </li>
-                  ))}
-              </ul>
-            </div>}
-              {!this.state.justOwnGroup&&<div className="ListPoi">
+            {/*{this.state.justOwnGroup&&*/}
+            {/*<div className="ListPoi">*/}
+            {/*  <ul className="GroupPoi">*/}
+            {/*      <b>My Group Poi :</b>*/}
+            {/*      {this.state.filteredPoisToShow*/}
+            {/*      .filter(poi => poi.Creator.group === 4)*/}
+            {/*      .map(poi => (*/}
+            {/*        <li id="singleGroupPoi"*/}
+            {/*          value={getIndex(*/}
+            {/*            poi.name,*/}
+            {/*            this.state.filteredPoisToShow.filter(*/}
+            {/*              poi => poi.Creator.group === 4*/}
+            {/*            ),*/}
+            {/*            "name"*/}
+            {/*          )}*/}
+            {/*          onClick={e =>*/}
+            {/*            this.setState({ indexPoiPage: e.target.value })*/}
+            {/*          }*/}
+            {/*        >*/}
+            {/*          {poi.name}*/}
+            {/*        </li>*/}
+            {/*      ))}*/}
+            {/*  </ul>*/}
+            {/*</div>}*/}
+            {/*  {!this.state.justOwnGroup&&<div className="ListPoi">*/}
+              <div className="ListPoi">
                   <ul className="GroupPoi">
-                    <b>All Pois :</b>
+                    <b>Points of interest :</b>
                       {this.state.filteredPoisToShow
                           .map(poi => (
                               <li id="singleGroupPoi"
@@ -956,7 +953,7 @@ class App extends Component {
                               </li>
                           ))}
                   </ul>
-              </div>}
+              </div>
           </div>
           <div className="rightDetails">
             <POI
