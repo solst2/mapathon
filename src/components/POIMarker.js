@@ -53,9 +53,7 @@ export default class POIMarker extends React.Component {
     prevState: Readonly<S>,
     snapshot: SS
   ): void {}
-  showSideBar = e => {
-    // this.props.displayPoi(this.state.newPOI);
-  };
+
   render() {
     let { poisList, addPoi } = this.props;
     let position = { lat: this.props.poi.lat, lng: this.props.poi.lng };
@@ -97,10 +95,10 @@ export default class POIMarker extends React.Component {
                   width={100}
                   height={100}
                   src={this.state.newPOI.image}
-                ></img>
+                />
               )}
               <p>{this.state.newPOI.description}</p>
-              {this.props.poi.Creator.id === this.props.user.sub && (
+              {this.state.newPOI.Creator.id === this.props.user.sub && (
                 <span>
                   <img
                     width={10}
@@ -146,7 +144,7 @@ export default class POIMarker extends React.Component {
                 poisList={poisList}
                 updatePOI={this.updatePOI}
                 position={position}
-                id={this.props.poi.id}
+                id={this.state.newPOI.id}
               />
             </Popup>
           </Marker>

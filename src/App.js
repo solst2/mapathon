@@ -500,7 +500,7 @@ class App extends Component {
   handleJustOwnClick = e => {
     this.setState(
       (state, props) => ({ justOwn: !state.justOwn}),
-      this.changeOfPois
+        function() {this.changeOfPois();}
     );
 
   };
@@ -508,7 +508,7 @@ class App extends Component {
     handleJustOwnGroupClick = e => {
         this.setState(
             (state, props) => ({ justOwnGroup: !state.justOwnGroup}),
-            this.changeOfPois
+            function() {this.changeOfPois()}
         );
 
     };
@@ -741,11 +741,9 @@ class App extends Component {
                 callback: this.addMarker
               }
             ]}
-
             ref={m => {
               this.leafletMap = m;
-            }}
-          >
+            }}>
             <LayersControl>
               <BaseLayer checked name="Default">
                 <TileLayer
@@ -783,23 +781,23 @@ class App extends Component {
                   url="https://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png"
                 />
               </BaseLayer>
-              <Overlay name="my pois">
-                <LayerGroup>
-                  {this.state.filteredPoisToShow
-                    .filter(poi => poi.Creator.id == this.props.user.sub)
-                    .map(poi => (
-                      <POIMarker
-                        addPoi={this.addPoi}
-                        poi={poi}
-                        poisList={this.state.filteredPoisToShow}
-                        categories={this.state.categories}
-                        tags={this.state.tags}
-                        user={this.props.user}
-                        displayPoi={this.displayPoi}
-                      />
-                    ))}
-                </LayerGroup>
-              </Overlay>
+              {/*<Overlay name="my pois">*/}
+              {/*  <LayerGroup>*/}
+              {/*    {this.state.filteredPoisToShow*/}
+              {/*      .filter(poi => poi.Creator.id == this.props.user.sub)*/}
+              {/*      .map(poi => (*/}
+              {/*        <POIMarker*/}
+              {/*          addPoi={this.addPoi}*/}
+              {/*          poi={poi}*/}
+              {/*          poisList={this.state.filteredPoisToShow}*/}
+              {/*          categories={this.state.categories}*/}
+              {/*          tags={this.state.tags}*/}
+              {/*          user={this.props.user}*/}
+              {/*          displayPoi={this.displayPoi}*/}
+              {/*        />*/}
+              {/*      ))}*/}
+              {/*  </LayerGroup>*/}
+              {/*</Overlay>*/}
               <Overlay name="search results" checked>
                 <LayerGroup>
                   {this.state.searchResults.map(searchpoint => (
@@ -815,8 +813,6 @@ class App extends Component {
 
               <Overlay name="show pois" checked>
                 <LayerGroup>
-                  {console.log(this.state.filteredPoisToShow)}
-                  {console.log(this.state.justOwnGroup)}
                     {this.state.filteredPoisToShow
                             .map(poi => (
                                 <POIMarker
@@ -908,31 +904,6 @@ class App extends Component {
 
         <div className="DetailsPoi">
           <div className="leftDetails">
-            {/*{this.state.justOwnGroup&&*/}
-            {/*<div className="ListPoi">*/}
-            {/*  <ul className="GroupPoi">*/}
-            {/*      <b>My Group Poi :</b>*/}
-            {/*      {this.state.filteredPoisToShow*/}
-            {/*      .filter(poi => poi.Creator.group === 4)*/}
-            {/*      .map(poi => (*/}
-            {/*        <li id="singleGroupPoi"*/}
-            {/*          value={getIndex(*/}
-            {/*            poi.name,*/}
-            {/*            this.state.filteredPoisToShow.filter(*/}
-            {/*              poi => poi.Creator.group === 4*/}
-            {/*            ),*/}
-            {/*            "name"*/}
-            {/*          )}*/}
-            {/*          onClick={e =>*/}
-            {/*            this.setState({ indexPoiPage: e.target.value })*/}
-            {/*          }*/}
-            {/*        >*/}
-            {/*          {poi.name}*/}
-            {/*        </li>*/}
-            {/*      ))}*/}
-            {/*  </ul>*/}
-            {/*</div>}*/}
-            {/*  {!this.state.justOwnGroup&&<div className="ListPoi">*/}
               <div className="ListPoi">
                   <ul className="GroupPoi">
                     <b>Points of interest :</b>
