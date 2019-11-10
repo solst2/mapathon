@@ -1,0 +1,100 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat:300,400,700,800");
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+.title{
+  color : white;
+  padding-top: 50px;
+}
+
+.PoiCard {
+  position: relative;
+  display: block;
+  width: 80%;
+  margin: 10px auto;
+  overflow: hidden;
+  border-radius: 10px;
+  transition: all 0.4s;
+  &:hover {
+    transform: scale(1.02);
+    transition: all 0.4s;
+  }
+  .info_section {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-blend-mode: multiply;
+    z-index: 2;
+    border-radius: 10px;
+    .movie_header {
+      padding: 25px 25px 5px 25px;
+      height: 40%;
+      h1{
+        display: inline-block;
+      }
+      h4 {
+        color: #9ac7fa;
+        font-weight: 400;
+      }
+
+      .type {
+        display: inline-block;
+        margin-left: 5px;
+        color: white;
+      }
+
+      .coordinate {
+        color: white;
+      }
+
+      .picture {
+        display: inline-block;
+        margin-right: 20px;
+        border-radius: 5px;
+        width: 50%;
+      }
+
+      .detailsPoi{
+        display: inline-block;
+        vertical-align: top;
+      }
+    }
+    .text {
+        color: white;
+    }
+
+  }
+
+}
+
+@media screen and (min-width: 768px) {
+  .info_section {
+    background: #222222;
+  }
+
+  .blur_back {
+    width: 80%;
+    background-position: -100% 10% !important;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .movie_card {
+    margin: 70px auto;
+    min-height: 350px;
+    height: auto;
+  }
+
+  .movie_header {
+    width: 100%;
+    margin-top: 85px;
+  }
+
+  .info_section {
+    background: linear-gradient(to top, rgb(20, 20, 19) 50%, transparent 100%);
+    display: inline-grid;
+  }
+}

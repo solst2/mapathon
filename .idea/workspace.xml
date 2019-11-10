@@ -1,12 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9d99ef1f-6be9-48ac-88ce-0e79a9308b07" name="Default Changelist" comment="" />
+    <list default="true" id="9d99ef1f-6be9-48ac-88ce-0e79a9308b07" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/POI.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/POI.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/POIForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/POIForm.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/POIMarker.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/POIMarker.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="CSS File" />
+        <option value="JavaScript File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -14,21 +28,24 @@
   <component name="JsFlowSettings">
     <service-enabled>true</service-enabled>
     <exe-path />
-    <annotation-enable>false</annotation-enable>
     <other-services-enabled>true</other-services-enabled>
     <auto-save>true</auto-save>
   </component>
   <component name="ProjectId" id="1QjpFQgmPYLByeqx1Uc1AFBvIC5" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="JavaScriptWeakerCompletionTypeGuess" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.standard" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -36,24 +53,30 @@
     <property name="node.js.path.for.package.standard" value="project" />
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
-    <property name="node.js.selected.package.standard" value="$PROJECT_DIR$/node_modules/eslint" />
+    <property name="node.js.selected.package.standard" value="" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="yarn" />
-    <property name="prettierjs.PrettierConfiguration.Package" value="/usr/local/lib/node_modules/prettier" />
-    <property name="settings.editor.selected.configurable" value="settings.javascript.linters.eslint" />
+    <property name="prettierjs.PrettierConfiguration.NodeInterpreter" value="project" />
+    <property name="prettierjs.PrettierConfiguration.Package" value="D:\Schule Fächerunterlagen\5. Semester\Project\Project\mapathon\node_modules\prettier" />
+    <property name="settings.editor.selected.configurable" value="settings.nodejs" />
     <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/components" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\mapathon2\src" />
+      <recent name="C:\Users\Romain\WebstormProjects\mapathon\src" />
+      <recent name="D:\Schule Fächerunterlagen\5. Semester\Project\Project\mapathon\public" />
       <recent name="$PROJECT_DIR$/src/assets" />
       <recent name="$PROJECT_DIR$/src/components" />
-      <recent name="$PROJECT_DIR$" />
-      <recent name="$PROJECT_DIR$/src" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\mapathon2\src\icons" />
+      <recent name="C:\Users\Romain\WebstormProjects\mapathon\src\gpx" />
+      <recent name="C:\Users\Romain\WebstormProjects\mapathon" />
+      <recent name="C:\Users\Romain\WebstormProjects\mapathon\src" />
+      <recent name="$PROJECT_DIR$/src/components" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -66,6 +89,21 @@
           <option name="name" value="StatusDashboardGroupingRule" />
         </RuleState>
       </list>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration name="Unnamed" type="JavascriptDebugType" nameIsGenerated="true" uri="http://localhost:3000">
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="allServicesViewState">
+      <serviceView>
+        <treeState>
+          <expand />
+          <select />
+        </treeState>
+      </serviceView>
     </option>
   </component>
   <component name="SvnConfiguration">
@@ -94,13 +132,278 @@
       <workItem from="1569588978842" duration="1901000" />
       <workItem from="1569840102716" duration="2672000" />
       <workItem from="1570087353375" duration="21000" />
-      <workItem from="1570092993063" duration="121000" />
-      <workItem from="1570093291247" duration="925000" />
-      <workItem from="1570431594328" duration="6310000" />
-      <workItem from="1570561851446" duration="3087000" />
-      <workItem from="1570691265564" duration="1798000" />
-      <workItem from="1570776604904" duration="1118000" />
+      <workItem from="1571036445477" duration="3089000" />
+      <workItem from="1571389697735" duration="24022000" />
+      <workItem from="1571416433310" duration="11916000" />
+      <workItem from="1571458445599" duration="1034000" />
+      <workItem from="1571473473487" duration="3864000" />
+      <workItem from="1571682957228" duration="17136000" />
+      <workItem from="1572533956610" duration="12225000" />
+      <workItem from="1572597796622" duration="20161000" />
+      <workItem from="1572685282800" duration="11832000" />
+      <workItem from="1572720427371" duration="13367000" />
+      <workItem from="1572770542801" duration="14365000" />
+      <workItem from="1572859012287" duration="1140000" />
+      <workItem from="1573032753653" duration="5519000" />
+      <workItem from="1573128735691" duration="20000" />
+      <workItem from="1573129197482" duration="5577000" />
+      <workItem from="1573310539661" duration="5071000" />
+      <workItem from="1573389835257" duration="85000" />
+      <workItem from="1573391309303" duration="2188000" />
     </task>
+    <task id="LOCAL-00001" summary="map">
+      <created>1570781121132</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1570781121132</updated>
+    </task>
+    <task id="LOCAL-00002" summary="map zoom at your direction, the icon location at the right place">
+      <created>1570787132625</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1570787132625</updated>
+    </task>
+    <task id="LOCAL-00003" summary="test image">
+      <created>1570794718501</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1570794718501</updated>
+    </task>
+    <task id="LOCAL-00004" summary="filter text">
+      <created>1571341987935</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1571341987936</updated>
+    </task>
+    <task id="LOCAL-00005" summary="filter text">
+      <created>1571389789377</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1571389789377</updated>
+    </task>
+    <task id="LOCAL-00006" summary="filter text">
+      <created>1571401636064</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1571401636064</updated>
+    </task>
+    <task id="LOCAL-00007" summary="filter text">
+      <created>1571460547184</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1571460547184</updated>
+    </task>
+    <task id="LOCAL-00008" summary="filter text">
+      <created>1571572608265</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1571572608265</updated>
+    </task>
+    <task id="LOCAL-00009" summary="filter text">
+      <created>1571578738262</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1571578738262</updated>
+    </task>
+    <task id="LOCAL-00010" summary="filter text">
+      <created>1571683230355</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1571683230355</updated>
+    </task>
+    <task id="LOCAL-00011" summary="filter again and merge">
+      <created>1571906828279</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1571906828279</updated>
+    </task>
+    <task id="LOCAL-00012" summary="filter again">
+      <created>1571907793207</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1571907793207</updated>
+    </task>
+    <task id="LOCAL-00013" summary="merged">
+      <created>1571987093748</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1571987093748</updated>
+    </task>
+    <task id="LOCAL-00014" summary="changes t work">
+      <created>1571988655972</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1571988655972</updated>
+    </task>
+    <task id="LOCAL-00015" summary="work with answer and request">
+      <created>1572010208060</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1572010208060</updated>
+    </task>
+    <task id="LOCAL-00016" summary="fix bug">
+      <created>1572252622086</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1572252622086</updated>
+    </task>
+    <task id="LOCAL-00017" summary="fix bug">
+      <created>1572456080583</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1572456080583</updated>
+    </task>
+    <task id="LOCAL-00018" summary="fix bug">
+      <created>1572823725937</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1572823725937</updated>
+    </task>
+    <task id="LOCAL-00019" summary="fix bug">
+      <created>1573036683516</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1573036683516</updated>
+    </task>
+    <task id="LOCAL-00020" summary="fix bug">
+      <created>1573085783142</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1573085783142</updated>
+    </task>
+    <task id="LOCAL-00021" summary="fix bug">
+      <created>1573113466262</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1573113466262</updated>
+    </task>
+    <task id="LOCAL-00022" summary="fix bug">
+      <created>1573119580138</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1573119580138</updated>
+    </task>
+    <task id="LOCAL-00023" summary="fix openpop">
+      <created>1573143050228</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1573143050228</updated>
+    </task>
+    <task id="LOCAL-00024" summary="fix openpop">
+      <created>1573144834022</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1573144834022</updated>
+    </task>
+    <task id="LOCAL-00025" summary="...">
+      <created>1573156968344</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1573156968344</updated>
+    </task>
+    <task id="LOCAL-00026" summary="file for route">
+      <created>1573191851148</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1573191851149</updated>
+    </task>
+    <task id="LOCAL-00027" summary="...">
+      <created>1573192683944</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1573192683944</updated>
+    </task>
+    <task id="LOCAL-00028" summary="href">
+      <created>1573198863140</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1573198863140</updated>
+    </task>
+    <task id="LOCAL-00029" summary="href">
+      <created>1573201987942</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1573201987942</updated>
+    </task>
+    <task id="LOCAL-00030" summary="logout">
+      <created>1573203896802</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1573203896802</updated>
+    </task>
+    <task id="LOCAL-00031" summary="cleaning">
+      <created>1573209712061</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1573209712061</updated>
+    </task>
+    <task id="LOCAL-00032" summary="List POI">
+      <created>1573217826883</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1573217826883</updated>
+    </task>
+    <task id="LOCAL-00033" summary="Finish and Clock centered">
+      <created>1573218595126</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1573218595126</updated>
+    </task>
+    <task id="LOCAL-00034" summary="Finish and Clock centered">
+      <created>1573221666612</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1573221666613</updated>
+    </task>
+    <task id="LOCAL-00035" summary="...">
+      <created>1573233281367</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1573233281367</updated>
+    </task>
+    <task id="LOCAL-00036" summary="...">
+      <created>1573313780114</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1573313780115</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -128,62 +431,63 @@
         </entry>
       </map>
     </option>
-    <option name="RECENT_FILTERS">
-      <map>
-        <entry key="Branch">
-          <value>
-            <list />
-          </value>
-        </entry>
-        <entry key="User">
-          <value>
-            <list />
-          </value>
-        </entry>
-      </map>
-    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="map" />
+    <MESSAGE value="map zoom at your direction, the icon location at the right place" />
+    <MESSAGE value="test image" />
+    <MESSAGE value="filter text" />
+    <MESSAGE value="filter again and merge" />
+    <MESSAGE value="filter again" />
+    <MESSAGE value="merged" />
+    <MESSAGE value="changes t work" />
+    <MESSAGE value="work with answer and request" />
+    <MESSAGE value="fix bug" />
+    <MESSAGE value="fix openpop" />
+    <MESSAGE value="file for route" />
+    <MESSAGE value="href" />
+    <MESSAGE value="logout" />
+    <MESSAGE value="cleaning" />
+    <MESSAGE value="List POI" />
+    <MESSAGE value="Finish and Clock centered" />
+    <MESSAGE value="..." />
+    <option name="LAST_COMMIT_MESSAGE" value="..." />
   </component>
   <component name="WindowStateProjectService">
-    <state x="601" y="286" width="524" height="502" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1569391972949">
-      <screen x="57" y="27" width="1623" height="1023" />
-    </state>
-    <state x="601" y="286" width="524" height="502" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/57.27.1623.1023/1680.0.1680.1050@57.27.1623.1023" timestamp="1569391972949" />
-    <state x="416" y="282" key="EditFileWatcherDialog" timestamp="1569391944487" />
-    <state x="416" y="282" key="EditFileWatcherDialog/1680.1050/1680.1050" timestamp="1569391944488" />
-    <state x="614" y="312" key="FileChooserDialogImpl" timestamp="1569391944488" />
-    <state x="614" y="312" key="FileChooserDialogImpl/1680.1050/1680.1050" timestamp="1569391944488" />
-    <state width="1657" height="277" key="GridCell.Tab.0.bottom" timestamp="1569850367766">
-      <screen x="1680" y="0" width="1680" height="1050" />
-    </state>
-    <state width="1600" height="268" key="GridCell.Tab.0.bottom/1680.1050/1680.1050" timestamp="1569391944488" />
-    <state width="1657" height="277" key="GridCell.Tab.0.bottom/57.27.1623.1023/1680.0.1680.1050@1680.0.1680.1050" timestamp="1569850367766" />
-    <state width="1657" height="277" key="GridCell.Tab.0.center" timestamp="1569850367765">
-      <screen x="1680" y="0" width="1680" height="1050" />
-    </state>
-    <state width="1600" height="268" key="GridCell.Tab.0.center/1680.1050/1680.1050" timestamp="1569391944488" />
-    <state width="1657" height="277" key="GridCell.Tab.0.center/57.27.1623.1023/1680.0.1680.1050@1680.0.1680.1050" timestamp="1569850367765" />
-    <state width="1657" height="277" key="GridCell.Tab.0.left" timestamp="1569850367765">
-      <screen x="1680" y="0" width="1680" height="1050" />
-    </state>
-    <state width="1600" height="268" key="GridCell.Tab.0.left/1680.1050/1680.1050" timestamp="1569391944488" />
-    <state width="1657" height="277" key="GridCell.Tab.0.left/57.27.1623.1023/1680.0.1680.1050@1680.0.1680.1050" timestamp="1569850367765" />
-    <state width="1657" height="277" key="GridCell.Tab.0.right" timestamp="1569850367765">
-      <screen x="1680" y="0" width="1680" height="1050" />
-    </state>
-    <state width="1600" height="268" key="GridCell.Tab.0.right/1680.1050/1680.1050" timestamp="1569391944488" />
-    <state width="1657" height="277" key="GridCell.Tab.0.right/57.27.1623.1023/1680.0.1680.1050@1680.0.1680.1050" timestamp="1569850367765" />
-    <state x="347" y="181" key="SettingsEditor" timestamp="1569840755495">
-      <screen x="57" y="27" width="1623" height="1023" />
-    </state>
-    <state x="347" y="181" key="SettingsEditor/1680.1050/1680.1050" timestamp="1569391944488" />
-    <state x="347" y="181" key="SettingsEditor/57.27.1623.1023/1680.0.1680.1050@1680.0.1680.1050" timestamp="1569840755495" />
-    <state x="175" y="150" width="1434" height="807" key="find.popup" timestamp="1570087363592">
-      <screen x="57" y="27" width="1623" height="1023" />
-    </state>
-    <state x="175" y="150" width="1434" height="807" key="find.popup/1680.1050/1680.1050" timestamp="1569391944488" />
-    <state x="175" y="150" width="1434" height="807" key="find.popup/57.27.1623.1023/1680.0.1680.1050@57.27.1623.1023" timestamp="1569563433524" />
-    <state x="175" y="150" width="1434" height="807" key="find.popup/57.27.1623.1023@57.27.1623.1023" timestamp="1570087363592" />
-    <state x="531" y="250" width="672" height="678" key="search.everywhere.popup" timestamp="1569391944488" />
-    <state x="531" y="250" width="672" height="678" key="search.everywhere.popup/1680.1050/1680.1050" timestamp="1569391944488" />
+    <state x="601" y="286" width="524" height="502" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" />
+    <state x="601" y="286" width="524" height="502" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/57.27.1623.1023/1680.0.1680.1050@57.27.1623.1023" />
+    <state x="416" y="282" key="EditFileWatcherDialog" />
+    <state x="416" y="282" key="EditFileWatcherDialog/1680.1050/1680.1050" />
+    <state x="614" y="312" key="FileChooserDialogImpl" />
+    <state x="614" y="312" key="FileChooserDialogImpl/1680.1050/1680.1050" />
+    <state width="1657" height="277" key="GridCell.Tab.0.bottom" />
+    <state width="1600" height="268" key="GridCell.Tab.0.bottom/1680.1050/1680.1050" />
+    <state width="1657" height="277" key="GridCell.Tab.0.bottom/57.27.1623.1023/1680.0.1680.1050@1680.0.1680.1050" />
+    <state width="1657" height="277" key="GridCell.Tab.0.center" />
+    <state width="1600" height="268" key="GridCell.Tab.0.center/1680.1050/1680.1050" />
+    <state width="1657" height="277" key="GridCell.Tab.0.center/57.27.1623.1023/1680.0.1680.1050@1680.0.1680.1050" />
+    <state width="1657" height="277" key="GridCell.Tab.0.left" />
+    <state width="1600" height="268" key="GridCell.Tab.0.left/1680.1050/1680.1050" />
+    <state width="1657" height="277" key="GridCell.Tab.0.left/57.27.1623.1023/1680.0.1680.1050@1680.0.1680.1050" />
+    <state width="1657" height="277" key="GridCell.Tab.0.right" />
+    <state width="1600" height="268" key="GridCell.Tab.0.right/1680.1050/1680.1050" />
+    <state width="1657" height="277" key="GridCell.Tab.0.right/57.27.1623.1023/1680.0.1680.1050@1680.0.1680.1050" />
+    <state x="347" y="181" key="SettingsEditor" />
+    <state x="347" y="181" key="SettingsEditor/1680.1050/1680.1050" />
+    <state x="347" y="181" key="SettingsEditor/57.27.1623.1023/1680.0.1680.1050@1680.0.1680.1050" />
+    <state x="175" y="150" width="1434" height="807" key="find.popup" />
+    <state x="175" y="150" width="1434" height="807" key="find.popup/1680.1050/1680.1050" />
+    <state x="175" y="150" width="1434" height="807" key="find.popup/57.27.1623.1023/1680.0.1680.1050@57.27.1623.1023" />
+    <state x="175" y="150" width="1434" height="807" key="find.popup/57.27.1623.1023@57.27.1623.1023" />
+    <state x="531" y="250" width="672" height="678" key="search.everywhere.popup" />
+    <state x="531" y="250" width="672" height="678" key="search.everywhere.popup/1680.1050/1680.1050" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <default-breakpoints>
+        <breakpoint enabled="true" type="javascript-exception" />
+      </default-breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
