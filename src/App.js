@@ -1,4 +1,4 @@
-import React, { useState, Component, useEffect, useRef } from "react";
+import React, { useState, Component, useEffect } from "react";
 import "./App.css";
 import L from "leaflet";
 import {
@@ -7,8 +7,7 @@ import {
   Map,
   Marker,
   Popup,
-  TileLayer,
-    FeatureGroup
+  TileLayer
 } from "react-leaflet";
 import { useAuth0 } from "./react-auth0-spa";
 import Loading from "./components/Loading";
@@ -27,7 +26,7 @@ import popupsound from "./sounds/pop.mp3";
 import ReactNotifications from "react-browser-notifications";
 import TagManager from "./pages/TagManager";
 import CategoryManager from "./pages/CategroyManager";
-import { Route, Link, BrowserRouter as Router } from "react-router-dom";
+import { Route, BrowserRouter as Router } from "react-router-dom";
 // import plugin's css (if present)
 // note, that this is only one of possible ways to load css
 import "leaflet-contextmenu/dist/leaflet.contextmenu.css";
@@ -71,7 +70,6 @@ function AppWrapper() {
     loginWithRedirect,
     loading,
     getTokenSilently,
-    logout,
     user
   } = useAuth0();
   let [poisList, setPoisList] = useState([]);
@@ -223,7 +221,7 @@ class App extends Component {
     super(props);
     this.showNotifications = this.showNotifications.bind(this);
     this.leafletMap = React.createRef();
-    this.leafletOverlay= React.createRef();
+    this.leafletOverlay = React.createRef();
     this.sideBarLeft = "";
     this.state = {
       POIs: [],
@@ -241,8 +239,8 @@ class App extends Component {
       is2ddisplayed: true,
       selectedPoi: "",
       indexPoiPage: 0,
-        justOwn:false,
-        justOwnGroup:false
+      justOwn: false,
+      justOwnGroup: false
     };
   }
 
@@ -294,7 +292,6 @@ class App extends Component {
 
     this.setState({ searchResults: searchResults });
     this.changeOfPois();
-
   }
 
   //realtime
@@ -310,7 +307,7 @@ class App extends Component {
     this.state.unsavedPois.map(poi => updatedList.push(poi));
 
     this.setState({ POIs: updatedList });
-     this.changeOfPois();
+    this.changeOfPois();
     //for the notification
     if (
       this.state.oldSizevalue < result.length &&
@@ -499,20 +496,19 @@ class App extends Component {
   };
 
   handleJustOwnClick = e => {
-    this.setState(
-      (state, props) => ({ justOwn: !state.justOwn}),
-        function() {this.changeOfPois();}
-    );
-
+    this.setState((state, props) => ({ justOwn: !state.justOwn }), function() {
+      this.changeOfPois();
+    });
   };
 
-    handleJustOwnGroupClick = e => {
-        this.setState(
-            (state, props) => ({ justOwnGroup: !state.justOwnGroup}),
-            function() {this.changeOfPois()}
-        );
-
-    };
+  handleJustOwnGroupClick = e => {
+    this.setState(
+      (state, props) => ({ justOwnGroup: !state.justOwnGroup }),
+      function() {
+        this.changeOfPois();
+      }
+    );
+  };
 
   //The filter of the pois
   changeOfPois = () => {
@@ -527,9 +523,9 @@ class App extends Component {
             if (poi.Creator === undefined) {
               return poi;
             }
-            return poi.Creator.id === props.user.sub     //if
+            return poi.Creator.id === props.user.sub //if
               ? this.filterThePoi(poi, state.filterPoi) // yes
-              : null;                                   //else
+              : null; //else
           })
         }));
       } else {
@@ -544,33 +540,36 @@ class App extends Component {
       //show all pois -> is there a filter? just own group?
       this.state.filterPoi !== "" &&
       this.state.filterPoi !== undefined
-    ) { //all with filter
+    ) {
+      //all with filter
       //own group?
-      if (this.state.justOwnGroup){ //filter with group
+      if (this.state.justOwnGroup) {
+        //filter with group
         this.setState((state, props) => ({
           filteredPoisToShow: state.POIs.filter(poi => {
-            return poi.Creator.group === 4 ?
-             this.filterThePoi(poi, state.filterPoi)
-                : null;
+            return poi.Creator.group === 4
+              ? this.filterThePoi(poi, state.filterPoi)
+              : null;
           })
         }));
-      } else{  //all
+      } else {
+        //all
         this.setState((state, props) => ({
           filteredPoisToShow: state.POIs.filter(poi => {
             return this.filterThePoi(poi, state.filterPoi);
           })
         }));
       }
-
     } else {
-      if (this.state.justOwnGroup){ //filter with group
-        this.setState((state, props) => ({ filteredPoisToShow: state.POIs.filter(poi => {
-            return poi.Creator.group === 4 ?
-                poi
-                : null;
+      if (this.state.justOwnGroup) {
+        //filter with group
+        this.setState((state, props) => ({
+          filteredPoisToShow: state.POIs.filter(poi => {
+            return poi.Creator.group === 4 ? poi : null;
           })
         }));
-      }else{ //all with no filter
+      } else {
+        //all with no filter
         this.setState((state, props) => ({ filteredPoisToShow: state.POIs }));
       }
     }
@@ -731,7 +730,7 @@ class App extends Component {
             minZoom={2}
             center={[0, 5]}
             zoom={2}
-            onClick={(e)=>this.doubleClick}
+            onClick={e => this.doubleClick}
             contextmenu={true}
             contextmenuWidth={140}
             contextmenuItems={[
@@ -746,7 +745,8 @@ class App extends Component {
             ]}
             ref={m => {
               this.leafletMap = m;
-            }}>
+            }}
+          >
             <LayersControl>
               <BaseLayer checked name="Default">
                 <TileLayer
@@ -816,24 +816,20 @@ class App extends Component {
 
               <Overlay name="show pois" checked>
                 <LayerGroup>
-                    {this.state.filteredPoisToShow
-                            .map(poi => (
-                                <POIMarker
-                                    addPoi={this.addPoi}
-                                    poi={poi}
-                                    poisList={this.state.POIs}
-                                    categories={this.state.categories}
-                                    tags={this.state.tags}
-                                    user={this.props.user}
-                                    displayPoi={this.displayPoi}
-                                />
-                            ))
-                    }
-                  {this.state.filteredPoisToShow
-                      .map(poi => (
+                  {this.state.filteredPoisToShow.map(poi => (
+                    <POIMarker
+                      addPoi={this.addPoi}
+                      poi={poi}
+                      poisList={this.state.POIs}
+                      categories={this.state.categories}
+                      tags={this.state.tags}
+                      user={this.props.user}
+                      displayPoi={this.displayPoi}
+                    />
+                  ))}
+                  {this.state.filteredPoisToShow.map(poi =>
                     console.log(poi.name)
-                      ))
-                  }
+                  )}
                 </LayerGroup>
               </Overlay>
               <Control position="topleft">
@@ -912,27 +908,26 @@ class App extends Component {
 
         <div className="DetailsPoi">
           <div className="leftDetails">
-              <div className="ListPoi">
-                  <ul className="GroupPoi">
-                    <b>Points of interest :</b>
-                      {this.state.filteredPoisToShow
-                          .map(poi => (
-                              <li id="singleGroupPoi"
-                                  value={getIndex(
-                                      poi.name,
-                                      this.state.filteredPoisToShow,
-                                      "name"
-                                  )}
-                                  onClick={e =>
-                                  {
-                                      this.setState({ indexPoiPage: e.target.value })}
-                                  }
-                              >
-                                  {poi.name}
-                              </li>
-                          ))}
-                  </ul>
-              </div>
+            <div className="ListPoi">
+              <ul className="GroupPoi">
+                <b>Points of interest :</b>
+                {this.state.filteredPoisToShow.map(poi => (
+                  <li
+                    id="singleGroupPoi"
+                    value={getIndex(
+                      poi.name,
+                      this.state.filteredPoisToShow,
+                      "name"
+                    )}
+                    onClick={e => {
+                      this.setState({ indexPoiPage: e.target.value });
+                    }}
+                  >
+                    {poi.name}
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
           <div className="rightDetails">
             <POI

@@ -3,8 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="9d99ef1f-6be9-48ac-88ce-0e79a9308b07" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/POI.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/POI.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/POIForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/POIForm.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/POIMarker.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/POIMarker.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -42,7 +44,7 @@
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="JavaScriptWeakerCompletionTypeGuess" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Exercises/beeblio" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.standard" value="true" />
@@ -146,6 +148,8 @@
       <workItem from="1573128735691" duration="20000" />
       <workItem from="1573129197482" duration="5577000" />
       <workItem from="1573310539661" duration="5071000" />
+      <workItem from="1573389835257" duration="85000" />
+      <workItem from="1573391309303" duration="2188000" />
     </task>
     <task id="LOCAL-00001" summary="map">
       <created>1570781121132</created>

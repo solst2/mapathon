@@ -15,7 +15,6 @@ const initMarker = ref => {
 
 export default class POIMarker extends React.Component {
   constructor(props) {
-
     super(props);
     this.leafletMarker = React.createRef();
     this.leafletMarker2 = React.createRef();
@@ -39,21 +38,17 @@ export default class POIMarker extends React.Component {
   }
 
   updatePOI = poi => {
-
     this.setState({ newPOI: poi });
   };
   componentDidMount(): void {
-
     if (this.state.newPOI.isSaved)
       this.leafletMarker.leafletElement.on("mouseover", function(e) {
-
         this.openPopup();
       });
   }
-upDateValue=()=>
-{
-  this.setState({ newPOI: this.props.poi });
-}
+  upDateValue = () => {
+    this.setState({ newPOI: this.props.poi });
+  };
   componentDidUpdate(
     prevProps: Readonly<P>,
     prevState: Readonly<S>,
@@ -66,7 +61,8 @@ upDateValue=()=>
 
     let img;
 
-    if (this.state.newPOI.Categories &&
+    if (
+      this.state.newPOI.Categories &&
       this.state.newPOI.Categories[0] != null &&
       this.state.newPOI.Categories[0].image != null
     ) {
@@ -82,7 +78,6 @@ upDateValue=()=>
     });
 
     if (this.state.newPOI.isSaved) {
-
       return (
         <div>
           <Marker
@@ -99,33 +94,31 @@ upDateValue=()=>
               <h1>{this.state.newPOI.name}</h1>
 
               {this.state.newPOI.image != null && (
-                <img
-                  width={100}
-                  height={100}
-                  src={this.state.newPOI.image}
-                />
+                <img width={100} height={100} src={this.state.newPOI.image} />
               )}
               <p>{this.state.newPOI.description}</p>
-              {this.state.newPOI.Creator.id === this.props.user.sub && (
-                <span>
-                  <img
-                    width={10}
-                    height={10}
-                    src="https://image.flaticon.com/icons/svg/61/61456.svg"
-                    onClick={e => {
-                      this.state.newPOI.isSaved = false;
-                      this.updatePOI(this.state.newPOI);
-                    }}
-                  />
-                  <br />
-                </span>
-              )}
-              {this.state.newPOI.Categories&&this.state.newPOI.Categories.map(cat => (
-                <div>
-                  <img width={25} height={30} src={cat.image} />{" "}
-                  <a>{cat.name}</a>
-                </div>
-              ))}
+              {this.props.user &&
+                this.state.newPOI.Creator.id === this.props.user.sub && (
+                  <span>
+                    <img
+                      width={10}
+                      height={10}
+                      src="https://image.flaticon.com/icons/svg/61/61456.svg"
+                      onClick={e => {
+                        this.state.newPOI.isSaved = false;
+                        this.updatePOI(this.state.newPOI);
+                      }}
+                    />
+                    <br />
+                  </span>
+                )}
+              {this.state.newPOI.Categories &&
+                this.state.newPOI.Categories.map(cat => (
+                  <div>
+                    <img width={25} height={30} src={cat.image} />{" "}
+                    <a>{cat.name}</a>
+                  </div>
+                ))}
               {this.state.newPOI.Tags.map(tag => (
                 <div>
                   <img width={25} height={30} src={tag.image} />{" "}

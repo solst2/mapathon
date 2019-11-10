@@ -15,9 +15,9 @@ export default function MenuOptions(props) {
       <button onClick={handleFilterClick} className="PersoBtn" id="btnForMap">
         {filter}
       </button>
-        <br/>
-        <br/>
-        {showFilterInput ? <input onChange={props.handleFilter} /> : null}
+      <br />
+      <br />
+      {showFilterInput ? <input onChange={props.handleFilter} /> : null}
       {showFilterInput ? (
         <div>
           <input
@@ -26,13 +26,13 @@ export default function MenuOptions(props) {
             onChange={props.handleJustOwnClick}
           />
           <small id="smallText">Show my POI</small>
-          <br/>
-            <input
-                type="checkbox"
-                checked={props.justOwnGroup}
-                onChange={props.handleJustOwnGroupClick}
-            />
-            <small id="smallText">Show my group</small>
+          <br />
+          <input
+            type="checkbox"
+            checked={props.justOwnGroup}
+            onChange={props.handleJustOwnGroupClick}
+          />
+          <small id="smallText">Show my group</small>
         </div>
       ) : null}
     </div>

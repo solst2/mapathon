@@ -9,7 +9,7 @@ import 'leaflet/dist/leaflet.css';
 import './w3template.css';
 import "esri-leaflet-geocoder/dist/esri-leaflet-geocoder.js";
 import "esri-leaflet-geocoder/dist/esri-leaflet-geocoder.css";
-import { Route, Link, BrowserRouter as Router } from 'react-router-dom'
+import { Route, BrowserRouter as Router } from 'react-router-dom'
 import TagManager from "./pages/TagManager";
 import CategoryManager from './pages/CategroyManager'
 let history = createBrowserHistory();
@@ -32,8 +32,8 @@ const routing = (
         <Router>
 
             <Route exact  path="/" component={App} />
-            <Route path="/categories" component={CategoryManager} ></Route>
-            <Route path="/tags" component={TagManager} ></Route>
+            <Route path="/categories" component={CategoryManager} />
+            <Route path="/tags" component={TagManager} />
         </Router>
     </Auth0Provider>
 );

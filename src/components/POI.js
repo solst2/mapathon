@@ -3,7 +3,6 @@ import "./POI.css";
 import deleteIcon from "../icons/delete.png";
 import targetIcon from "../icons/targetWhite.png";
 import shareIcon from "../icons/share.png";
-import { preventDefault } from "leaflet/src/dom/DomEvent";
 export default function POI(props) {
   const {
     name,
@@ -13,32 +12,16 @@ export default function POI(props) {
     lng,
     image,
     url,
-    group,
     liked,
     likes
   } = props;
-  const { Categories, Tags, User, Status } = props;
+  const { Categories, Tags, Status } = props;
   const creator = { ...props.Creator };
   const { zoomOnMarker, deleteMarker, sendEmail, setLike } = props;
 
   let handleLikeClick = async e => {
     setLike(id);
   };
-
-  let statusColor;
-  if (Status) {
-    switch (Status.id) {
-      case 1:
-        statusColor = "red";
-        break;
-      case 2:
-        statusColor = "orange";
-        break;
-      case 3:
-        statusColor = "green";
-        break;
-    }
-  }
 
   return (
     <div className="PoiCard">
@@ -92,7 +75,7 @@ export default function POI(props) {
               <div className="utilitiesBtn">
                   <img width={20} height={20} src={targetIcon} name={id} onClick={zoomOnMarker}/>
                   <div className="utilitie">
-                  {id != undefined && <img width={20} height={20} src={deleteIcon} name={id} onClick={deleteMarker}/>}
+                  {id !== undefined && <img width={20} height={20} src={deleteIcon} name={id} onClick={deleteMarker}/>}
                   </div>
                   <div className="utilitie">
                   <img width={20} height={20} src={shareIcon} name={id} onClick={sendEmail}/>
