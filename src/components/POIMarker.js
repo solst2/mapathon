@@ -15,6 +15,7 @@ const initMarker = ref => {
 
 export default class POIMarker extends React.Component {
   constructor(props) {
+
     super(props);
     this.leafletMarker = React.createRef();
     this.leafletMarker2 = React.createRef();
@@ -42,12 +43,17 @@ export default class POIMarker extends React.Component {
     this.setState({ newPOI: poi });
   };
   componentDidMount(): void {
+
     if (this.state.newPOI.isSaved)
       this.leafletMarker.leafletElement.on("mouseover", function(e) {
+
         this.openPopup();
       });
   }
-
+upDateValue=()=>
+{
+  this.setState({ newPOI: this.props.poi });
+}
   componentDidUpdate(
     prevProps: Readonly<P>,
     prevState: Readonly<S>,
@@ -57,6 +63,7 @@ export default class POIMarker extends React.Component {
   render() {
     let { poisList, addPoi } = this.props;
     let position = { lat: this.props.poi.lat, lng: this.props.poi.lng };
+
     let img;
 
     if (this.state.newPOI.Categories &&
@@ -75,6 +82,7 @@ export default class POIMarker extends React.Component {
     });
 
     if (this.state.newPOI.isSaved) {
+
       return (
         <div>
           <Marker
@@ -85,7 +93,7 @@ export default class POIMarker extends React.Component {
             position={position}
             icon={myIcon}
             draggable="true"
-            onClick={this.showSideBar}
+            onmouseover={this.upDateValue}
           >
             <Popup>
               <h1>{this.state.newPOI.name}</h1>

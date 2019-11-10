@@ -310,7 +310,7 @@ class App extends Component {
     this.state.unsavedPois.map(poi => updatedList.push(poi));
 
     this.setState({ POIs: updatedList });
-    this.changeOfPois();
+     this.changeOfPois();
     //for the notification
     if (
       this.state.oldSizevalue < result.length &&
@@ -494,6 +494,7 @@ class App extends Component {
 
   handleFilter = async e => {
     this.setState({ filterPoi: e.target.value });
+    this.leafletMap.leafletElement.closePopup();
     this.changeOfPois();
   };
 
@@ -516,6 +517,8 @@ class App extends Component {
   //The filter of the pois
   changeOfPois = () => {
     // Show just own pois -> no need of group filter, it is automatically just own group
+    //
+
     if (this.state.justOwn) {
       // with filter
       if (this.state.filterPoi !== undefined && this.state.POIs !== "") {
@@ -818,7 +821,7 @@ class App extends Component {
                                 <POIMarker
                                     addPoi={this.addPoi}
                                     poi={poi}
-                                    poisList={this.state.filteredPoisToShow}
+                                    poisList={this.state.POIs}
                                     categories={this.state.categories}
                                     tags={this.state.tags}
                                     user={this.props.user}
@@ -826,6 +829,11 @@ class App extends Component {
                                 />
                             ))
                     }
+                  {this.state.filteredPoisToShow
+                      .map(poi => (
+                    console.log(poi.name)
+                      ))
+                  }
                 </LayerGroup>
               </Overlay>
               <Control position="topleft">
